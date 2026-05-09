@@ -505,7 +505,8 @@
                 <li><a href="#video-show">视界</a></li>
                 <li><a href="#smartpet">SmartPet</a></li>
                 <li><a href="#love-form">心流</a></li>
-                <li><a href="https://www.pgyer.com/laswiai-ios" target="_blank" class="download-link">📱 App 下载</a></li>
+                <!-- ✅ 新增：下载中心入口（跳转到独立的下载页面） -->
+                <li><a href="download.html" class="download-link">📥 下载中心</a></li>
             </ul>
         </div>
     </nav>
@@ -520,7 +521,8 @@
                     <p class="hero-desc">底层开源架构 · 全场景无缝流转。Pad / Phone / Computer 三端统一，AI 深度进化。</p>
                     <div class="btn-group">
                         <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-primary btn-demo">🚀 在线体验 LaswI 产品</a>
-                        <a href="https://www.pgyer.com/laswiai-ios" target="_blank" class="btn btn-primary btn-download">📲 iOS App 立即下载</a>
+                        <!-- ✅ 修改：下载按钮也指向下载中心 -->
+                        <a href="download.html" class="btn btn-primary btn-download">📲 立即下载 App</a>
                         <a href="#os-ai" class="btn btn-outline">探索操作系统 ▸</a>
                     </div>
                 </div>
@@ -662,7 +664,7 @@
         <footer>
             <div class="container">
                 <p>© 2026 LaswI — 开源 · 无界 · 以爱为核 | 底层开源系统 LaswI OS | 子品牌 SmartPet</p>
-                <p style="margin-top: 12px; font-size: 0.8rem;">✦ 体验页：<a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#8ABBFF;">laswi-ai-production.up.railway.app</a> ✦  iOS App：<a href="https://www.pgyer.com/laswiai-ios" target="_blank" style="color:#8ABBFF;">立即下载</a> ✦ I ❤️ 科技 ✦</p>
+                <p style="margin-top: 12px; font-size: 0.8rem;">✦ 体验页：<a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#8ABBFF;">laswi-ai-production.up.railway.app</a> ✦ iOS App：<a href="download.html" target="_blank" style="color:#8ABBFF;">立即下载</a> ✦ I ❤️ 科技 ✦</p>
             </div>
         </footer>
     </main>
@@ -782,7 +784,7 @@
             document.querySelectorAll('.nav-links a').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
-                    if (targetId && targetId.startsWith('#')) {
+                    if (targetId && targetId.startsWith('#') && targetId !== '#') {
                         e.preventDefault();
                         const targetElement = document.querySelector(targetId);
                         if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
