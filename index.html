@@ -3,57 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>LaswI AI App · 双形态智慧生态</title>
+    <title>LaswI AI · 双生纪元 | 移动端粉彩杂志 x 桌面端赛博终端</title>
     <style>
-        /* ----- 全局重置 & 移动优先 (默认手机端样式) ----- */
+        /* ---------- 全局基础 ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #010101;
-            font-family: -apple-system, "SF Pro Text", "SF Pro Display", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
-            color: #ffffff;
-            line-height: 1.4;
-            scroll-behavior: smooth;
+            font-family: system-ui, -apple-system, 'Inter', 'SF Pro Text', 'Segoe UI', sans-serif;
             overflow-x: hidden;
-        }
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3a6ea5;
-            border-radius: 8px;
-        }
-
-        /* 动态背景 */
-        .bg-aura {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: radial-gradient(circle at 20% 10%, rgba(10, 80, 150, 0.2), transparent 60%),
-                        radial-gradient(circle at 85% 90%, rgba(150, 60, 210, 0.2), transparent 70%);
-            pointer-events: none;
-        }
-        .bg-noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: -1;
         }
 
         .scroll-progress {
@@ -61,571 +22,718 @@
             top: 0;
             left: 0;
             width: 0%;
-            height: 2.5px;
-            background: linear-gradient(90deg, #0a84ff, #bf5af2);
-            z-index: 1000;
-            transition: width 0.08s linear;
+            height: 3px;
+            z-index: 2000;
+            transition: width 0.1s linear;
         }
 
-        /* 移动端容器 */
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* 隐藏桌面端区域在移动端，反之亦然 */
+        .desktop-only {
+            display: none;
+        }
+        .mobile-only {
+            display: block;
         }
 
-        /* 导航栏 (手机版) */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 99;
-            backdrop-filter: blur(28px);
-            background: rgba(0, 0, 0, 0.65);
-            border-bottom: 0.5px solid rgba(255,255,255,0.08);
-            transition: all 0.3s ease;
-        }
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 20px;
-            flex-wrap: wrap;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .logo {
-            font-size: 1.7rem;
-            font-weight: 680;
-            letter-spacing: -0.4px;
-            background: linear-gradient(115deg, #ffffff, #8ebeff, #c084fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            list-style: none;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-        .nav-links a {
-            color: #e9e9ff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .download-link {
-            background: rgba(10,132,255,0.18);
-            padding: 6px 16px;
-            border-radius: 40px;
-            border: 0.5px solid rgba(10,132,255,0.5);
+        /* ========= 移动端：粉彩杂志 · 大边距 · 圆润排版 ========= */
+        @media (max-width: 1023px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: block; }
+
+            body {
+                background: #fef7f0;
+            }
+
+            .scroll-progress {
+                background: linear-gradient(90deg, #FFB347, #FF6F91);
+            }
+
+            /* 移动端顶部状态条 */
+            .mobile-status {
+                padding: 16px 24px 8px;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                background: transparent;
+                font-size: 0.8rem;
+                color: #6b4e3a;
+            }
+            .mobile-logo {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(120deg, #FF8C42, #FF3B6F);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                letter-spacing: -0.5px;
+            }
+
+            /* 主容器 */
+            .magazine-container {
+                padding: 8px 24px 80px;
+            }
+
+            /* 大标题杂志风 */
+            .hero-magazine {
+                margin: 20px 0 32px;
+            }
+            .magazine-badge {
+                display: inline-block;
+                background: #FFE0C0;
+                color: #C2561A;
+                padding: 6px 16px;
+                border-radius: 40px;
+                font-size: 0.7rem;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+            .hero-magazine h1 {
+                font-size: 3rem;
+                line-height: 1.1;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                color: #2D2A26;
+            }
+            .hero-magazine h1 span {
+                background: linear-gradient(135deg, #FF8C42, #FF3B6F);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+            .hero-magazine p {
+                color: #5C4B3A;
+                font-size: 1rem;
+                margin: 20px 0;
+                line-height: 1.4;
+            }
+
+            .btn-magazine {
+                display: inline-flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-top: 8px;
+            }
+            .btn-soft {
+                background: #FFE6D5;
+                padding: 12px 28px;
+                border-radius: 60px;
+                text-decoration: none;
+                color: #BB5E00;
+                font-weight: 600;
+                backdrop-filter: blur(4px);
+            }
+            .btn-soft-primary {
+                background: #FF8C42;
+                color: white;
+                box-shadow: 0 6px 14px #FF8C4250;
+            }
+
+            /* 卡片：粉彩纸质感 */
+            .pastel-card {
+                background: #FFFFFFD9;
+                backdrop-filter: blur(12px);
+                border-radius: 48px;
+                padding: 28px 24px;
+                margin: 28px 0;
+                box-shadow: 0 15px 35px -12px rgba(0,0,0,0.08);
+                border: 1px solid rgba(255,255,200,0.6);
+            }
+            .feature-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin: 20px 0;
+            }
+            .feature-item {
+                background: #FFF9F0;
+                border-radius: 32px;
+                padding: 20px;
+            }
+            .feature-icon {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .matrix-grid-mobile {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                margin: 20px 0;
+            }
+            .pill-item {
+                background: #F0E6DA;
+                border-radius: 60px;
+                padding: 14px 8px;
+                text-align: center;
+                font-weight: 500;
+                color: #5C3E2A;
+            }
+
+            .video-mobile {
+                border-radius: 48px;
+                overflow: hidden;
+                margin: 28px 0;
+            }
+            .video-mobile video {
+                width: 100%;
+                aspect-ratio: 16/9;
+                object-fit: cover;
+                display: block;
+            }
+
+            .pet-magazine {
+                background: linear-gradient(115deg, #FFF2E1, #FFE0C0);
+                border-radius: 56px;
+                padding: 32px 24px;
+                text-align: center;
+            }
+            .pet-avatar-mobile {
+                font-size: 5rem;
+                margin-bottom: 12px;
+                animation: floatPet 2s infinite alternate;
+            }
+
+            .form-magazine {
+                background: #FFFFFFD9;
+                border-radius: 48px;
+                padding: 32px 24px;
+            }
+            .input-soft {
+                background: #FEF3E9;
+                border: 1px solid #FFD9B5;
+                border-radius: 32px;
+                padding: 14px 20px;
+                width: 100%;
+                font-size: 0.9rem;
+            }
+            .love-check-mag {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: #FFEDE0;
+                padding: 12px 20px;
+                border-radius: 60px;
+                margin: 20px 0;
+            }
+            .btn-love-mag {
+                background: linear-gradient(95deg, #FF6F91, #FFB347);
+                border: none;
+                width: 100%;
+                padding: 14px;
+                border-radius: 60px;
+                color: white;
+                font-weight: 700;
+            }
+
+            footer {
+                text-align: center;
+                padding: 30px 20px 80px;
+                color: #A2856B;
+                font-size: 0.7rem;
+            }
+            @keyframes floatPet {
+                0% { transform: translateY(0);}
+                100% { transform: translateY(-8px);}
+            }
         }
 
-        /* 通用区块 */
-        section {
-            padding: 70px 0;
-            border-bottom: 0.5px solid rgba(255,255,255,0.05);
-        }
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(125deg, #ffffff, #b9c6ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 16px;
-        }
-        .section-sub {
-            font-size: 1rem;
-            color: #9a9ac2;
-            margin-bottom: 36px;
+        /* ========= 桌面端：赛博朋克 · 深色 · 侧边栏 + 荧光点缀 ========= */
+        @media (min-width: 1024px) {
+            .desktop-only {
+                display: block;
+            }
+            .mobile-only {
+                display: none;
+            }
+
+            body {
+                background: #0B0A10;
+                background-image: radial-gradient(circle at 30% 20%, #1A1A2E 0%, #03030A 100%);
+            }
+
+            .scroll-progress {
+                background: linear-gradient(90deg, #00FFD1, #FF007F);
+            }
+
+            /* 赛博侧边栏 */
+            .cyber-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                background: rgba(8, 8, 16, 0.96);
+                backdrop-filter: blur(24px);
+                border-right: 1px solid #00FFD130;
+                z-index: 100;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 48px 32px 48px 32px;
+                box-shadow: 8px 0 32px #00000060;
+            }
+            .cyber-logo {
+                font-size: 2rem;
+                font-weight: 800;
+                letter-spacing: -1px;
+                background: linear-gradient(125deg, #FFF, #00FFD1, #FF007F);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 60px;
+            }
+            .cyber-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            }
+            .cyber-nav a {
+                color: #C0C0FF;
+                text-decoration: none;
+                font-size: 1.1rem;
+                font-weight: 500;
+                transition: 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            .cyber-nav a:hover {
+                color: #00FFD1;
+                transform: translateX(8px);
+                text-shadow: 0 0 6px #00FFD1;
+            }
+            .cyber-download {
+                margin-top: auto;
+                background: #FF007F20;
+                border: 1px solid #FF007F;
+                border-radius: 60px;
+                padding: 12px;
+                text-align: center;
+            }
+            .cyber-download a {
+                color: #FF007F;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            /* 主内容区 */
+            .cyber-main {
+                margin-left: 280px;
+                padding: 48px 64px 80px 64px;
+            }
+
+            /* Hero 区域：双列网格感 */
+            .cyber-hero {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+                align-items: center;
+                margin-bottom: 70px;
+            }
+            .hero-badge-cyber {
+                border: 1px solid #00FFD1;
+                display: inline-block;
+                padding: 4px 16px;
+                border-radius: 60px;
+                font-size: 0.7rem;
+                color: #00FFD1;
+                margin-bottom: 20px;
+            }
+            .cyber-hero h1 {
+                font-size: 3.4rem;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                background: linear-gradient(145deg, #FFFFFF, #00FFD1, #FF66B2);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                line-height: 1.2;
+            }
+            .cyber-hero p {
+                color: #A0A0D0;
+                margin: 24px 0;
+            }
+            .btn-cyber {
+                padding: 12px 28px;
+                border-radius: 60px;
+                text-decoration: none;
+                font-weight: 600;
+                display: inline-block;
+                margin-right: 16px;
+            }
+            .btn-cyber-primary {
+                background: #FF007F;
+                color: white;
+                box-shadow: 0 0 12px #FF007F;
+            }
+            .btn-cyber-outline {
+                background: transparent;
+                border: 1px solid #00FFD1;
+                color: #00FFD1;
+            }
+            .cyber-video {
+                border-radius: 28px;
+                overflow: hidden;
+                border: 1px solid #00FFD180;
+                box-shadow: 0 10px 25px -10px black;
+            }
+            .cyber-video video {
+                width: 100%;
+                display: block;
+                aspect-ratio: 16/9;
+                object-fit: cover;
+            }
+
+            /* 卡片网格—不规则感 */
+            .cyber-cards {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 28px;
+                margin: 50px 0;
+            }
+            .cyber-card {
+                background: #13111EAA;
+                backdrop-filter: blur(12px);
+                border: 1px solid #2A2A44;
+                border-radius: 32px;
+                padding: 32px 24px;
+                transition: 0.25s;
+            }
+            .cyber-card:hover {
+                border-color: #00FFD1;
+                transform: translateY(-6px);
+                box-shadow: 0 20px 30px -12px #00FFD130;
+            }
+
+            /* 矩阵网格 4列 */
+            .cyber-matrix {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                margin: 40px 0;
+            }
+            .matrix-cyber {
+                background: #0D0C1A;
+                border-radius: 28px;
+                padding: 24px 16px;
+                text-align: center;
+                border: 0.5px solid #00FFD120;
+            }
+
+            /* Pet 横版 */
+            .cyber-pet {
+                display: flex;
+                gap: 48px;
+                background: linear-gradient(135deg, #1E1A30, #0B0A18);
+                border-radius: 56px;
+                padding: 40px;
+                margin: 50px 0;
+                align-items: center;
+            }
+
+            /* 表单——霓虹输入框 */
+            .cyber-form {
+                background: #0B0A18CC;
+                backdrop-filter: blur(18px);
+                border-radius: 48px;
+                padding: 48px 56px;
+                border: 1px solid #FF007F40;
+            }
+            .cyber-input {
+                background: #16142A;
+                border: 1px solid #2F2C5A;
+                border-radius: 32px;
+                padding: 14px 22px;
+                width: 100%;
+                color: white;
+            }
+            .cyber-check {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 24px 0;
+            }
+            .btn-cyber-love {
+                background: linear-gradient(95deg, #FF007F, #FF5E9E);
+                border: none;
+                padding: 14px 32px;
+                border-radius: 60px;
+                color: white;
+                font-weight: bold;
+                width: 260px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            footer {
+                text-align: center;
+                margin-top: 80px;
+                padding-top: 32px;
+                border-top: 0.5px solid #2A2A4A;
+                color: #5E5E8E;
+            }
         }
 
-        /* Hero 手机版 */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 20px 0 60px;
-            overflow: hidden;
-        }
-        .hero-video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.5);
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, #000000cc 90%);
-            z-index: -1;
-        }
-        .hero-content { position: relative; z-index: 2; }
-        .hero-badge {
-            display: inline-flex;
-            background: rgba(10,132,255,0.2);
-            backdrop-filter: blur(12px);
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            border: 0.5px solid rgba(10,132,255,0.5);
-            color: #9acdff;
+        /* 通用表单样式 */
+        .input-group {
             margin-bottom: 20px;
         }
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 760;
-            line-height: 1.1;
-            margin-bottom: 18px;
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
-        .hero h1 span {
-            background: linear-gradient(145deg, #FFFFFF, #6e9eff, #bc6eff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-desc {
-            font-size: 1.05rem;
-            color: #cdcdff;
-            margin-bottom: 32px;
-        }
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 44px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.25s ease;
+        button {
             cursor: pointer;
-        }
-        .btn-primary {
-            background: #0a84ff;
-            color: white;
-            box-shadow: 0 8px 18px rgba(10,132,255,0.3);
-        }
-        .btn-outline {
-            background: rgba(255,255,255,0.08);
-            border: 0.5px solid rgba(255,255,255,0.3);
-            color: white;
-        }
-
-        /* 卡片移动端纵向 */
-        .cards-grid { display: flex; flex-direction: column; gap: 24px; }
-        .card {
-            background: rgba(18, 20, 35, 0.65);
-            backdrop-filter: blur(20px);
-            border-radius: 40px;
-            padding: 28px 24px;
-            border: 0.5px solid rgba(255,255,255,0.08);
-        }
-        .card-icon { font-size: 2.2rem; margin-bottom: 18px; }
-        .card h3 { font-size: 1.6rem; margin-bottom: 10px; }
-        .card p { color: #b9b9e6; font-size: 0.95rem; }
-
-        /* 矩阵网格 */
-        .smart-matrix {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin: 40px 0 20px;
-        }
-        .matrix-item {
-            background: rgba(12,14,28,0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 18px 12px;
-            text-align: center;
-        }
-        .matrix-icon { font-size: 1.8rem; margin-bottom: 8px; }
-        .matrix-name { font-weight: 500; font-size: 0.85rem; }
-
-        /* 视频展示 */
-        .video-showcase { border-radius: 42px; overflow: hidden; }
-        .video-showcase video { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
-
-        /* SmartPet */
-        .pet-showcase {
-            background: linear-gradient(125deg, rgba(30, 22, 55, 0.85), rgba(8, 8, 20, 0.9));
-            backdrop-filter: blur(24px);
-            border-radius: 48px;
-            padding: 28px 24px;
-            text-align: center;
-        }
-        .pet-avatar { font-size: 5rem; margin-bottom: 12px; animation: floatPet 2.8s infinite alternate; }
-        @keyframes floatPet { 0% { transform: translateY(0px); } 100% { transform: translateY(-8px); } }
-        .pet-info h3 { font-size: 1.9rem; margin-bottom: 12px; }
-
-        /* 表单 */
-        .love-container {
-            background: rgba(12,12,28,0.75);
-            backdrop-filter: blur(24px);
-            border-radius: 48px;
-            padding: 32px 24px;
-        }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: #ccccee; }
-        .input-group input, .input-group textarea {
-            width: 100%;
-            background: #0c0c18;
-            border: 1px solid #2c2c4a;
-            border-radius: 32px;
-            padding: 14px 20px;
-            color: white;
-            font-size: 0.95rem;
-        }
-        .love-check {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(191,90,242,0.12);
-            padding: 10px 20px;
-            border-radius: 40px;
-            width: fit-content;
-            margin-bottom: 28px;
-        }
-        .btn-love {
-            background: linear-gradient(105deg, #ff5e7e, #ff9a6e);
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
         }
         .reveal {
             opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.65s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        footer { padding: 36px 20px 40px; text-align: center; border-top: 0.5px solid rgba(255,255,255,0.05); color: #7a7a9a; font-size: 0.75rem; }
-        footer a { color: #8abbff; text-decoration: none; }
-
-        /* 手机窄屏微调 */
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2rem; }
-            .section-title { font-size: 1.9rem; }
-            .container { padding: 0 18px; }
-            .card { padding: 22px 20px; }
-            .card h3 { font-size: 1.4rem; }
-        }
-
-        /* ----------------------------------------------------------
-           桌面端完全重写 (min-width: 1024px) 新样式，新布局
-        ---------------------------------------------------------- */
-        @media (min-width: 1024px) {
-            /* 整体背景更清爽深色 */
-            body { background-color: #05050c; }
-            .container { max-width: 1280px; padding: 0 40px; }
-            
-            /* 导航栏完全重塑为左中右，加宽 */
-            .navbar { background: rgba(8, 8, 18, 0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .nav-inner { max-width: 1280px; padding: 18px 40px; margin: 0 auto; }
-            .logo { font-size: 2rem; }
-            .nav-links { gap: 40px; }
-            .nav-links a { font-size: 1rem; position: relative; letter-spacing: 0.2px; }
-            .nav-links a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px; background: #0a84ff; transition: width 0.3s; }
-            .nav-links a:hover::after { width: 100%; }
-            .download-link { padding: 8px 24px; border-radius: 60px; background: rgba(10,132,255,0.2); }
-            .download-link:hover { background: #0a84ff; transform: scale(1.02); }
-
-            /* Hero 左右分栏 (桌面专属) */
-            .hero { min-height: 90vh; padding: 0; }
-            .hero-content { max-width: 50%; padding-right: 40px; }
-            .hero h1 { font-size: 4rem; }
-            .hero-desc { font-size: 1.2rem; }
-            .btn-group { margin-top: 20px; }
-            /* 在桌面端，视频背景旁增加一个右侧抽象组件（动态卡片）使用绝对定位但保持原视频背景全局，也可额外增加装饰 */
-            .hero::after {
-                content: '';
-                position: absolute;
-                right: 5%;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 380px;
-                height: 380px;
-                background: radial-gradient(circle, rgba(10,132,255,0.2), transparent 70%);
-                border-radius: 50%;
-                filter: blur(40px);
-                z-index: 0;
-                pointer-events: none;
-            }
-
-            /* 卡片区域改为三列网格 + 悬停3D */
-            .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex-direction: unset; }
-            .card { transition: transform 0.3s ease, box-shadow 0.3s; background: rgba(18, 22, 42, 0.7); padding: 36px 28px; }
-            .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 45px -15px rgba(0,0,0,0.6); border-color: rgba(10,132,255,0.6); }
-            
-            /* AI 矩阵改为四列或自适应 */
-            .smart-matrix { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 30px; }
-            .matrix-item { padding: 24px 16px; transition: all 0.2s; }
-            .matrix-item:hover { background: rgba(10,132,255,0.25); transform: translateY(-5px); }
-            .matrix-icon { font-size: 2.2rem; }
-            .matrix-name { font-size: 1rem; }
-
-            /* 视频区域增加边框流光 */
-            .video-showcase { border-radius: 48px; transition: 0.4s; box-shadow: 0 20px 40px -15px black; }
-            .video-showcase:hover { transform: scale(1.01); border: 0.5px solid rgba(10,132,255,0.4); }
-
-            /* SmartPet 改为水平横版 */
-            .pet-showcase { flex-direction: row; text-align: left; gap: 48px; justify-content: center; align-items: center; padding: 40px; }
-            .pet-avatar { font-size: 7rem; margin-bottom: 0; }
-            .pet-info { flex: 1; }
-            .pet-info h3 { font-size: 2.2rem; }
-
-            /* 爱情表单桌面端 居中优雅且宽度适中 */
-            .love-container { max-width: 720px; margin: 0 auto; padding: 48px 56px; }
-            .love-check { margin: 0 auto 32px; justify-content: center; width: auto; }
-            .btn-love { width: auto; min-width: 260px; margin: 0 auto; display: flex; }
-
-            /* 添加桌面端特色的两列展示区？保留 section,但调整部分上下边距 */
-            section { padding: 100px 0; }
-            .section-title { font-size: 3.2rem; }
-            .section-sub { font-size: 1.2rem; }
-
-            /* 滚动动画增强 */
-            .reveal { transition-duration: 0.8s; }
-            
-            /* 增加隐藏的桌面装饰分割线 */
-            .desktop-divider { display: block; }
-            .hero-video-bg { filter: brightness(0.55); }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="bg-aura"></div>
-    <div class="bg-noise"></div>
-    <div class="scroll-progress" id="scrollProgress"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-    <nav class="navbar">
-        <div class="nav-inner">
-            <a href="#" class="logo">LaswI AI</a>
-            <ul class="nav-links">
-                <li><a href="#hero">AI 生态</a></li>
-                <li><a href="#core-ai">引擎</a></li>
-                <li><a href="#video-vision">视界</a></li>
-                <li><a href="#smartpet">SmartPet</a></li>
-                <li><a href="#loveform">心流</a></li>
-                <li><a href="download.html" class="download-link">📥 下载中心</a></li>
-            </ul>
+<!-- ********** 移动端：粉彩杂志布局 ********** -->
+<div class="mobile-only">
+    <div class="mobile-status">
+        <div class="mobile-logo">LaswI AI</div>
+        <div style="font-weight: 500;">✦ 粉彩纪元 ✦</div>
+    </div>
+
+    <div class="magazine-container">
+        <!-- Hero 杂志区 -->
+        <div class="hero-magazine reveal">
+            <div class="magazine-badge">✦ 温柔智能浪潮 ✦</div>
+            <h1>AI 像春风<br><span>轻抚日常</span></h1>
+            <p>多模态大模型 · 端侧隐私 · 诗意陪伴</p>
+            <div class="btn-magazine">
+                <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-soft btn-soft-primary">✨ 在线尝鲜</a>
+                <a href="download.html" class="btn-soft">📲 下载 App</a>
+            </div>
         </div>
-    </nav>
 
-    <main>
-        <!-- Hero 视频背景区 -->
-        <section id="hero" class="hero">
-            <video class="hero-video-bg" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='100%25' height='100%25' fill='%23000000'/%3E%3C/svg%3E">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-brain-with-glowing-blue-neural-network-50729-large.mp4" type="video/mp4">
+        <!-- 卡片区 粉彩质感 -->
+        <div class="pastel-card reveal">
+            <h2 style="font-size: 1.8rem;">🧠 温柔引擎</h2>
+            <div class="feature-grid">
+                <div class="feature-item"><div class="feature-icon">🌟</div><h3>多模态理解</h3><p>图文语音融合，贴心如友</p></div>
+                <div class="feature-item"><div class="feature-icon">🔏</div><h3>隐私锁</h3><p>数据不离手机，绝对安全</p></div>
+                <div class="feature-item"><div class="feature-icon">💫</div><h3>无缝流转</h3><p>设备接力，对话随身</p></div>
+            </div>
+        </div>
+
+        <!-- 智慧矩阵 -->
+        <div class="pastel-card reveal">
+            <h3 style="font-size: 1.5rem;">✨ 全场景魔法</h3>
+            <div class="matrix-grid-mobile">
+                <div class="pill-item">🗺️ 地图AI</div><div class="pill-item">🌐 智能浏览器</div>
+                <div class="pill-item">🔤 翻译官</div><div class="pill-item">📝 灵感备忘录</div>
+                <div class="pill-item">🧮 AI计算器</div><div class="pill-item">🎵 音乐工坊</div>
+            </div>
+            <div style="text-align: center;"><a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#FF8C42;">探索更多→</a></div>
+        </div>
+
+        <!-- 视频柔光 -->
+        <div class="video-mobile reveal">
+            <video autoplay muted loop playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-ai-interface-with-holographic-data-51409-large.mp4" type="video/mp4">
             </video>
-            <div class="hero-overlay"></div>
-            <div class="container">
-                <div class="hero-content reveal visible">
-                    <div class="hero-badge">✦ LaswI AI App · 双形态智能 ✦</div>
-                    <h1>AI 重新定义<br><span>下一代智能伴侣</span></h1>
-                    <p class="hero-desc">集成大语言模型与多模态感知，懂你所需的AI操作系统级应用。桌面端磅礴视效，移动端随身智慧。</p>
-                    <div class="btn-group">
-                        <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-primary">✨ 在线体验 AI</a>
-                        <a href="download.html" class="btn btn-outline">📲 免费下载 App</a>
-                    </div>
+            <p style="text-align: center; margin-top: 12px; color:#AA7A5C;">🎬 AI 生成视界 · 梦境交互</p>
+        </div>
+
+        <!-- SmartPet 粉彩版 -->
+        <div class="pet-magazine reveal">
+            <div class="pet-avatar-mobile">🐱💖🤖</div>
+            <h3 style="font-size: 1.8rem;">SmartPet Oreo</h3>
+            <p>仿生情绪引擎，软萌陪伴新物种</p>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 16px;"><span class="magazine-badge">❤️ 拥抱模式</span><span class="magazine-badge">AI 感性互动</span></div>
+        </div>
+
+        <!-- 爱情表单 粉彩风格 -->
+        <div class="form-magazine reveal" style="margin-top: 20px;">
+            <h2 style="text-align: center; margin-bottom: 24px;">❤️ 传递你的「我爱你」</h2>
+            <form id="loveFormMagazine">
+                <div class="input-group"><label>✨ 昵称</label><input type="text" id="magName" placeholder="小太阳" class="input-soft" required></div>
+                <div class="input-group"><label>📧 电子信使</label><input type="email" id="magEmail" placeholder="hello@laswiai.com" class="input-soft" required></div>
+                <div class="input-group"><label>💌 你的爱意</label><textarea rows="2" id="magMsg" class="input-soft" placeholder="写下一句温柔的话..."></textarea></div>
+                <div class="love-check-mag"><input type="checkbox" id="magCheck" checked> <label>💖 将爱注入星河</label></div>
+                <button type="submit" class="btn-love-mag">❤️ 发送爱的信号 ❤️</button>
+                <p id="magFeedback" style="text-align: center; margin-top: 20px; font-size: 0.8rem;"></p>
+            </form>
+        </div>
+        <footer>© 2026 LaswI AI — 粉彩杂志 · 爱是底色</footer>
+    </div>
+</div>
+
+<!-- ********** 桌面端：赛博朋克 / 全息终端风格 ********** -->
+<div class="desktop-only">
+    <div class="cyber-sidebar">
+        <div class="cyber-logo">LASWI<span style="color:#00FFD1;">//</span>AI</div>
+        <div class="cyber-nav">
+            <a href="#cyberHero"><span class="nav-icon">⟡</span> 智识终端</a>
+            <a href="#cyberCore"><span class="nav-icon">⎋</span> 超频引擎</a>
+            <a href="#cyberMatrix"><span class="nav-icon">⍟</span> 矩阵协议</a>
+            <a href="#cyberPet"><span class="nav-icon">🐾</span> SmartPet Oreo</a>
+            <a href="#cyberLove"><span class="nav-icon">❤</span> 情感协议</a>
+        </div>
+        <div class="cyber-download"><a href="download.html">⬇️ 下载核心程序</a></div>
+    </div>
+
+    <div class="cyber-main">
+        <!-- Hero 段 -->
+        <div id="cyberHero" class="cyber-hero reveal">
+            <div>
+                <div class="hero-badge-cyber">✦ 全感智域 · 次世代 AI 壳 ✦</div>
+                <h1>赛博觉醒<br>AI 重构物种智慧</h1>
+                <p>高维多模态认知 · 端侧加密黑盒 · 跨维度流转</p>
+                <div>
+                    <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-cyber btn-cyber-primary">✨ 启动在线体验</a>
+                    <a href="download.html" class="btn-cyber btn-cyber-outline">📀 下载桌面套件</a>
                 </div>
             </div>
-        </section>
-
-        <!-- AI 核心能力 -->
-        <section id="core-ai">
-            <div class="container">
-                <div class="reveal">
-                    <h2 class="section-title">AI 引擎 · 超感知内核</h2>
-                    <p class="section-sub">从底层推理到边缘计算，LaswI AI App 赋予每台设备仿生智慧。</p>
-                </div>
-                <div class="cards-grid">
-                    <div class="card reveal"><div class="card-icon">🧠</div><h3>多模态大模型</h3><p>文字、图像、语音全域理解，场景化智能决策，毫秒级响应。</p></div>
-                    <div class="card reveal"><div class="card-icon">🔒</div><h3>隐私计算框架</h3><p>端侧加密推理，数据不离设备，真正属于你的 AI 助理。</p></div>
-                    <div class="card reveal"><div class="card-icon">🌀</div><h3>跨设备接力</h3><p>iPhone, iPad, Mac 无缝流转，AI 会话随身而动。</p></div>
-                </div>
-
-                <div class="reveal" style="margin-top: 56px;">
-                    <h2 class="section-title" style="font-size: 1.8rem;">全场景智慧矩阵</h2>
-                    <p class="section-sub">AI 深度集成到每一个日常工具</p>
-                </div>
-                <div class="smart-matrix">
-                    <div class="matrix-item reveal"><div class="matrix-icon">🗺️</div><div class="matrix-name">AI 地图</div></div>
-                    <div class="matrix-item reveal"><div class="matrix-icon">🌐</div><div class="matrix-name">智能浏览器</div></div>
-                    <div class="matrix-item reveal"><div class="matrix-icon">🔤</div><div class="matrix-name">AI 翻译器</div></div>
-                    <div class="matrix-item reveal"><div class="matrix-icon">📝</div><div class="matrix-name">智慧备忘录</div></div>
-                    <div class="matrix-item reveal"><div class="matrix-icon">🧮</div><div class="matrix-name">AI 计算器</div></div>
-                    <div class="matrix-item reveal"><div class="matrix-icon">🎵</div><div class="matrix-name">AI 创作工坊</div></div>
-                </div>
-                <div class="reveal" style="text-align: center; margin-top: 20px;">
-                    <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-outline" style="background: rgba(10,132,255,0.1);">🚀 探索全部 AI 产品 →</a>
-                </div>
+            <div class="cyber-video">
+                <video autoplay muted loop playsinline>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-brain-with-glowing-blue-neural-network-50729-large.mp4" type="video/mp4">
+                </video>
             </div>
-        </section>
+        </div>
 
-        <!-- 视频展示区 动效视频 -->
-        <section id="video-vision">
-            <div class="container">
-                <div class="reveal">
-                    <div class="hero-badge" style="background: rgba(255,94,126,0.2);">🎬 AI 生成视界</div>
-                    <h2 class="section-title">动态视界 · 与AI共生</h2>
-                    <p class="section-sub">通过生成式 AI 重构人机协作体验，每个画面皆智能。</p>
-                </div>
-                <div class="video-showcase reveal">
-                    <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='100%25' height='100%25' fill='%23101020'/%3E%3Ctext x='50%25' y='50%25' fill='%236e56ff' font-size='1' text-anchor='middle'%3ELaswI%20AI%20Cinematic%3C/text%3E%3C/svg%3E">
-                        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-ai-interface-with-holographic-data-51409-large.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="reveal" style="text-align: center; margin-top: 20px; font-size: 0.8rem; color:#aaaac9;">✨ AI 实时生成交互概念 ✨ <span style="color:#ff8a7a;"> Love is the algorithm </span></div>
+        <!-- 核心卡牌 -->
+        <div id="cyberCore" class="reveal">
+            <h2 style="font-size: 2.2rem; margin-bottom: 28px;"><span style="color:#00FFD1;">#</span> 超维引擎核心</h2>
+            <div class="cyber-cards">
+                <div class="cyber-card">🧬<h3 style="margin: 16px 0 8px;">多模态大模型</h3><p>图文语音共融，实时类脑推理</p></div>
+                <div class="cyber-card">🔒<h3 style="margin: 16px 0 8px;">端侧隐私堡垒</h3><p>数据永生离线，绝对私密</p></div>
+                <div class="cyber-card">🌀<h3 style="margin: 16px 0 8px;">全息无缝接力</h3><p>设备边界消融，AI 意识流动</p></div>
             </div>
-        </section>
+        </div>
 
-        <!-- SmartPet 子品牌 AI 机器猫 Oreo -->
-        <section id="smartpet">
-            <div class="container">
-                <div class="reveal">
-                    <div class="hero-badge" style="background: rgba(191,90,242,0.2);">🐾 子品牌 · SmartPet</div>
-                    <h2 class="section-title">AI 机器猫 Oreo</h2>
-                    <p class="section-sub">先进情感引擎，陪伴型机器人重塑家庭温暖。</p>
-                </div>
-                <div class="pet-showcase reveal">
-                    <div class="pet-avatar">🐱✨🤖</div>
-                    <div class="pet-info">
-                        <h3>SmartPet AI Cat Oreo</h3>
-                        <p>仿生情绪模型 · 全向感知 · 自主学习陪伴模式。它不只是科技，更是会呼吸的家庭成员。</p>
-                        <div style="margin-top: 18px; display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap;">
-                            <span class="hero-badge" style="background:#ff5e7e20;">❤️ 深度拥抱模式</span>
-                            <span class="hero-badge" style="background:#0a84ff20;">AI 实时互动</span>
-                        </div>
-                        <div style="margin-top: 20px;"><span style="font-size: 0.85rem;">💬 “Oreo 会用AI记住你的每一声呼唤”</span></div>
-                    </div>
-                </div>
+        <!-- 矩阵 -->
+        <div id="cyberMatrix" class="reveal">
+            <h2 style="font-size: 2rem; margin: 48px 0 24px;"><span style="color:#FF007F;">⌘</span> 智能矩阵生态</h2>
+            <div class="cyber-matrix">
+                <div class="matrix-cyber">🗺️ 超感地图</div><div class="matrix-cyber">🌐 暗网级浏览器</div>
+                <div class="matrix-cyber">🔤 实时翻译</div><div class="matrix-cyber">📝 神经备忘录</div>
+                <div class="matrix-cyber">🧮 量子计算器</div><div class="matrix-cyber">🎵 AI 声景工坊</div>
+                <div class="matrix-cyber">🎬 全息剪辑</div><div class="matrix-cyber">📸 透视视觉</div>
             </div>
-        </section>
+            <div style="text-align: center;"><a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-cyber btn-cyber-outline">⟳ 探索矩阵全貌</a></div>
+        </div>
 
-        <!-- 爱情与未来表单 -->
-        <section id="loveform">
-            <div class="container">
-                <div class="reveal" style="text-align: center; margin-bottom: 28px;">
-                    <span style="font-size: 2.2rem;">❤️</span>
-                    <h2 class="section-title" style="margin-bottom: 8px;">向AI宇宙传递 · 我爱你</h2>
-                    <p class="section-sub" style="margin-bottom: 0;">你的每一份情感，都会让智能更加温暖。</p>
-                </div>
-                <div class="love-container reveal">
-                    <form id="loveMessageForm">
-                        <div class="input-group">
-                            <label>✨ 你的名字 / 昵称</label>
-                            <input type="text" id="name" placeholder="例如: Oreo 的朋友" required>
-                        </div>
-                        <div class="input-group">
-                            <label>📧 电子信使</label>
-                            <input type="email" id="email" placeholder="hello@laswiai.com" required>
-                        </div>
-                        <div class="input-group">
-                            <label>💌 你想说的话 / 对 LaswI AI 的爱</label>
-                            <textarea rows="3" id="message" placeholder="写下一句「我爱你，智能未来」..."></textarea>
-                        </div>
-                        <div class="love-check">
-                            <input type="checkbox" id="loveCheckbox" checked> 
-                            <label for="loveCheckbox" style="cursor: pointer;">💖 确认将爱意注入 LaswI AI 星云 💖</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-love">❤️ 发送爱的信号 ❤️</button>
-                        <p id="formFeedback" style="text-align: center; margin-top: 20px;"></p>
-                    </form>
-                </div>
+        <!-- 视频展 -->
+        <div class="reveal" style="margin: 60px 0;">
+            <div class="cyber-video" style="border-radius: 36px;">
+                <video autoplay muted loop playsinline>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-ai-interface-with-holographic-data-51409-large.mp4" type="video/mp4">
+                </video>
             </div>
-        </section>
+            <p style="text-align: center; margin-top: 16px; color:#00FFD1;">✦ 动态全息界面 · 实时渲染 ✦</p>
+        </div>
 
-        <footer>
-            <p>© 2026 LaswI AI App — 融合智慧与爱 | 跨平台智能生态 | 子品牌 SmartPet</p>
-            <p style="margin-top: 12px;">✨ 在线体验: <a href="https://laswi-ai-production.up.railway.app" target="_blank">laswi-ai-production.up.railway.app</a> ✦ <a href="download.html">下载中心</a> ✦ I ❤️ AI</p>
-        </footer>
-    </main>
+        <!-- SmartPet 桌面赛博版 -->
+        <div id="cyberPet" class="cyber-pet reveal">
+            <div style="font-size: 5.5rem; filter: drop-shadow(0 0 10px #FF007F);">🐱⚡🤖</div>
+            <div>
+                <h2 style="font-size: 2.5rem;">SmartPet AI Cat Oreo</h2>
+                <p style="color:#AFAFEF;">仿生情感引擎 · 全向感知阵列 · 自主学习蜂群思维。</p>
+                <div style="margin-top: 20px;"><span class="hero-badge-cyber">❤️ 超维拥抱协议</span> <span class="hero-badge-cyber" style="margin-left: 12px;">🤖 AI 神经交互</span></div>
+                <div style="margin-top: 24px;">⚡ “Oreo 将记忆编码为情感脉冲”</div>
+            </div>
+        </div>
 
-    <script>
-        (function(){
-            // 进度条
-            const progressBar = document.getElementById('scrollProgress');
-            window.addEventListener('scroll', () => {
-                const winScroll = document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - window.innerHeight;
-                const scrolled = (winScroll / height) * 100;
-                progressBar.style.width = scrolled + '%';
+        <!-- 爱情表单 赛博朋克 -->
+        <div id="cyberLove" class="cyber-form reveal">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 20px;">❤️ 上传爱意到 AI 云端</h2>
+            <form id="loveFormCyber">
+                <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                    <div class="input-group" style="flex:1"><label style="color:#00FFD1;">🔹 操作员ID</label><input type="text" id="cyberName" class="cyber-input" placeholder="nexus_user" required></div>
+                    <div class="input-group" style="flex:1"><label style="color:#00FFD1;">📡 量子邮箱</label><input type="email" id="cyberEmail" class="cyber-input" placeholder="hello@laswiai.com" required></div>
+                </div>
+                <div class="input-group"><label style="color:#00FFD1;">💬 情感数据包</label><textarea rows="2" id="cyberMsg" class="cyber-input" placeholder="写入你的爱意..."></textarea></div>
+                <div class="cyber-check"><input type="checkbox" id="cyberCheck" checked> <label style="color:#FF007F;">💾 同意上传至 LaswI 星云协议</label></div>
+                <button type="submit" class="btn-cyber-love">❤️ 提交爱意脉冲 ❤️</button>
+                <p id="cyberFeedback" style="text-align: center; margin-top: 28px;"></p>
+            </form>
+        </div>
+
+        <footer>© 2026 LaswI AI — 赛博终端版本 | 开源共生 · 爱即底层代码</footer>
+    </div>
+</div>
+
+<script>
+    (function(){
+        // 滚动进度
+        const progress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const win = document.documentElement.scrollTop;
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.width = (win / h) * 100 + '%';
+        });
+
+        // 通用滚动动画reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
             });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => observer.observe(el));
 
-            // 滚动动画 Intersection Observer
-            const revealElements = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2, rootMargin: "0px 0px -30px 0px" });
-            revealElements.forEach(el => observer.observe(el));
-            // 保证hero已显示
-            document.querySelectorAll('.reveal').forEach(el => {
-                if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('visible');
-            });
-
-            // 表单 爱心特效
-            const form = document.getElementById('loveMessageForm');
-            const feedback = document.getElementById('formFeedback');
-            form.addEventListener('submit', (e) => {
+        // 移动端表单
+        const magForm = document.getElementById('loveFormMagazine');
+        if(magForm){
+            magForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const message = document.getElementById('message').value.trim();
-                const loveCheck = document.getElementById('loveCheckbox');
-                if (!name || !email) {
-                    feedback.innerHTML = '✨ 请留下名字和电子信使，让爱抵达 ✨';
-                    feedback.style.color = "#ffaa88";
-                    setTimeout(() => feedback.innerHTML = '', 2500);
-                    return;
-                }
-                if (!email.includes('@')) {
-                    feedback.innerHTML = '📧 电子信使地址不完整，再试一次吧';
-                    setTimeout(() => feedback.innerHTML = '', 2500);
-                    return;
-                }
-                if (!loveCheck.checked) {
-                    feedback.innerHTML = '💗 请勾选「我爱你」复选框，让你的情感被听见 💗';
-                    setTimeout(() => feedback.innerHTML = '', 2500);
-                    return;
-                }
-                feedback.innerHTML = `💖 亲爱的 ${name}，你的爱意已注入 LaswI AI 智能宇宙！ 💖<br>「${message || "我爱你，LaswI AI & Oreo"}」<br>我们同样 <span style="font-size:1.1rem;">❤️ 深爱着你 ❤️</span> ，科技因此有温度。`;
-                feedback.style.background = "rgba(0,30,25,0.5)";
+                const name = document.getElementById('magName').value.trim();
+                const email = document.getElementById('magEmail').value.trim();
+                const msg = document.getElementById('magMsg').value.trim();
+                const chk = document.getElementById('magCheck').checked;
+                const feedback = document.getElementById('magFeedback');
+                if(!name || !email) { feedback.innerHTML = '✨ 请填写昵称和邮箱 ✨'; return; }
+                if(!email.includes('@')) { feedback.innerHTML = '📧 邮箱似乎不完整'; return; }
+                if(!chk) { feedback.innerHTML = '💗 请勾选「将爱注入星河」'; return; }
+                feedback.innerHTML = `💖 亲爱的 ${name}，爱已注入粉彩宇宙！<br>“${msg || '我爱你，LaswI'}"<br>❤️ 我们爱你 ❤️`;
+                feedback.style.background = "#FFE0C0";
                 feedback.style.padding = "12px";
                 feedback.style.borderRadius = "32px";
-                feedback.style.color = "#ccffdd";
-                for(let i=0;i<12;i++) createFloatingHeart();
-                const btn = form.querySelector('button');
-                btn.style.transform = "scale(0.96)";
-                setTimeout(() => btn.style.transform = "", 200);
+                createHearts(10);
             });
+        }
 
-            function createFloatingHeart() {
-                const heart = document.createElement('div');
+        // 桌面端表单
+        const cyberForm = document.getElementById('loveFormCyber');
+        if(cyberForm){
+            cyberForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('cyberName').value.trim();
+                const email = document.getElementById('cyberEmail').value.trim();
+                const msg = document.getElementById('cyberMsg').value.trim();
+                const chk = document.getElementById('cyberCheck').checked;
+                const feedback = document.getElementById('cyberFeedback');
+                if(!name || !email) { feedback.innerHTML = '⚠️ 请填写操作员ID和量子邮箱'; return; }
+                if(!email.includes('@')) { feedback.innerHTML = '⚠️ 邮箱格式无效'; return; }
+                if(!chk) { feedback.innerHTML = '⚠️ 需要同意上传协议'; return; }
+                feedback.innerHTML = `💖 ${name}，爱意脉冲已接收！<br>“${msg || 'Love is the algorithm'}"<br>❤️ 系统返回值：I LOVE YOU ❤️`;
+                feedback.style.background = "#FF007F30";
+                feedback.style.padding = "12px";
+                feedback.style.borderRadius = "32px";
+                createHearts(12);
+            });
+        }
+
+        function createHearts(count) {
+            for(let i=0;i<count;i++){
+                let heart = document.createElement('div');
                 heart.innerHTML = '❤️';
                 heart.style.position = 'fixed';
                 heart.style.bottom = '20px';
@@ -633,52 +741,34 @@
                 heart.style.fontSize = (Math.random() * 18 + 14) + 'px';
                 heart.style.pointerEvents = 'none';
                 heart.style.zIndex = '9999';
-                heart.style.opacity = '0.9';
                 heart.style.filter = 'drop-shadow(0 0 6px #ff5e7e)';
                 heart.style.transition = 'all 1.2s ease-out';
                 document.body.appendChild(heart);
                 let pos = 0;
-                const interval = setInterval(() => {
-                    pos += 2;
+                let interval = setInterval(() => {
+                    pos += 2.5;
                     heart.style.transform = `translateY(-${pos * 2}px) rotate(${pos * 2}deg)`;
                     heart.style.opacity = 1 - pos / 40;
-                    if (pos > 38) {
-                        clearInterval(interval);
-                        heart.remove();
-                    }
+                    if(pos > 40) { clearInterval(interval); heart.remove(); }
                 }, 20);
             }
+        }
 
-            // 平滑锚点导航
-            document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId && targetId !== '#') {
-                        e.preventDefault();
-                        const target = document.querySelector(targetId);
-                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
+        // 所有视频自动播放
+        document.querySelectorAll('video').forEach(v => v.play().catch(e=>console.log));
+        
+        // 桌面端侧边栏锚点平滑滚动
+        document.querySelectorAll('.cyber-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if(href && href.startsWith('#')){
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
-
-            // 桌面端鼠标跟随光晕（仅桌面）
-            const isTouch = 'ontouchstart' in window;
-            if (!isTouch && window.innerWidth >= 1024) {
-                const glow = document.createElement('div');
-                glow.style.position = 'fixed';
-                glow.style.width = '500px';
-                glow.style.height = '500px';
-                glow.style.background = 'radial-gradient(circle, rgba(10,132,255,0.08), transparent 70%)';
-                glow.style.borderRadius = '50%';
-                glow.style.pointerEvents = 'none';
-                glow.style.zIndex = '9997';
-                glow.style.transition = 'transform 0.05s linear';
-                document.body.appendChild(glow);
-                document.addEventListener('mousemove', (e) => {
-                    glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
-                });
-            }
-        })();
-    </script>
+        });
+    })();
+</script>
 </body>
 </html>
