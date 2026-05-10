@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>LaswI AI App · 你的智能进化伙伴</title>
+    <title>LaswI AI App · 双形态智慧生态</title>
     <style>
+        /* ----- 全局重置 & 移动优先 (默认手机端样式) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +22,6 @@
             overflow-x: hidden;
         }
 
-        /* 优雅滚动条 (移动端自动隐藏) */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -33,7 +33,7 @@
             border-radius: 8px;
         }
 
-        /* 动态背景层 - 柔和光晕 */
+        /* 动态背景 */
         .bg-aura {
             position: fixed;
             top: 0;
@@ -56,7 +56,6 @@
             z-index: -1;
         }
 
-        /* 滚动进度条 - 苹果细线 */
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -68,14 +67,14 @@
             transition: width 0.08s linear;
         }
 
-        /* 主容器 - 移动优先 */
+        /* 移动端容器 */
         .container {
             max-width: 700px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* 导航栏 - 极致轻薄毛玻璃 */
+        /* 导航栏 (手机版) */
         .navbar {
             position: sticky;
             top: 0;
@@ -118,18 +117,12 @@
             font-size: 0.85rem;
             font-weight: 500;
             transition: 0.2s;
-            padding: 6px 0;
         }
         .download-link {
             background: rgba(10,132,255,0.18);
             padding: 6px 16px;
             border-radius: 40px;
             border: 0.5px solid rgba(10,132,255,0.5);
-            font-size: 0.8rem;
-        }
-        .download-link:hover {
-            background: #0a84ff;
-            color: white;
         }
 
         /* 通用区块 */
@@ -151,10 +144,9 @@
             font-size: 1rem;
             color: #9a9ac2;
             margin-bottom: 36px;
-            line-height: 1.4;
         }
 
-        /* Hero 区域 (视频背景适配手机) */
+        /* Hero 手机版 */
         .hero {
             min-height: 85vh;
             display: flex;
@@ -171,7 +163,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
-            filter: brightness(0.5) contrast(1.1);
+            filter: brightness(0.5);
         }
         .hero-overlay {
             position: absolute;
@@ -182,11 +174,7 @@
             background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, #000000cc 90%);
             z-index: -1;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            padding: 20px 0;
-        }
+        .hero-content { position: relative; z-index: 2; }
         .hero-badge {
             display: inline-flex;
             background: rgba(10,132,255,0.2);
@@ -194,7 +182,6 @@
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
-            font-weight: 500;
             border: 0.5px solid rgba(10,132,255,0.5);
             color: #9acdff;
             margin-bottom: 20px;
@@ -203,7 +190,6 @@
             font-size: 2.8rem;
             font-weight: 760;
             line-height: 1.1;
-            letter-spacing: -0.02em;
             margin-bottom: 18px;
         }
         .hero h1 span {
@@ -216,7 +202,6 @@
             font-size: 1.05rem;
             color: #cdcdff;
             margin-bottom: 32px;
-            line-height: 1.4;
         }
         .btn-group {
             display: flex;
@@ -235,57 +220,32 @@
             text-decoration: none;
             transition: all 0.25s ease;
             cursor: pointer;
-            border: none;
         }
         .btn-primary {
             background: #0a84ff;
             color: white;
             box-shadow: 0 8px 18px rgba(10,132,255,0.3);
         }
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
         .btn-outline {
             background: rgba(255,255,255,0.08);
             border: 0.5px solid rgba(255,255,255,0.3);
             color: white;
         }
-        .btn-outline:active {
-            background: rgba(10,132,255,0.2);
-        }
 
-        /* AI 能力卡片 (移动端竖排舒适) */
-        .cards-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        /* 卡片移动端纵向 */
+        .cards-grid { display: flex; flex-direction: column; gap: 24px; }
         .card {
             background: rgba(18, 20, 35, 0.65);
             backdrop-filter: blur(20px);
             border-radius: 40px;
             padding: 28px 24px;
             border: 0.5px solid rgba(255,255,255,0.08);
-            transition: all 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
         }
-        .card:active {
-            transform: scale(0.99);
-        }
-        .card-icon {
-            font-size: 2.2rem;
-            margin-bottom: 18px;
-        }
-        .card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 10px;
-            font-weight: 620;
-        }
-        .card p {
-            color: #b9b9e6;
-            font-size: 0.95rem;
-        }
+        .card-icon { font-size: 2.2rem; margin-bottom: 18px; }
+        .card h3 { font-size: 1.6rem; margin-bottom: 10px; }
+        .card p { color: #b9b9e6; font-size: 0.95rem; }
 
-        /* AI 智能矩阵 (移动端两列网格) */
+        /* 矩阵网格 */
         .smart-matrix {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -298,83 +258,35 @@
             border-radius: 28px;
             padding: 18px 12px;
             text-align: center;
-            transition: 0.2s;
-            border: 0.5px solid rgba(255,255,255,0.05);
         }
-        .matrix-item:active {
-            background: rgba(10,132,255,0.2);
-            transform: scale(0.98);
-        }
-        .matrix-icon {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-        }
-        .matrix-name {
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
+        .matrix-icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .matrix-name { font-weight: 500; font-size: 0.85rem; }
 
-        /* 视频展示区 */
-        .video-showcase {
-            border-radius: 42px;
-            overflow: hidden;
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.6);
-        }
-        .video-showcase video {
-            width: 100%;
-            display: block;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-        }
+        /* 视频展示 */
+        .video-showcase { border-radius: 42px; overflow: hidden; }
+        .video-showcase video { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
 
-        /* SmartPet 专区 */
+        /* SmartPet */
         .pet-showcase {
             background: linear-gradient(125deg, rgba(30, 22, 55, 0.85), rgba(8, 8, 20, 0.9));
             backdrop-filter: blur(24px);
             border-radius: 48px;
             padding: 28px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             text-align: center;
-            gap: 24px;
-            border: 0.5px solid rgba(150, 100, 255, 0.3);
         }
-        .pet-avatar {
-            font-size: 5rem;
-            filter: drop-shadow(0 12px 18px rgba(150,100,255,0.4));
-            animation: floatPet 2.8s infinite alternate;
-        }
-        @keyframes floatPet {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-8px); }
-        }
-        .pet-info h3 {
-            font-size: 1.9rem;
-            margin-bottom: 12px;
-        }
-        .pet-info p {
-            font-size: 0.95rem;
-            color: #cdcdff;
-        }
+        .pet-avatar { font-size: 5rem; margin-bottom: 12px; animation: floatPet 2.8s infinite alternate; }
+        @keyframes floatPet { 0% { transform: translateY(0px); } 100% { transform: translateY(-8px); } }
+        .pet-info h3 { font-size: 1.9rem; margin-bottom: 12px; }
 
-        /* 爱情表单 */
+        /* 表单 */
         .love-container {
             background: rgba(12,12,28,0.75);
             backdrop-filter: blur(24px);
             border-radius: 48px;
             padding: 32px 24px;
         }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: #ccccee;
-        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: #ccccee; }
         .input-group input, .input-group textarea {
             width: 100%;
             background: #0c0c18;
@@ -383,12 +295,6 @@
             padding: 14px 20px;
             color: white;
             font-size: 0.95rem;
-            font-family: inherit;
-        }
-        .input-group input:focus, .input-group textarea:focus {
-            outline: none;
-            border-color: #0a84ff;
-            box-shadow: 0 0 0 3px rgba(10,132,255,0.2);
         }
         .love-check {
             display: flex;
@@ -400,57 +306,109 @@
             width: fit-content;
             margin-bottom: 28px;
         }
-        .love-check input {
-            width: 20px;
-            height: 20px;
-            accent-color: #bf5af2;
-        }
         .btn-love {
             background: linear-gradient(105deg, #ff5e7e, #ff9a6e);
-            border: none;
             width: 100%;
             justify-content: center;
             padding: 14px;
-            font-size: 1rem;
         }
-        #formFeedback {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        /* 滚动动画 reveal */
         .reveal {
             opacity: 0;
             transform: translateY(28px);
             transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.65s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        footer { padding: 36px 20px 40px; text-align: center; border-top: 0.5px solid rgba(255,255,255,0.05); color: #7a7a9a; font-size: 0.75rem; }
+        footer a { color: #8abbff; text-decoration: none; }
 
-        footer {
-            padding: 36px 20px 40px;
-            text-align: center;
-            border-top: 0.5px solid rgba(255,255,255,0.05);
-            color: #7a7a9a;
-            font-size: 0.75rem;
-        }
-        footer a {
-            color: #8abbff;
-            text-decoration: none;
-        }
-
-        /* 手机额外优化 */
+        /* 手机窄屏微调 */
         @media (max-width: 480px) {
             .hero h1 { font-size: 2.2rem; }
             .section-title { font-size: 1.9rem; }
             .container { padding: 0 18px; }
             .card { padding: 22px 20px; }
             .card h3 { font-size: 1.4rem; }
-            .nav-links { gap: 12px; }
-            .download-link { padding: 4px 12px; font-size: 0.7rem; }
+        }
+
+        /* ----------------------------------------------------------
+           桌面端完全重写 (min-width: 1024px) 新样式，新布局
+        ---------------------------------------------------------- */
+        @media (min-width: 1024px) {
+            /* 整体背景更清爽深色 */
+            body { background-color: #05050c; }
+            .container { max-width: 1280px; padding: 0 40px; }
+            
+            /* 导航栏完全重塑为左中右，加宽 */
+            .navbar { background: rgba(8, 8, 18, 0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .nav-inner { max-width: 1280px; padding: 18px 40px; margin: 0 auto; }
+            .logo { font-size: 2rem; }
+            .nav-links { gap: 40px; }
+            .nav-links a { font-size: 1rem; position: relative; letter-spacing: 0.2px; }
+            .nav-links a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px; background: #0a84ff; transition: width 0.3s; }
+            .nav-links a:hover::after { width: 100%; }
+            .download-link { padding: 8px 24px; border-radius: 60px; background: rgba(10,132,255,0.2); }
+            .download-link:hover { background: #0a84ff; transform: scale(1.02); }
+
+            /* Hero 左右分栏 (桌面专属) */
+            .hero { min-height: 90vh; padding: 0; }
+            .hero-content { max-width: 50%; padding-right: 40px; }
+            .hero h1 { font-size: 4rem; }
+            .hero-desc { font-size: 1.2rem; }
+            .btn-group { margin-top: 20px; }
+            /* 在桌面端，视频背景旁增加一个右侧抽象组件（动态卡片）使用绝对定位但保持原视频背景全局，也可额外增加装饰 */
+            .hero::after {
+                content: '';
+                position: absolute;
+                right: 5%;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 380px;
+                height: 380px;
+                background: radial-gradient(circle, rgba(10,132,255,0.2), transparent 70%);
+                border-radius: 50%;
+                filter: blur(40px);
+                z-index: 0;
+                pointer-events: none;
+            }
+
+            /* 卡片区域改为三列网格 + 悬停3D */
+            .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex-direction: unset; }
+            .card { transition: transform 0.3s ease, box-shadow 0.3s; background: rgba(18, 22, 42, 0.7); padding: 36px 28px; }
+            .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 45px -15px rgba(0,0,0,0.6); border-color: rgba(10,132,255,0.6); }
+            
+            /* AI 矩阵改为四列或自适应 */
+            .smart-matrix { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 30px; }
+            .matrix-item { padding: 24px 16px; transition: all 0.2s; }
+            .matrix-item:hover { background: rgba(10,132,255,0.25); transform: translateY(-5px); }
+            .matrix-icon { font-size: 2.2rem; }
+            .matrix-name { font-size: 1rem; }
+
+            /* 视频区域增加边框流光 */
+            .video-showcase { border-radius: 48px; transition: 0.4s; box-shadow: 0 20px 40px -15px black; }
+            .video-showcase:hover { transform: scale(1.01); border: 0.5px solid rgba(10,132,255,0.4); }
+
+            /* SmartPet 改为水平横版 */
+            .pet-showcase { flex-direction: row; text-align: left; gap: 48px; justify-content: center; align-items: center; padding: 40px; }
+            .pet-avatar { font-size: 7rem; margin-bottom: 0; }
+            .pet-info { flex: 1; }
+            .pet-info h3 { font-size: 2.2rem; }
+
+            /* 爱情表单桌面端 居中优雅且宽度适中 */
+            .love-container { max-width: 720px; margin: 0 auto; padding: 48px 56px; }
+            .love-check { margin: 0 auto 32px; justify-content: center; width: auto; }
+            .btn-love { width: auto; min-width: 260px; margin: 0 auto; display: flex; }
+
+            /* 添加桌面端特色的两列展示区？保留 section,但调整部分上下边距 */
+            section { padding: 100px 0; }
+            .section-title { font-size: 3.2rem; }
+            .section-sub { font-size: 1.2rem; }
+
+            /* 滚动动画增强 */
+            .reveal { transition-duration: 0.8s; }
+            
+            /* 增加隐藏的桌面装饰分割线 */
+            .desktop-divider { display: block; }
+            .hero-video-bg { filter: brightness(0.55); }
         }
     </style>
 </head>
@@ -468,13 +426,13 @@
                 <li><a href="#video-vision">视界</a></li>
                 <li><a href="#smartpet">SmartPet</a></li>
                 <li><a href="#loveform">心流</a></li>
-                <li><a href="download.html" class="download-link">📥 下载</a></li>
+                <li><a href="download.html" class="download-link">📥 下载中心</a></li>
             </ul>
         </div>
     </nav>
 
     <main>
-        <!-- Hero 区域 - 视频背景 + LaswI AI App 主视觉 -->
+        <!-- Hero 视频背景区 -->
         <section id="hero" class="hero">
             <video class="hero-video-bg" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='100%25' height='100%25' fill='%23000000'/%3E%3C/svg%3E">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-brain-with-glowing-blue-neural-network-50729-large.mp4" type="video/mp4">
@@ -482,9 +440,9 @@
             <div class="hero-overlay"></div>
             <div class="container">
                 <div class="hero-content reveal visible">
-                    <div class="hero-badge">✦ LaswI AI App · 原生智能体 ✦</div>
+                    <div class="hero-badge">✦ LaswI AI App · 双形态智能 ✦</div>
                     <h1>AI 重新定义<br><span>下一代智能伴侣</span></h1>
-                    <p class="hero-desc">集成大语言模型与多模态感知，懂你所需的AI操作系统级应用。极速、隐私、创造无限。</p>
+                    <p class="hero-desc">集成大语言模型与多模态感知，懂你所需的AI操作系统级应用。桌面端磅礴视效，移动端随身智慧。</p>
                     <div class="btn-group">
                         <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-primary">✨ 在线体验 AI</a>
                         <a href="download.html" class="btn btn-outline">📲 免费下载 App</a>
@@ -554,7 +512,7 @@
                     <div class="pet-info">
                         <h3>SmartPet AI Cat Oreo</h3>
                         <p>仿生情绪模型 · 全向感知 · 自主学习陪伴模式。它不只是科技，更是会呼吸的家庭成员。</p>
-                        <div style="margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <div style="margin-top: 18px; display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap;">
                             <span class="hero-badge" style="background:#ff5e7e20;">❤️ 深度拥抱模式</span>
                             <span class="hero-badge" style="background:#0a84ff20;">AI 实时互动</span>
                         </div>
@@ -605,19 +563,16 @@
 
     <script>
         (function(){
-            // 进度条与导航样式
+            // 进度条
             const progressBar = document.getElementById('scrollProgress');
-            const navbar = document.querySelector('.navbar');
             window.addEventListener('scroll', () => {
                 const winScroll = document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - window.innerHeight;
                 const scrolled = (winScroll / height) * 100;
                 progressBar.style.width = scrolled + '%';
-                if (winScroll > 15) navbar.style.background = 'rgba(0,0,0,0.8)';
-                else navbar.style.background = 'rgba(0, 0, 0, 0.65)';
             });
 
-            // 滚动动画 Intersection Observer (苹果式优雅)
+            // 滚动动画 Intersection Observer
             const revealElements = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -628,9 +583,12 @@
                 });
             }, { threshold: 0.2, rootMargin: "0px 0px -30px 0px" });
             revealElements.forEach(el => observer.observe(el));
-            // 预置可见hero内容已经可见
+            // 保证hero已显示
+            document.querySelectorAll('.reveal').forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('visible');
+            });
 
-            // 爱情表单 爱心粒子特效
+            // 表单 爱心特效
             const form = document.getElementById('loveMessageForm');
             const feedback = document.getElementById('formFeedback');
             form.addEventListener('submit', (e) => {
@@ -660,10 +618,10 @@
                 feedback.style.padding = "12px";
                 feedback.style.borderRadius = "32px";
                 feedback.style.color = "#ccffdd";
-                for(let i=0;i<10;i++) createFloatingHeart();
-                const submitBtn = form.querySelector('button[type="submit"]');
-                submitBtn.style.transform = "scale(0.96)";
-                setTimeout(() => submitBtn.style.transform = "", 200);
+                for(let i=0;i<12;i++) createFloatingHeart();
+                const btn = form.querySelector('button');
+                btn.style.transform = "scale(0.96)";
+                setTimeout(() => btn.style.transform = "", 200);
             });
 
             function createFloatingHeart() {
@@ -703,13 +661,13 @@
                 });
             });
 
-            // 鼠标/手指跟随光晕（桌面端优雅，移动端忽略）
+            // 桌面端鼠标跟随光晕（仅桌面）
             const isTouch = 'ontouchstart' in window;
-            if (!isTouch) {
+            if (!isTouch && window.innerWidth >= 1024) {
                 const glow = document.createElement('div');
                 glow.style.position = 'fixed';
-                glow.style.width = '400px';
-                glow.style.height = '400px';
+                glow.style.width = '500px';
+                glow.style.height = '500px';
                 glow.style.background = 'radial-gradient(circle, rgba(10,132,255,0.08), transparent 70%)';
                 glow.style.borderRadius = '50%';
                 glow.style.pointerEvents = 'none';
@@ -717,7 +675,7 @@
                 glow.style.transition = 'transform 0.05s linear';
                 document.body.appendChild(glow);
                 document.addEventListener('mousemove', (e) => {
-                    glow.style.transform = `translate(${e.clientX - 200}px, ${e.clientY - 200}px)`;
+                    glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
                 });
             }
         })();
