@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>LaswI · 智慧生态 | 下一代操作系统</title>
+    <title>LaswI AI App · 智慧涌现的下一代智能体</title>
     <style>
         * {
             margin: 0;
@@ -12,124 +12,108 @@
         }
 
         body {
-            background-color: #05050A;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-            color: #F0F0F8;
-            line-height: 1.5;
+            background-color: #000000;
+            font-family: -apple-system, "SF Pro Text", "SF Pro Display", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+            color: #ffffff;
+            line-height: 1.4;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* 自定义滚动条 - 更苹果细窄风格 */
+        /* 自定义滚动条 - 极细致 */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #0A0A14;
+            background: #0a0a0a;
         }
         ::-webkit-scrollbar-thumb {
-            background: #4F4F7A;
+            background: #4a4a6e;
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #7A7AAF;
-        }
 
-        /* 动态网格背景 + 缓动位移 */
-        .bg-grid {
+        /* 动态光晕背景 (深度感) */
+        .ambient-glow {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-image: 
-                linear-gradient(#0F0F1E 1px, transparent 1px),
-                linear-gradient(90deg, #0F0F1E 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.35;
+            background: radial-gradient(circle at 20% 30%, rgba(20, 30, 80, 0.5), transparent 70%),
+                        radial-gradient(circle at 80% 70%, rgba(100, 60, 160, 0.4), transparent 65%);
             pointer-events: none;
-            animation: subtleGridMove 30s linear infinite;
+            animation: slowDrift 24s infinite alternate;
         }
-        @keyframes subtleGridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        @keyframes slowDrift {
+            0% { opacity: 0.6; transform: scale(1);}
+            100% { opacity: 1; transform: scale(1.05);}
         }
 
-        /* 流光溢彩光晕 (多层次动画) */
-        .bg-glow {
+        /* 噪点纹理增加质感 */
+        .noise-texture {
             position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 200, 255, 0.1), rgba(10, 10, 30, 0) 70%);
-            z-index: -1;
-            pointer-events: none;
-            animation: auroraDrift 18s ease-in-out infinite alternate;
-        }
-        .bg-glow-2 {
-            position: fixed;
-            bottom: -30%;
-            right: -20%;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 70% 80%, rgba(120, 80, 255, 0.08), transparent 80%);
-            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
-            animation: auroraDriftReverse 22s ease-in-out infinite alternate;
-        }
-        @keyframes auroraDrift {
-            0% { transform: translate(0%, 0%) scale(1); opacity: 0.5; }
-            100% { transform: translate(8%, 5%) scale(1.1); opacity: 0.9; }
-        }
-        @keyframes auroraDriftReverse {
-            0% { transform: translate(0%, 0%) scale(1); opacity: 0.3; }
-            100% { transform: translate(-5%, -8%) scale(1.2); opacity: 0.7; }
+            z-index: -1;
+            opacity: 0.4;
         }
 
-        /* 平滑容器 */
+        /* 滚动进度条 (精致) */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2.5px;
+            background: linear-gradient(90deg, #3a8cff, #bc6eff);
+            z-index: 1001;
+            transition: width 0.08s linear;
+            box-shadow: 0 0 8px #3a8cff;
+        }
+
+        /* 主容器 */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 32px;
         }
 
-        /* 导航栏 - 强化模糊+动态下划线 */
+        /* 导航栏 - 极简毛玻璃 */
         .navbar {
             position: sticky;
             top: 0;
-            backdrop-filter: blur(24px);
-            background: rgba(5, 5, 10, 0.6);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(28px);
+            background: rgba(0, 0, 0, 0.55);
+            border-bottom: 0.5px solid rgba(255,255,255,0.1);
             z-index: 100;
-            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.1);
         }
         .navbar.scrolled {
-            background: rgba(5, 5, 10, 0.8);
-            border-bottom-color: rgba(62,158,255,0.3);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(32px);
+            border-bottom-color: rgba(58,140,255,0.3);
         }
         .nav-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 0;
+            padding: 14px 0;
             flex-wrap: wrap;
         }
         .logo {
             font-size: 1.9rem;
-            font-weight: 700;
+            font-weight: 620;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FFFFFF, #7F7FFF, #3EC8FF);
+            background: linear-gradient(135deg, #ffffff, #8b9eff, #5c6eff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-decoration: none;
-            transition: transform 0.2s ease;
-        }
-        .logo:hover {
-            transform: scale(1.02);
         }
         .nav-links {
             display: flex;
@@ -138,135 +122,127 @@
             align-items: center;
         }
         .nav-links a {
-            color: #DDDDFF;
+            color: #e0e0ff;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.2s ease;
             font-size: 1rem;
+            transition: all 0.2s;
             position: relative;
         }
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #3E9EFF, #8C5EFF);
-            transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background: #3a8cff;
+            transition: width 0.3s ease;
             border-radius: 2px;
         }
         .nav-links a:hover::after {
             width: 100%;
         }
-        .nav-links a:hover {
-            color: #FFFFFF;
-        }
         .download-link {
-            background: rgba(46, 110, 255, 0.2);
-            padding: 6px 18px;
+            background: rgba(58,140,255,0.2);
+            padding: 5px 20px;
             border-radius: 40px;
-            border: 1px solid rgba(46, 110, 255, 0.4);
-            transition: all 0.25s;
+            border: 1px solid rgba(58,140,255,0.5);
+        }
+        .download-link:hover::after {
+            width: 0;
         }
         .download-link:hover {
-            background: #2E6EFF;
+            background: #3a8cff;
             color: white !important;
-            border-color: #2E6EFF;
-            transform: scale(1.03);
-        }
-        .download-link::after {
-            display: none;
-        }
-        @media (max-width: 720px) {
-            .nav-inner {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .nav-links {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .container {
-                padding: 0 24px;
-            }
+            transform: scale(1.02);
         }
 
-        /* 通用section样式 */
+        /* Section 通用 */
         section {
-            padding: 100px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 120px 0;
+            border-bottom: 0.5px solid rgba(255,255,255,0.05);
         }
         .section-title {
-            font-size: 2.8rem;
-            font-weight: 600;
+            font-size: 3.4rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(120deg, #FFFFFF, #B0B0FF);
+            background: linear-gradient(115deg, #ffffff, #b9c6ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         .section-sub {
-            color: #A0A0C0;
             font-size: 1.2rem;
-            max-width: 680px;
-            margin-bottom: 48px;
+            color: #aaaac9;
+            max-width: 640px;
+            margin-bottom: 56px;
         }
 
-        /* Hero 区 + 文字视差效果 */
+        /* Hero 区域 + 视频背景 */
         .hero {
-            min-height: 90vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 60px 0;
             position: relative;
+            padding: 60px 0;
+            overflow: hidden;
+        }
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.45) saturate(1.2);
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 40%, rgba(0,0,0,0.2), #000000bb);
+            z-index: -1;
         }
         .hero-content {
-            max-width: 720px;
-            transform: translateZ(0);
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
         }
         .hero-badge {
-            display: inline-block;
-            background: rgba(62, 158, 255, 0.15);
-            backdrop-filter: blur(8px);
-            padding: 6px 16px;
+            display: inline-flex;
+            background: rgba(58,140,255,0.2);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
             border-radius: 40px;
             font-size: 0.85rem;
-            border: 0.5px solid rgba(62, 158, 255, 0.4);
-            color: #8ABBFF;
-            margin-bottom: 24px;
-            animation: badgePulse 2s infinite;
-        }
-        @keyframes badgePulse {
-            0% { box-shadow: 0 0 0 0 rgba(62,158,255,0.2); }
-            70% { box-shadow: 0 0 0 8px rgba(62,158,255,0); }
-            100% { box-shadow: 0 0 0 0 rgba(62,158,255,0); }
+            border: 0.5px solid rgba(58,140,255,0.5);
+            color: #99ccff;
+            margin-bottom: 28px;
+            letter-spacing: 0.3px;
         }
         .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+            font-size: 5rem;
+            font-weight: 750;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
             margin-bottom: 24px;
-            animation: heroGlow 1.2s ease-out;
-        }
-        @keyframes heroGlow {
-            0% { opacity: 0; transform: translateY(30px); filter: blur(12px);}
-            100% { opacity: 1; transform: translateY(0); filter: blur(0);}
         }
         .hero h1 span {
-            background: linear-gradient(135deg, #FFFFFF, #7F7FFF, #00CCFF);
+            background: linear-gradient(145deg, #FFFFFF, #8aaaff, #6e56ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         .hero-desc {
-            font-size: 1.25rem;
-            color: #BCBCE0;
+            font-size: 1.3rem;
+            color: #d9d9ff;
             margin-bottom: 40px;
-            max-width: 600px;
+            max-width: 560px;
         }
         .btn-group {
             display: flex;
@@ -276,411 +252,352 @@
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 500;
+            gap: 12px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
-            border: none;
             font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        .btn:active::after {
-            width: 300px;
-            height: 300px;
+            backdrop-filter: blur(8px);
         }
         .btn-primary {
-            background: #2E6EFF;
+            background: #3a8cff;
             color: white;
-            box-shadow: 0 8px 20px rgba(46, 110, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(58,140,255,0.3);
         }
         .btn-primary:hover {
-            background: #1A5AE0;
+            background: #296de0;
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(46, 110, 255, 0.4);
+            box-shadow: 0 20px 30px -8px rgba(58,140,255,0.5);
         }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #EEEEFF;
+        .btn-outline-light {
+            background: rgba(255,255,255,0.08);
+            border: 0.5px solid rgba(255,255,255,0.3);
+            color: white;
         }
-        .btn-outline:hover {
-            border-color: #2E6EFF;
-            background: rgba(46, 110, 255, 0.15);
+        .btn-outline-light:hover {
+            background: rgba(58,140,255,0.2);
+            border-color: #3a8cff;
             transform: translateY(-2px);
         }
-        .btn-demo {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,120,200,0.3);
-        }
-        .btn-demo:hover {
-            background: rgba(255,80,120,0.25);
-            border-color: #FF6E8A;
-        }
-        .btn-download {
-            background: linear-gradient(95deg, #2E6EFF, #8C5EFF);
-            border: none;
-            color: white;
-            box-shadow: 0 8px 20px rgba(46, 110, 255, 0.3);
-        }
 
-        /* 卡片3D倾斜与高级悬浮 */
+        /* AI 能力卡片 (苹果风格大圆角) */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
             margin-top: 20px;
         }
         .card {
-            background: rgba(20, 20, 40, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 32px 24px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-            cursor: default;
-            transform-style: preserve-3d;
-            will-change: transform;
+            background: rgba(20, 22, 35, 0.6);
+            backdrop-filter: blur(18px);
+            border-radius: 44px;
+            padding: 36px 28px;
+            border: 0.5px solid rgba(255,255,255,0.1);
+            transition: all 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            transform: translateY(0px);
         }
         .card:hover {
-            transform: translateY(-12px) scale(1.01);
-            border-color: rgba(46, 110, 255, 0.6);
-            background: rgba(35, 35, 65, 0.75);
-            box-shadow: 0 30px 45px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(62,158,255,0.3);
+            transform: translateY(-10px);
+            background: rgba(32, 34, 55, 0.8);
+            border-color: rgba(58,140,255,0.5);
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.5);
         }
         .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-        .card:hover .card-icon {
-            transform: scale(1.1);
+            font-size: 2.8rem;
+            margin-bottom: 24px;
         }
         .card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 12px;
+            font-size: 1.8rem;
+            margin-bottom: 14px;
             font-weight: 600;
         }
-        .badge-os {
-            background: #1A2A3A;
-            border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            display: inline-block;
-            margin-top: 12px;
-            color: #AAD0FF;
+        .card p {
+            color: #b9b9e6;
+            line-height: 1.45;
         }
 
-        /* AI 产品网格动画浮现 */
-        .ai-grid {
+        /* AI 智能矩阵 (优雅图标行) */
+        .smart-matrix {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 24px;
-            margin: 40px 0 20px;
+            margin: 60px 0 30px;
         }
-        .ai-item {
-            background: rgba(12,12,30,0.5);
-            backdrop-filter: blur(8px);
+        .matrix-item {
+            background: rgba(10,12,28,0.6);
+            backdrop-filter: blur(12px);
             border-radius: 28px;
-            padding: 20px 12px;
+            padding: 24px 12px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.25s ease;
+            transition: all 0.25s;
+            border: 0.5px solid rgba(255,255,255,0.05);
         }
-        .ai-item:hover {
-            background: rgba(46,110,255,0.2);
-            border-color: #3E9EFF;
-            transform: translateY(-6px) scale(1.02);
+        .matrix-item:hover {
+            background: rgba(58,140,255,0.2);
+            transform: translateY(-6px);
+            border-color: #3a8cff;
         }
-        .ai-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            transition: transform 0.2s;
+        .matrix-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
         }
-        .ai-item:hover .ai-icon {
-            transform: scale(1.1);
+        .matrix-name {
+            font-weight: 500;
+            font-size: 1rem;
         }
 
-        /* 视频区强化光影 */
-        .video-wrapper {
-            background: #0C0C18;
-            border-radius: 48px;
+        /* 视频展示卡 (优雅嵌入) */
+        .video-showcase {
+            border-radius: 56px;
             overflow: hidden;
-            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s;
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.7);
+            transition: all 0.5s;
         }
-        .video-wrapper:hover {
+        .video-showcase video {
+            width: 100%;
+            display: block;
+            object-fit: cover;
             transform: scale(1.01);
-            box-shadow: 0 30px 60px -15px rgba(0, 160, 255, 0.2);
-            border-color: rgba(62,158,255,0.4);
+            transition: transform 0.4s;
+        }
+        .video-showcase:hover video {
+            transform: scale(1.02);
         }
 
-        /* SmartPet 专区漂浮动画 */
-        .pet-card {
+        /* SmartPet 子品牌专区 */
+        .pet-showcase {
             display: flex;
             flex-wrap: wrap;
-            background: linear-gradient(135deg, rgba(30,20,45,0.7), rgba(10,10,30,0.8));
-            backdrop-filter: blur(16px);
-            border-radius: 56px;
-            padding: 32px;
-            margin-top: 20px;
-            border: 1px solid rgba(255,120,180,0.3);
+            background: linear-gradient(115deg, rgba(40,25,65,0.7), rgba(10,10,25,0.85));
+            backdrop-filter: blur(28px);
+            border-radius: 64px;
+            padding: 40px;
             align-items: center;
-            gap: 32px;
-            transition: all 0.3s;
-        }
-        .pet-card:hover {
-            border-color: rgba(255,140,180,0.7);
-            transform: translateY(-6px);
-            box-shadow: 0 30px 40px -20px rgba(255,80,120,0.3);
+            gap: 40px;
+            border: 1px solid rgba(140,90,255,0.3);
         }
         .pet-avatar {
-            font-size: 6rem;
-            filter: drop-shadow(0 8px 20px rgba(255,100,150,0.4));
-            animation: petFloat 3s infinite alternate ease-in-out;
+            font-size: 7rem;
+            filter: drop-shadow(0 12px 20px rgba(140,90,255,0.4));
+            animation: floatPet 3s infinite alternate;
         }
-        @keyframes petFloat {
+        @keyframes floatPet {
             0% { transform: translateY(0px); }
-            100% { transform: translateY(-10px); }
+            100% { transform: translateY(-12px); }
+        }
+        .pet-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
         }
 
-        /* 表单精致交互 */
-        .form-container {
-            background: rgba(12, 12, 24, 0.6);
-            backdrop-filter: blur(16px);
-            border-radius: 48px;
-            padding: 48px 40px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.4s;
-        }
-        .form-container:hover {
-            border-color: rgba(62,158,255,0.3);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
+        /* 爱情表单区 - 精致情感触达 */
+        .love-container {
+            background: rgba(12,12,28,0.7);
+            backdrop-filter: blur(24px);
+            border-radius: 56px;
+            padding: 48px 48px;
+            border: 0.5px solid rgba(255,255,255,0.1);
         }
         .input-group input, .input-group textarea {
-            width: 100%;
-            background: #0A0A16;
-            border: 1px solid #2A2A44;
-            border-radius: 24px;
-            padding: 14px 20px;
+            background: #0c0c1c;
+            border: 1px solid #2a2a4a;
+            border-radius: 32px;
+            padding: 16px 24px;
             color: white;
             font-size: 1rem;
-            transition: all 0.2s;
+            width: 100%;
         }
         .input-group input:focus, .input-group textarea:focus {
             outline: none;
-            border-color: #3E9EFF;
-            box-shadow: 0 0 0 4px rgba(62, 158, 255, 0.2);
-            transform: scale(1.01);
+            border-color: #3a8cff;
+            box-shadow: 0 0 0 3px rgba(58,140,255,0.2);
         }
         .love-check {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 32px;
-            background: rgba(255,80,120,0.1);
-            padding: 12px 20px;
+            background: rgba(255,76,106,0.12);
+            padding: 10px 22px;
             border-radius: 60px;
-            width: fit-content;
-            transition: all 0.2s;
-        }
-        .love-check:hover {
-            background: rgba(255,80,120,0.2);
         }
         .btn-love {
-            background: linear-gradient(95deg, #FF4C6A, #FF8C6A);
+            background: linear-gradient(105deg, #ff5e7e, #ff9a6e);
             border: none;
-            padding: 14px 32px;
+            padding: 14px 38px;
             font-weight: 600;
-            box-shadow: 0 8px 18px rgba(255, 76, 106, 0.3);
-        }
-        .btn-love:hover {
-            background: linear-gradient(95deg, #FF2A4F, #FF704A);
-            transform: translateY(-3px) scale(1.02);
         }
 
-        /* 交错滚动动画强化 */
-        .fade-up {
+        /* 滚动动画交互相 (苹果式过渡) */
+        .reveal {
             opacity: 0;
-            transform: translateY(45px);
-            transition: opacity 0.9s cubic-bezier(0.15, 0.85, 0.35, 1), transform 0.9s cubic-bezier(0.15, 0.85, 0.35, 1);
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
-        .fade-up.visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* 为卡片添加交错延迟 */
-        .cards-grid .card:nth-child(1) { transition-delay: 0.05s; }
-        .cards-grid .card:nth-child(2) { transition-delay: 0.1s; }
-        .cards-grid .card:nth-child(3) { transition-delay: 0.15s; }
-        .ai-grid .ai-item:nth-child(n) { transition-delay: calc(0.03s * var(--i, 0)); }
-
-        /* 顶部进度条 苹果风格 */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #2E6EFF, #C05EFF);
-            z-index: 1001;
-            transition: width 0.1s ease;
-            box-shadow: 0 0 8px #2E6EFF;
+        /* 视差辅助元素 */
+        .parallax-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        footer a {
-            transition: color 0.2s;
+        footer {
+            padding: 56px 0 48px;
+            text-align: center;
+            border-top: 0.5px solid rgba(255,255,255,0.06);
+            color: #8f8fb0;
         }
-        footer a:hover {
-            color: #6E9EFF;
-        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .section-title { font-size: 2.2rem; }
+            .hero h1 { font-size: 3rem; }
+            .section-title { font-size: 2.4rem; }
+            .container { padding: 0 24px; }
+            .love-container { padding: 32px 24px; }
+            .pet-showcase { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
-    <div class="bg-glow-2"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-texture"></div>
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <nav class="navbar" id="navbar">
         <div class="container nav-inner">
-            <a href="#" class="logo">LaswI</a>
+            <a href="#" class="logo">LaswI AI</a>
             <ul class="nav-links">
-                <li><a href="#hero">生态</a></li>
-                <li><a href="#os-ai">系统·AI</a></li>
-                <li><a href="#video-show">视界</a></li>
+                <li><a href="#hero">AI生态</a></li>
+                <li><a href="#core-ai">智能引擎</a></li>
+                <li><a href="#video-vision">视界·AI</a></li>
                 <li><a href="#smartpet">SmartPet</a></li>
-                <li><a href="#love-form">心流</a></li>
+                <li><a href="#loveform">心流·情感</a></li>
                 <li><a href="download.html" class="download-link">📥 下载中心</a></li>
             </ul>
         </div>
     </nav>
 
     <main>
+        <!-- Hero 区域: 视频背景 + 新品牌 LaswI AI App -->
         <section id="hero" class="hero">
+            <video class="hero-video-bg" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='100%25' height='100%25' fill='%23000000'/%3E%3C/svg%3E">
+                <!-- 使用高质量科技感视频 (Mixkit 自由视频库 - 数字神经网络风格) -->
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-brain-with-glowing-blue-neural-network-50729-large.mp4" type="video/mp4">
+                您的浏览器不支持视频背景。
+            </video>
+            <div class="hero-overlay"></div>
             <div class="container">
-                <div class="hero-content fade-up visible">
-                    <div class="hero-badge">✦ LaswI 全域智能生态 ✦</div>
-                    <h1>超越未来 · <span>LaswI OS</span></h1>
-                    <p class="hero-desc">底层开源架构 · 全场景无缝流转。Pad / Phone / Computer 三端统一，AI 深度进化。</p>
+                <div class="hero-content reveal visible">
+                    <div class="hero-badge">✦ LaswI AI App · 原生智能体 ✦</div>
+                    <h1>AI 重新定义<br><span>下一代智能伴侣</span></h1>
+                    <p class="hero-desc">集成大语言模型与多模态感知，懂你所需的AI操作系统级应用。极速、隐私、创造无限。</p>
                     <div class="btn-group">
-                        <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-primary btn-demo">🚀 在线体验 LaswI 产品</a>
-                        <a href="download.html" class="btn btn-primary btn-download">📲 立即下载 App</a>
-                        <a href="#os-ai" class="btn btn-outline">探索操作系统 ▸</a>
+                        <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-primary">✨ 在线体验 LaswI AI</a>
+                        <a href="download.html" class="btn btn-outline-light">📲 免费下载 App</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="os-ai">
+        <!-- AI 核心能力 + OS 概念升级 -->
+        <section id="core-ai">
             <div class="container">
-                <div class="fade-up">
-                    <h2 class="section-title">LaswI OS · 开源新纪元</h2>
-                    <p class="section-sub">底层开源系统结构，驱动跨设备一致性体验。安全、流畅、为 AI 原生而生。</p>
+                <div class="reveal">
+                    <h2 class="section-title">AI 引擎 · 超感知内核</h2>
+                    <p class="section-sub">从底层推理到边缘计算，LaswI AI App 赋予每台设备仿生智慧。</p>
                 </div>
                 <div class="cards-grid">
-                    <div class="card fade-up"><div class="card-icon">📱</div><h3>LaswI Phone OS</h3><p>A2026 & B2026 双版本 · 灵动交互，超算内核</p><span class="badge-os">AI 增强引擎</span></div>
-                    <div class="card fade-up"><div class="card-icon">🖥️</div><h3>LaswI Pad OS A2026</h3><p>平板生产力重构，多模态协同，Studio 级创作</p><span class="badge-os">无缝接力</span></div>
-                    <div class="card fade-up"><div class="card-icon">💻</div><h3>LaswI Computer OS A2026</h3><p>桌面级性能，开源生态，专业工作流加速</p><span class="badge-os">原生 Linux 兼容层</span></div>
+                    <div class="card reveal"><div class="card-icon">🧠</div><h3>多模态大模型</h3><p>文字、图像、语音全域理解，场景化智能决策，毫秒级响应。</p></div>
+                    <div class="card reveal"><div class="card-icon">🔒</div><h3>隐私计算框架</h3><p>端侧加密推理，数据不离设备，真正属于你的 AI 助理。</p></div>
+                    <div class="card reveal"><div class="card-icon">🌀</div><h3>跨设备接力</h3><p>iPhone, iPad, Mac 无缝流转，AI 会话随身而动。</p></div>
                 </div>
 
-                <div class="fade-up" style="margin-top: 70px;">
-                    <h2 class="section-title" style="font-size: 2.2rem;">⚡ 智慧矩阵 · LaswI AI</h2>
-                    <p class="section-sub">从地图到浏览器，从翻译到备忘录，AI 重塑日常。</p>
+                <div class="reveal" style="margin-top: 80px;">
+                    <h2 class="section-title" style="font-size: 2.2rem;">全场景智慧矩阵</h2>
+                    <p class="section-sub">AI 深度集成到每一个日常工具</p>
                 </div>
-                <div class="ai-grid">
-                    <div class="ai-item fade-up" style="--i:1"><div class="ai-icon">🗺️</div><div class="ai-name">LaswI Maps</div></div>
-                    <div class="ai-item fade-up" style="--i:2"><div class="ai-icon">🌐</div><div class="ai-name">LaswI Browser</div></div>
-                    <div class="ai-item fade-up" style="--i:3"><div class="ai-icon">🔤</div><div class="ai-name">LaswI Translate</div></div>
-                    <div class="ai-item fade-up" style="--i:4"><div class="ai-icon">📝</div><div class="ai-name">LaswI Memo</div></div>
-                    <div class="ai-item fade-up" style="--i:5"><div class="ai-icon">🧮</div><div class="ai-name">LaswI Calculator</div></div>
-                    <div class="ai-item fade-up" style="--i:6"><div class="ai-icon">🎬</div><div class="ai-name">LaswI Media</div></div>
+                <div class="smart-matrix">
+                    <div class="matrix-item reveal"><div class="matrix-icon">🗺️</div><div class="matrix-name">AI 地图</div></div>
+                    <div class="matrix-item reveal"><div class="matrix-icon">🌐</div><div class="matrix-name">智能浏览器</div></div>
+                    <div class="matrix-item reveal"><div class="matrix-icon">🔤</div><div class="matrix-name">AI 翻译器</div></div>
+                    <div class="matrix-item reveal"><div class="matrix-icon">📝</div><div class="matrix-name">智慧备忘录</div></div>
+                    <div class="matrix-item reveal"><div class="matrix-icon">🧮</div><div class="matrix-name">AI 计算器</div></div>
+                    <div class="matrix-item reveal"><div class="matrix-icon">🎵</div><div class="matrix-name">AI 创作工坊</div></div>
                 </div>
-                <div class="fade-up" style="text-align: center; margin-top: 20px;">
-                    <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-outline" style="background: rgba(46,110,255,0.1);">✨ 探索 AI 产品体验页 →</a>
+                <div class="reveal" style="text-align: center; margin-top: 24px;">
+                    <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn btn-outline-light" style="background: rgba(58,140,255,0.1);">🚀 探索全部 AI 产品 →</a>
                 </div>
             </div>
         </section>
 
-        <section id="video-show">
+        <!-- 视频展示区 + 动态滚动特效 (可放视频) -->
+        <section id="video-vision">
             <div class="container">
-                <div class="fade-up">
-                    <div class="hero-badge" style="background: rgba(255,80,120,0.15);">❤️ LaswI Vision · 爱是底层代码 ❤️</div>
-                    <h2 class="section-title">动态视界 · 未来交互</h2>
-                    <p class="section-sub">感受 LaswI OS 生态下的沉浸式数字流体验。</p>
+                <div class="reveal" style="margin-bottom: 40px;">
+                    <div class="hero-badge" style="background: rgba(255,86,110,0.2);">🎬 LaswI AI Vision · 情感计算</div>
+                    <h2 class="section-title">动态视界 · 与AI共生</h2>
+                    <p class="section-sub">通过生成式 AI 重构人机协作体验，每个画面皆智能。</p>
                 </div>
-                <div class="video-wrapper fade-up">
-                    <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='100%25' height='100%25' fill='%23101020'/%3E%3Ctext x='50%25' y='50%25' fill='%234466FF' font-size='1' text-anchor='middle' dominant-baseline='middle'%3ELaswI%20Cinematic%3C/text%3E%3C/svg%3E">
-                        <source src="videos/laswi_future_demo.mp4" type="video/mp4">
+                <div class="video-showcase reveal">
+                    <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='100%25' height='100%25' fill='%23101020'/%3E%3Ctext x='50%25' y='50%25' fill='%236e56ff' font-size='1' text-anchor='middle'%3ELaswI%20AI%20Cinematic%3C/text%3E%3C/svg%3E">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-ai-interface-with-holographic-data-51409-large.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
                     </video>
                 </div>
-                <div class="video-caption fade-up">
-                    ✦ LaswI 超现实概念演示 · 万物智联 ✦  <span style="color:#FF8C6A;"> I love the future </span>
-                </div>
+                <div class="reveal" style="text-align: center; margin-top: 32px; color:#aaaac9;">✨ AI 实时生成界面概念 ✨ <span style="color:#ff8a7a;"> Love is the algorithm </span></div>
             </div>
         </section>
 
+        <!-- SmartPet 子品牌 AI 机器猫 Oreo -->
         <section id="smartpet">
             <div class="container">
-                <div class="fade-up">
-                    <div class="hero-badge" style="background: rgba(255,120,90,0.2); border-color:#FF9F7A;">🐾 子品牌 · SmartPet</div>
-                    <h2 class="section-title">AI 机器猫 · Oreo</h2>
-                    <p class="section-sub">情感陪伴新物种，搭载专属操作系统，会呼吸的智能伙伴。</p>
+                <div class="reveal">
+                    <div class="hero-badge" style="background: rgba(255,120,100,0.2);">🐾 子品牌 · SmartPet</div>
+                    <h2 class="section-title">AI 机器猫 Oreo</h2>
+                    <p class="section-sub">先进情感引擎，陪伴型机器人重塑家庭温暖。</p>
                 </div>
-                <div class="pet-card fade-up">
-                    <div class="pet-avatar">🐱✨</div>
+                <div class="pet-showcase reveal">
+                    <div class="pet-avatar">🐱✨🤖</div>
                     <div class="pet-info">
                         <h3>SmartPet AI Cat Oreo</h3>
-                        <p>仿生情绪引擎 · 全向感知传感器 · 自主学习行为模式。不只是机器，更是家庭新成员。</p>
-                        <div class="pet-os">⚙️ 操作系统：SmartPet AI Cat Oreo OS A2026</div>
-                        <div style="margin-top: 20px;"><span class="badge-os" style="background:#FF6A8A;">❤️ 陪伴模式</span><span class="badge-os" style="background:#2E6EFF;">AI 深度互动</span></div>
+                        <p>仿生情绪模型 · 全向感知 · 自主学习陪伴模式。它不只是科技，更是会呼吸的家庭成员。</p>
+                        <div style="margin-top: 16px;"><span class="hero-badge" style="background:#ff5e7e20;">❤️ 深度拥抱模式</span><span class="hero-badge" style="margin-left: 12px; background:#3a8cff20;">AI 实时互动</span></div>
+                        <div style="margin-top: 20px;"><span style="font-size: 0.9rem;">💬 “Oreo 会用AI记住你的每一声呼唤”</span></div>
                     </div>
-                </div>
-                <div class="fade-up" style="text-align: center; margin-top: 32px;">
-                    <span style="display: inline-flex; gap: 6px;">🎵 “Oreo 会记住你的爱，每一次触摸都是代码的温柔。” 🎵</span>
                 </div>
             </div>
         </section>
 
-        <section id="love-form">
+        <!-- 爱与未来表单 (保留情感核心) -->
+        <section id="loveform">
             <div class="container">
-                <div class="fade-up" style="text-align: center; margin-bottom: 32px;">
-                    <span style="font-size: 2rem;">❤️</span>
-                    <h2 class="section-title" style="margin-bottom: 8px;">传递你的「我爱你」</h2>
-                    <p class="section-sub" style="margin-bottom: 0;">科技的温度源于情感。对 LaswI、对 Oreo、对未来，说出你的爱意。</p>
+                <div class="reveal" style="text-align: center; margin-bottom: 40px;">
+                    <span style="font-size: 2.6rem;">❤️</span>
+                    <h2 class="section-title" style="margin-bottom: 12px;">向AI宇宙传递 · 我爱你</h2>
+                    <p class="section-sub" style="margin-bottom: 0;">你的每一份情感，都会让智能更加温暖。</p>
                 </div>
-                <div class="form-container fade-up">
+                <div class="love-container reveal">
                     <form id="loveMessageForm">
-                        <div class="form-row">
-                            <div class="input-group"><label>✨ 你的名字 / 昵称</label><input type="text" id="name" placeholder="例如: 星辰 / Oreo 的朋友" required></div>
-                            <div class="input-group"><label>📧 电子信使</label><input type="email" id="email" placeholder="hello@laswi.com" required></div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 28px;">
+                            <div class="input-group" style="flex:1;"><label>✨ 你的名字</label><input type="text" id="name" placeholder="Oreo 的朋友" required></div>
+                            <div class="input-group" style="flex:1;"><label>📧 电子信使</label><input type="email" id="email" placeholder="hello@laswiai.com" required></div>
                         </div>
-                        <div class="input-group"><label>💌 你的留言 / 对 LaswI 或 Oreo 的爱</label><textarea rows="4" id="message" placeholder="写下你想说的话，或者一句「我爱你，未来」..."></textarea></div>
-                        <div class="love-check"><input type="checkbox" id="loveCheckbox" checked><label for="loveCheckbox" style="margin:0; cursor: pointer;">💖 我确认并传递这份「我爱你」给 LaswI 智慧宇宙 💖</label></div>
-                        <div style="display: flex; justify-content: center;"><button type="submit" class="btn btn-primary btn-love"><span>❤️</span> 发送爱的信号 <span>❤️</span></button></div>
-                        <p id="formFeedback" style="text-align: center; margin-top: 24px; font-size: 0.9rem;"></p>
+                        <div class="input-group"><label>💌 你想说的话 / 对 LaswI AI 的爱</label><textarea rows="3" id="message" placeholder="写下一句「我爱你，智能未来」..."></textarea></div>
+                        <div style="margin: 28px 0 32px;" class="love-check">
+                            <input type="checkbox" id="loveCheckbox" checked> <label for="loveCheckbox" style="cursor: pointer;">💖 确认将爱意注入 LaswI AI 星云 💖</label>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <button type="submit" class="btn btn-primary btn-love">❤️ 发送爱的信号 ❤️</button>
+                        </div>
+                        <p id="formFeedback" style="text-align: center; margin-top: 28px; font-size: 0.95rem;"></p>
                     </form>
                 </div>
             </div>
@@ -688,28 +605,28 @@
 
         <footer>
             <div class="container">
-                <p>© 2026 LaswI — 开源 · 无界 · 以爱为核 | 底层开源系统 LaswI OS | 子品牌 SmartPet</p>
-                <p style="margin-top: 12px; font-size: 0.8rem;">✦ 体验页：<a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#8ABBFF;">laswi-ai-production.up.railway.app</a> ✦ iOS App：<a href="download.html" target="_blank" style="color:#8ABBFF;">立即下载</a> ✦ I ❤️ 科技 ✦</p>
+                <p>© 2026 LaswI AI App — 融合智慧与爱 | 跨平台智能生态 | 子品牌 SmartPet</p>
+                <p style="margin-top: 14px; font-size: 0.8rem;">✨ 在线体验: <a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#8abbff;">laswi-ai-production.up.railway.app</a> ✦ 下载中心: <a href="download.html" style="color:#8abbff;">立即获取</a> ✦ I ❤️ AI</p>
             </div>
         </footer>
     </main>
 
     <script>
-        (function() {
-            // 增强滚动进度条
-            const progressBar = document.getElementById('scrollProgress');
+        (function(){
+            // 滚动进度 & 导航栏透明变化
+            const progress = document.getElementById('scrollProgress');
+            const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
                 const winScroll = document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - window.innerHeight;
                 const scrolled = (winScroll / height) * 100;
-                progressBar.style.width = scrolled + '%';
-                const navbar = document.getElementById('navbar');
-                if (window.scrollY > 20) navbar.classList.add('scrolled');
+                progress.style.width = scrolled + '%';
+                if (winScroll > 20) navbar.classList.add('scrolled');
                 else navbar.classList.remove('scrolled');
             });
 
-            // 滚动动画增强 (交错多段)
-            const fadeElements = document.querySelectorAll('.fade-up');
+            // Intersection Observer 优雅滚动动画 (苹果风格)
+            const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -717,114 +634,107 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.2, rootMargin: "0px 0px -30px 0px" });
-            fadeElements.forEach(el => observer.observe(el));
-            // 手动触发一屏可见
-            setTimeout(() => {
-                fadeElements.forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top < window.innerHeight - 80) el.classList.add('visible');
-                });
-            }, 200);
+            }, { threshold: 0.2, rootMargin: "0px 0px -40px 0px" });
+            reveals.forEach(el => observer.observe(el));
+            // 预置 Hero 可见性
+            document.querySelectorAll('.reveal').forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
+            });
 
-            // 表单爱心增强 + 粒子效果
+            // 表单提交 + 爱的粒子飞心效果
             const form = document.getElementById('loveMessageForm');
-            const feedback = document.getElementById('formFeedback');
+            const feedbackDiv = document.getElementById('formFeedback');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const name = document.getElementById('name').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const msg = document.getElementById('message').value.trim();
-                const loveCheck = document.getElementById('loveCheckbox');
+                const loveChk = document.getElementById('loveCheckbox');
                 if (!name || !email) {
-                    feedback.innerHTML = '✨ 请留下名字和电子信使，让爱抵达 ✨';
-                    feedback.style.color = "#FFAA88";
-                    setTimeout(() => feedback.innerHTML = '', 2500);
+                    feedbackDiv.innerHTML = '✨ 请留下名字和电子信使，让爱抵达 ✨';
+                    feedbackDiv.style.color = "#ffaa88";
+                    setTimeout(() => feedbackDiv.innerHTML = '', 2500);
                     return;
                 }
                 if (!email.includes('@')) {
-                    feedback.innerHTML = '📧 电子信使地址似乎不完整，再试一次吧～';
-                    setTimeout(() => feedback.innerHTML = '', 2500);
+                    feedbackDiv.innerHTML = '📧 电子信使地址似乎不太完整，再试试～';
+                    setTimeout(() => feedbackDiv.innerHTML = '', 2500);
                     return;
                 }
-                if (!loveCheck.checked) {
-                    feedback.innerHTML = '💗 请勾选「我爱你」复选框，让情感被听见 💗';
-                    setTimeout(() => feedback.innerHTML = '', 2500);
+                if (!loveChk.checked) {
+                    feedbackDiv.innerHTML = '💗 请勾选「我爱你」复选框，让你的情感被听见 💗';
+                    setTimeout(() => feedbackDiv.innerHTML = '', 2500);
                     return;
                 }
-                feedback.innerHTML = `💖 亲爱的 ${name}，你的爱意已注入 LaswI 智慧星云！ 💖<br>「${msg || "我爱你，LaswI 与 Oreo"}」<br>我们同样 <span style="font-size:1.2rem;">❤️ 我爱你 ❤️</span> ，未来因你而温暖。`;
-                feedback.style.color = "#C8FFD0";
-                feedback.style.background = "rgba(0,30,20,0.5)";
-                feedback.style.padding = "12px";
-                feedback.style.borderRadius = "60px";
-                for(let i=0;i<12;i++) createFloatingHeart();
-                const btnLove = document.querySelector('.btn-love');
-                if(btnLove) btnLove.style.transform = "scale(0.96)";
-                setTimeout(() => { if(btnLove) btnLove.style.transform = ""; }, 200);
+                feedbackDiv.innerHTML = `💖 亲爱的 ${name}，你的爱意已注入 LaswI AI 智能宇宙！ 💖<br>「${msg || "我爱你，LaswI AI & Oreo"}」<br>我们同样 <span style="font-size:1.2rem;">❤️ 深爱着你 ❤️</span> ，科技因此有温度。`;
+                feedbackDiv.style.background = "rgba(0,30,25,0.6)";
+                feedbackDiv.style.padding = "16px";
+                feedbackDiv.style.borderRadius = "60px";
+                feedbackDiv.style.color = "#ccffdd";
+                for(let i=0;i<12;i++) createFlyingHeart();
+                const btn = document.querySelector('.btn-love');
+                if(btn) btn.style.transform = "scale(0.96)";
+                setTimeout(() => { if(btn) btn.style.transform = ""; }, 200);
             });
 
-            function createFloatingHeart() {
+            function createFlyingHeart() {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
                 heart.style.position = 'fixed';
-                heart.style.bottom = '30px';
+                heart.style.bottom = '20px';
                 heart.style.left = Math.random() * window.innerWidth + 'px';
-                heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
+                heart.style.fontSize = (Math.random() * 22 + 14) + 'px';
                 heart.style.pointerEvents = 'none';
                 heart.style.zIndex = '9999';
                 heart.style.opacity = '0.9';
-                heart.style.filter = 'drop-shadow(0 0 8px #FF4C6A)';
-                heart.style.transition = 'all 1.5s ease-out';
+                heart.style.filter = 'drop-shadow(0 0 8px #ff5e7e)';
+                heart.style.transition = 'all 1.3s ease-out';
                 document.body.appendChild(heart);
                 let pos = 0;
                 const interval = setInterval(() => {
-                    pos += 2;
-                    heart.style.transform = `translateY(-${pos * 2}px) rotate(${pos * 2}deg)`;
+                    pos += 2.5;
+                    heart.style.transform = `translateY(-${pos * 2}px) rotate(${pos * 1.5}deg)`;
                     heart.style.opacity = 1 - pos / 45;
-                    if (pos > 40) {
+                    if (pos > 42) {
                         clearInterval(interval);
                         heart.remove();
                     }
                 }, 20);
             }
 
-            // 鼠标跟随光晕增强 (平滑)
-            const mouseGlow = document.createElement('div');
-            mouseGlow.style.position = 'fixed';
-            mouseGlow.style.width = '500px';
-            mouseGlow.style.height = '500px';
-            mouseGlow.style.background = 'radial-gradient(circle, rgba(0,200,255,0.05), transparent 70%)';
-            mouseGlow.style.borderRadius = '50%';
-            mouseGlow.style.pointerEvents = 'none';
-            mouseGlow.style.zIndex = '9998';
-            mouseGlow.style.transition = 'transform 0.08s linear';
-            document.body.appendChild(mouseGlow);
-            document.addEventListener('mousemove', (e) => {
-                mouseGlow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
-            });
-
-            // 平滑锚点滚动增强
+            // 平滑导航锚点
             document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    const hash = this.getAttribute('href');
-                    if (hash && hash !== '#') {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId !== '#') {
                         e.preventDefault();
-                        const target = document.querySelector(hash);
-                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const targetEl = document.querySelector(targetId);
+                        if(targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 });
             });
-            // 视频自动播放兼容
-            const video = document.querySelector('video');
-            if(video) video.play().catch(()=>{});
-            // 模拟卡片倾斜效果(桌面端柔和3D)
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
+            // 鼠标跟随微光 (增大氛围)
+            const mouseSpot = document.createElement('div');
+            mouseSpot.style.position = 'fixed';
+            mouseSpot.style.width = '500px';
+            mouseSpot.style.height = '500px';
+            mouseSpot.style.background = 'radial-gradient(circle, rgba(58,140,255,0.08), transparent 70%)';
+            mouseSpot.style.borderRadius = '50%';
+            mouseSpot.style.pointerEvents = 'none';
+            mouseSpot.style.zIndex = '9997';
+            mouseSpot.style.transition = 'transform 0.05s linear';
+            document.body.appendChild(mouseSpot);
+            document.addEventListener('mousemove', (e) => {
+                mouseSpot.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+            });
+            // 卡片微交互，玻璃增强
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
-                    card.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${y * -6}deg) translateY(-6px)`;
+                    card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${y * -5}deg) translateY(-8px)`;
                 });
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = '';
