@@ -17,53 +17,22 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'PingFang SC', 'Roboto', sans-serif;
             min-height: 100vh;
-            background: radial-gradient(ellipse at 20% 30%, #1a1a3e 0%, #0f0f1a 60%, #0a0a12 100%);
+            background: url('./bei.png') center center / cover no-repeat fixed;
             color: rgba(255, 255, 255, 0.92);
             overflow-x: hidden;
             position: relative;
         }
-
-        /* 动态光晕 */
+        /* 暗色叠加层（让文字更清晰） */
         body::before {
             content: '';
             position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 60%;
-            height: 70%;
-            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.10) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 10, 16, 0.50);
             z-index: 0;
             pointer-events: none;
-            animation: glowFloat 14s ease-in-out infinite alternate;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 50%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-            animation: glowFloat2 16s ease-in-out infinite alternate;
-        }
-
-        @keyframes glowFloat {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(60px, 40px) scale(1.15);
-            }
-        }
-        @keyframes glowFloat2 {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(-40px, -30px) scale(1.2);
-            }
         }
 
         html {
@@ -117,7 +86,7 @@
         }
 
         /* ============================================================
-                   导航
+                   导航（含 Logo）
                    ============================================================ */
         .glass-nav {
             display: flex;
@@ -142,18 +111,10 @@
             color: #fff;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
         }
-        .logo-icon {
-            width: 36px;
+        .logo img {
             height: 36px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #7c5cfc, #5b3fd4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(100, 80, 255, 0.25);
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
         }
         .logo-text {
             background: linear-gradient(135deg, #c4b5ff, #8a72f0);
@@ -253,6 +214,18 @@
             border-color: rgba(255, 255, 255, 0.12);
             color: #fff;
         }
+        .btn-glass-secondary.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .btn-glass-secondary.disabled:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            transform: none;
+            box-shadow: none;
+        }
         .btn-glass-gold {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 180, 0, 0.08));
             border-color: rgba(255, 215, 0, 0.15);
@@ -282,6 +255,11 @@
             color: #ffd54f;
             border-color: rgba(255, 215, 0, 0.15);
             background: rgba(255, 215, 0, 0.05);
+        }
+        .badge-soon {
+            color: #ff8a65;
+            border-color: rgba(255, 138, 101, 0.15);
+            background: rgba(255, 138, 101, 0.05);
         }
 
         /* ============================================================
@@ -398,6 +376,11 @@
             color: #ffd54f;
             border-color: rgba(255, 215, 0, 0.15);
             background: rgba(255, 215, 0, 0.05);
+        }
+        .game-card .card-badge.soon {
+            color: #ff8a65;
+            border-color: rgba(255, 138, 101, 0.15);
+            background: rgba(255, 138, 101, 0.05);
         }
         .game-card .card-title {
             font-size: 1.8rem;
@@ -558,10 +541,8 @@
             .logo {
                 font-size: 1.2rem;
             }
-            .logo-icon {
-                width: 28px;
+            .logo img {
                 height: 28px;
-                font-size: 0.9rem;
             }
             .hero-section h1 {
                 font-size: 2rem;
@@ -633,12 +614,12 @@
 
     <div class="container">
         <!-- ============================================================
-        导航
+        导航（含 Logo）
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
-                <div class="logo-icon">🎮</div>
-                <span class="logo-text">LaswI · 游戏中心</span>
+                <img src="./logo.png" alt="LaswI Games Logo" onerror="this.style.display='none'" />
+                <span class="logo-text">LaswI Games</span>
             </div>
             <div class="nav-links">
                 <a href="index.html">🏠 官网</a>
@@ -675,11 +656,11 @@
         <div id="games" class="games-grid reveal-on-scroll">
 
             <!-- ============================================================
-            游戏1：白墨瑟尔城
+            游戏1：白墨瑟尔城（即将上线）
             ============================================================ -->
             <div class="game-card">
                 <div class="card-icon">🏛️</div>
-                <div class="card-badge">✦ 叙事卡牌 · 治愈</div>
+                <div class="card-badge soon">⏳ 即将上线</div>
                 <div class="card-title">
                     《云端之上 · <span class="highlight">白墨瑟尔城</span>》
                 </div>
@@ -695,13 +676,13 @@
                     <span>🌙 治愈系</span>
                 </div>
                 <div class="card-actions">
-                    <a href="games.html" class="btn-glass btn-glass-primary">🎮 查看详情</a>
-                    <a href="#" class="btn-glass btn-glass-secondary">📖 试玩 Demo</a>
+                    <a href="games.html" class="btn-glass btn-glass-primary">🎮 了解详情</a>
+                    <span class="btn-glass btn-glass-secondary disabled">⏳ 即将上线</span>
                 </div>
             </div>
 
             <!-- ============================================================
-            游戏2：魔法花园（金色卡片）
+            游戏2：魔法花园（已上线）
             ============================================================ -->
             <div class="game-card gold-card">
                 <div class="card-icon">🌤️</div>
@@ -803,7 +784,7 @@
         ============================================================ -->
         <footer>
             <p>
-                LaswI · 游戏中心 &nbsp;|&nbsp;
+                LaswI Games &nbsp;|&nbsp;
                 云端之上系列 &nbsp;|&nbsp;
                 © 2026 LaswI Team
             </p>
@@ -843,8 +824,8 @@
                 });
             });
 
-            console.log('🎮 LaswI · 游戏中心已加载');
-            console.log('🌤️ 包含《白墨瑟尔城》和《魔法花园》两款游戏');
+            console.log('🎮 LaswI Games · 游戏中心已加载');
+            console.log('🌤️ 包含《白墨瑟尔城》（即将上线）和《魔法花园》（已上线）两款游戏');
             console.log('🌟 魔法花园入口: https://wengu130301.github.io/hua');
 
         })();
