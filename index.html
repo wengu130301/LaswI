@@ -6,7 +6,7 @@
     <title>LaswI AI · 奶油梦境</title>
     <style>
         /* ============================================================
-                   全局重置 & 毛玻璃基础LaswI Studio
+                   全局重置 & 毛玻璃基础
                    ============================================================ */
         * {
             margin: 0;
@@ -90,12 +90,6 @@
         .glass-padded {
             padding: 2rem 2.2rem;
             margin: 2rem 0;
-        }
-        .glass-light {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(12px) saturate(1.2);
-            -webkit-backdrop-filter: blur(12px) saturate(1.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .glass-nav {
@@ -211,8 +205,6 @@
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.25);
         }
-
-        /* 新增：下载按钮风格（与在线体验区分） */
         .btn-glass-download {
             background: rgba(100, 200, 180, 0.15);
             border-color: rgba(100, 200, 180, 0.2);
@@ -418,8 +410,12 @@
             animation: floatSoft 3s infinite alternate;
         }
         @keyframes floatSoft {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-10px); }
+            0% {
+                transform: translateY(0px);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
         }
         .pet-text h3 {
             font-size: 1.9rem;
@@ -594,6 +590,51 @@
             background: rgba(255, 255, 255, 0.07);
         }
 
+        /* ============================================================
+                   🖥️ 下载入口卡片（新增）
+                   ============================================================ */
+        .download-card {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 2.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 56px;
+            margin: 2rem 0;
+        }
+        .download-card .icon-group {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 2.4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .download-card .info {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        .download-card .info h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .download-card .info p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+        .download-card .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         footer {
             text-align: center;
             margin-top: 3.5rem;
@@ -618,38 +659,137 @@
                    响应式
                    ============================================================ */
         @media (max-width: 800px) {
-            .container { padding: 1rem 1.2rem 2.5rem; }
-            .glass-nav { flex-direction: column; gap: 12px; padding: 1rem 1.2rem; border-radius: 40px; }
-            .nav-links { gap: 1rem; justify-content: center; }
-            h1 { font-size: 2.4rem; }
-            h2 { font-size: 1.7rem; }
-            .scroll-driven-object { width: 110px; height: 110px; font-size: 2.5rem; }
-            .scroll-progress-value { font-size: 1.8rem; }
-            .game-preview-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-            .game-preview-item img { height: 140px; }
-            .game-poster-wrapper img { max-height: 350px; }
-            .rich-text { columns: 1; }
-            .pet-showcase { padding: 1.8rem 1.2rem; }
-            .glass-padded { padding: 1.5rem 1.2rem; }
-            .glass-form { padding: 1.5rem 1.2rem; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .logo { font-size: 1.4rem; }
-            .logo img { height: 34px; }
+            .container {
+                padding: 1rem 1.2rem 2.5rem;
+            }
+            .glass-nav {
+                flex-direction: column;
+                gap: 12px;
+                padding: 1rem 1.2rem;
+                border-radius: 40px;
+            }
+            .nav-links {
+                gap: 1rem;
+                justify-content: center;
+            }
+            h1 {
+                font-size: 2.4rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+            .scroll-driven-object {
+                width: 110px;
+                height: 110px;
+                font-size: 2.5rem;
+            }
+            .scroll-progress-value {
+                font-size: 1.8rem;
+            }
+            .game-preview-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .game-preview-item img {
+                height: 140px;
+            }
+            .game-poster-wrapper img {
+                max-height: 350px;
+            }
+            .rich-text {
+                columns: 1;
+            }
+            .pet-showcase {
+                padding: 1.8rem 1.2rem;
+            }
+            .glass-padded {
+                padding: 1.5rem 1.2rem;
+            }
+            .glass-form {
+                padding: 1.5rem 1.2rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .logo {
+                font-size: 1.4rem;
+            }
+            .logo img {
+                height: 34px;
+            }
+            .download-card {
+                padding: 1.5rem 1.2rem;
+                gap: 1.2rem;
+            }
+            .download-card .icon-group {
+                font-size: 1.8rem;
+            }
         }
         @media (max-width: 480px) {
-            .container { padding: 0.8rem 0.8rem 2rem; }
-            .glass-nav { border-radius: 28px; padding: 0.8rem 1rem; }
-            .nav-links { gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
-            .nav-links a { font-size: 0.8rem; }
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.4rem; }
-            .game-preview-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-            .game-preview-item img { height: 120px; }
-            .game-poster-wrapper img { max-height: 280px; }
-            .scroll-driven-object { width: 90px; height: 90px; font-size: 2rem; }
-            .btn-glass { padding: 10px 20px; font-size: 0.85rem; }
-            .glass-padded { padding: 1.2rem 1rem; }
-            .feature-item { padding: 1.2rem 1rem; }
+            .container {
+                padding: 0.8rem 0.8rem 2rem;
+            }
+            .glass-nav {
+                border-radius: 28px;
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                gap: 0.6rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .game-preview-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .game-preview-item img {
+                height: 120px;
+            }
+            .game-poster-wrapper img {
+                max-height: 280px;
+            }
+            .scroll-driven-object {
+                width: 90px;
+                height: 90px;
+                font-size: 2rem;
+            }
+            .btn-glass {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            .glass-padded {
+                padding: 1.2rem 1rem;
+            }
+            .feature-item {
+                padding: 1.2rem 1rem;
+            }
+            .download-card {
+                padding: 1.2rem 0.8rem;
+                gap: 0.8rem;
+                border-radius: 32px;
+            }
+            .download-card .icon-group {
+                font-size: 1.4rem;
+                gap: 0.4rem;
+            }
+            .download-card .info h3 {
+                font-size: 1.1rem;
+            }
+            .download-card .info p {
+                font-size: 0.75rem;
+            }
+            .download-card .btn-group .btn-glass {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -659,7 +799,7 @@
 
     <div class="container">
         <!-- ============================================================
-        毛玻璃导航栏
+        毛玻璃导航栏（新增 📥 下载入口）
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
@@ -676,11 +816,13 @@
                 <a href="./games.html" class="nav-highlight">🎯 游戏专页</a>
                 <a href="./hayui.html" class="nav-highlight">🖥️ HayUI</a>
                 <a href="./id.html" style="color:#c4b5ff;">🔐 ID</a>
+                <!-- 📥 新增下载入口 -->
+                <a href="./download.html" class="nav-highlight" style="color:#7cd4c0;">📥 下载</a>
             </div>
         </nav>
 
         <!-- ============================================================
-        Hero 区域（已恢复“下载桌面App”按钮）
+        Hero 区域
         ============================================================ -->
         <div class="reveal-on-scroll" style="margin-bottom: 2rem;">
             <div class="badge-glass">🍦 温柔智能纪元 · 毛玻璃质感</div>
@@ -690,8 +832,7 @@
             </p>
             <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">🍰 尝鲜在线版</a>
-                <!-- ✅ 已恢复“下载桌面App”按钮 -->
-                <a href="#" class="btn-glass btn-glass-download">📦 下载桌面App</a>
+                <a href="./download.html" class="btn-glass btn-glass-download">📦 下载桌面App</a>
                 <a href="./hayui.html" class="btn-glass" style="background:rgba(120,80,255,0.15); border-color:rgba(120,80,255,0.2); color:#c4b5ff;">🖥️ HayUI 框架</a>
             </div>
         </div>
@@ -841,6 +982,26 @@
                     🖥️ 探索 HayUI 框架
                 </a>
                 <span style="color:rgba(255,255,255,0.15); margin-left: 12px; font-size:0.8rem;">Android · Linux · Web</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        📥 下载入口卡片（新增）
+        ============================================================ -->
+        <div class="download-card reveal-on-scroll">
+            <div class="icon-group">
+                <span>📱</span>
+                <span>💻</span>
+                <span>🖥️</span>
+                <span>🍎</span>
+            </div>
+            <div class="info">
+                <h3>📦 多平台下载</h3>
+                <p>iOS · Android · HarmonyOS · macOS · Windows</p>
+            </div>
+            <div class="btn-group">
+                <a href="./download.html" class="btn-glass btn-glass-download">📥 前往下载中心</a>
+                <a href="./download.html" class="btn-glass" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.06); color:rgba(255,255,255,0.5);">查看全部平台</a>
             </div>
         </div>
 
@@ -1083,9 +1244,7 @@
                 });
 
             console.log('🍰 LaswI AI · 毛玻璃官网已加载');
-            console.log('📦 已恢复「下载桌面App」按钮');
-            console.log('🖥️ HayUI 入口已添加');
-            //HaySo: Say-< Hallo World >_L
+            console.log('📥 已整合下载页面入口（导航栏 + Hero + 下载卡片）');
 
         })();
     </script>
