@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <title>HayUI · 轻量跨平台界面框架</title>
+    <style>
+        /* ============================================================
+                   全局重置 & 毛玻璃基础
+                   ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'PingFang SC', 'Roboto', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 20% 50%, #1a1a2e 0%, #0f0f1a 100%);
+            color: rgba(255, 255, 255, 0.92);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 动态光晕背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -30%;
+            left: -20%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.12) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat 12s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -15%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat2 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, 40px) scale(1.2);
+            }
+        }
+        @keyframes glowFloat2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-40px, -30px) scale(1.3);
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            backdrop-filter: blur(4px);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+                   毛玻璃组件
+                   ============================================================ */
+        .glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .glass:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .glass-padded {
+            padding: 2rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        /* ============================================================
+                   导航（毛玻璃）
+                   ============================================================ */
+        .glass-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0.7rem 1.8rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c5cfc, #5b3fd4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(100, 80, 255, 0.25);
+        }
+        .logo-text {
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.25s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a.nav-highlight {
+            color: #c4b5ff;
+            font-weight: 600;
+        }
+        .nav-links a.nav-highlight::after {
+            width: 100%;
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
+        }
+
+        /* ============================================================
+                   按钮
+                   ============================================================ */
+        .btn-glass {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            color: #fff;
+        }
+        .btn-glass-primary {
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.25), rgba(80, 60, 220, 0.15));
+            border-color: rgba(120, 80, 255, 0.2);
+            color: #c4b5ff;
+        }
+        .btn-glass-primary:hover {
+            background: rgba(120, 80, 255, 0.2);
+            border-color: rgba(120, 80, 255, 0.3);
+            color: #fff;
+        }
+        .btn-glass-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .btn-glass-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        /* ============================================================
+                   徽章
+                   ============================================================ */
+        .badge-glass {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+                   英雄区
+                   ============================================================ */
+        .hero-section {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+        }
+        .hero-section .badge-glass {
+            margin-bottom: 0.8rem;
+        }
+        .hero-section h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .hero-section h1 .gradient-text {
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0, #6b4fd4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-section .subtitle {
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 600px;
+            margin: 0.8rem auto 1.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+                   平台标签
+                   ============================================================ */
+        .platform-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 1rem 0 0.5rem;
+        }
+        .platform-tag {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .platform-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .platform-tag .dot.android {
+            background: #3ddc84;
+        }
+        .platform-tag .dot.linux {
+            background: #f8c300;
+        }
+        .platform-tag .dot.web {
+            background: #4fc3f7;
+        }
+
+        /* ============================================================
+                   特性网格
+                   ============================================================ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 28px;
+            padding: 1.8rem 1.5rem;
+            transition: all 0.35s ease;
+        }
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        .feature-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        /* ============================================================
+                   响应式展示（设备模拟）
+                   ============================================================ */
+        .device-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem 1rem;
+        }
+        .device-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 32px;
+            transition: all 0.3s ease;
+        }
+        .device-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            transform: translateY(-4px);
+        }
+        .device-item .mockup {
+            width: 100%;
+            max-width: 120px;
+            margin: 0 auto 0.8rem;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .device-item .mockup .screen-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(120, 80, 255, 0.08), transparent 70%);
+        }
+        .device-item .mockup-phone {
+            max-width: 100px;
+            aspect-ratio: 9 / 19;
+            border-radius: 20px;
+        }
+        .device-item .mockup-tablet {
+            max-width: 160px;
+            aspect-ratio: 4 / 3;
+            border-radius: 16px;
+        }
+        .device-item .mockup-desktop {
+            max-width: 220px;
+            aspect-ratio: 16 / 10;
+            border-radius: 12px;
+        }
+        .device-item .device-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .device-item .device-desc {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+                   技术栈标签
+                   ============================================================ */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .tech-tag:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ============================================================
+                   亮点区块
+                   ============================================================ */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+        .highlight-item {
+            text-align: center;
+            padding: 1.2rem 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+        .highlight-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .highlight-item .number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c4b5ff, #6b4fd4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .highlight-item .label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+                   代码片段展示（毛玻璃）
+                   ============================================================ */
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .code-block .comment {
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .code-block .keyword {
+            color: #c4b5ff;
+        }
+        .code-block .string {
+            color: #7cd4a0;
+        }
+        .code-block .func {
+            color: #f5c27a;
+        }
+
+        /* ============================================================
+                   页脚
+                   ============================================================ */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        footer a {
+            color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        footer a:hover {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ============================================================
+                   响应式
+                   ============================================================ */
+        @media (max-width: 900px) {
+            .container {
+                padding: 0.8rem 1.2rem 2.5rem;
+            }
+            .glass-nav {
+                flex-direction: column;
+                gap: 10px;
+                padding: 0.8rem 1.2rem;
+                border-radius: 40px;
+            }
+            .nav-links {
+                gap: 1rem;
+                justify-content: center;
+            }
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+            .glass-padded {
+                padding: 1.5rem 1.2rem;
+            }
+            .device-showcase {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+            .device-item .mockup-desktop {
+                max-width: 160px;
+            }
+            .device-item .mockup-tablet {
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0.6rem 0.8rem 2rem;
+            }
+            .glass-nav {
+                padding: 0.6rem 0.8rem;
+                border-radius: 28px;
+            }
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+            }
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .hero-section .subtitle {
+                font-size: 0.9rem;
+            }
+            .glass-padded {
+                padding: 1.2rem 1rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .device-showcase {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+                padding: 0.8rem 0.4rem;
+            }
+            .device-item .mockup-desktop {
+                max-width: 120px;
+            }
+            .device-item .mockup-tablet {
+                max-width: 90px;
+            }
+            .device-item .mockup-phone {
+                max-width: 70px;
+            }
+            .highlight-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .btn-glass {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+            .code-block {
+                font-size: 0.7rem;
+                padding: 1rem 1rem;
+            }
+            .platform-tags {
+                gap: 6px;
+            }
+            .platform-tag {
+                font-size: 0.65rem;
+                padding: 3px 12px;
+            }
+            .tech-tags {
+                gap: 5px;
+            }
+            .tech-tag {
+                font-size: 0.65rem;
+                padding: 4px 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+            .device-showcase {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+            .device-item .mockup-desktop {
+                max-width: 100px;
+            }
+            .device-item .mockup-tablet {
+                max-width: 75px;
+            }
+            .device-item .mockup-phone {
+                max-width: 60px;
+            }
+            .device-item .device-label {
+                font-size: 0.7rem;
+            }
+            .device-item .device-desc {
+                font-size: 0.6rem;
+            }
+            .highlight-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+            .highlight-item .number {
+                font-size: 1.6rem;
+            }
+            .highlight-item .label {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* 淡入动画 */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 呼吸光晕（装饰） */
+        .pulse-ring {
+            position: fixed;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 80, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulseRing 8s ease-in-out infinite;
+        }
+        .pulse-ring.r1 {
+            width: 40vw;
+            height: 40vw;
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+        .pulse-ring.r2 {
+            width: 30vw;
+            height: 30vw;
+            bottom: -5%;
+            left: -5%;
+            animation-delay: 3s;
+        }
+        @keyframes pulseRing {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 装饰光晕 -->
+    <div class="pulse-ring r1"></div>
+    <div class="pulse-ring r2"></div>
+
+    <div class="container">
+        <!-- ============================================================
+        导航
+        ============================================================ -->
+        <nav class="glass-nav">
+            <div class="logo">
+                <div class="logo-icon">H</div>
+                <span class="logo-text">HayUI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">✦ 特性</a>
+                <a href="#devices">📱 多端</a>
+                <a href="#tech">⚙️ 技术</a>
+                <a href="#code">💻 代码</a>
+                <a href="https://github.com" target="_blank" style="color:rgba(255,255,255,0.3);">📦 GitHub</a>
+                <!-- 🔐 LaswI ID 登录入口 -->
+                <a href="id.html" class="nav-highlight">🔐 LaswI ID</a>
+                <a href="./index.html" class="nav-highlight">🏠 回到官网</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        Hero
+        ============================================================ -->
+        <section class="hero-section reveal-on-scroll">
+            <div class="badge-glass">✦ 轻量 · 跨平台 · 现代</div>
+            <h1>
+                基于 <span class="gradient-text">Android &amp; Linux</span><br />
+                定制的界面框架
+            </h1>
+            <p class="subtitle">
+                HayUI 是一套为手机、平板、电脑三端统一设计的轻量级 UI 框架，<br />
+                深度融合 Android 与 Linux 生态，带来流畅、一致、优雅的交互体验。
+            </p>
+            <div class="platform-tags">
+                <span class="platform-tag"><span class="dot android"></span> Android</span>
+                <span class="platform-tag"><span class="dot linux"></span> Linux</span>
+                <span class="platform-tag"><span class="dot web"></span> Web / 跨端</span>
+            </div>
+            <div class="hero-actions">
+                <a href="#features" class="btn-glass btn-glass-primary">✨ 探索特性</a>
+                <a href="#code" class="btn-glass btn-glass-secondary">📄 查看代码</a>
+                <a href="https://github.com" target="_blank" class="btn-glass btn-glass-secondary">⭐ Star on GitHub</a>
+                <!-- 登录入口按钮 -->
+                <a href="id.html" class="btn-glass btn-glass-primary">🔐 登录 LaswI ID</a>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        核心特性
+        ============================================================ -->
+        <div id="features" class="glass glass-padded reveal-on-scroll">
+            <h2 style="color:#fff; font-size: 1.8rem; margin-bottom: 0.2rem;">✨ 核心特性</h2>
+            <p style="color:rgba(255,255,255,0.3); margin-bottom: 1.2rem;">为 Android 与 Linux 深度优化的现代界面方案</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="icon">📱</span>
+                    <h3>三端一致</h3>
+                    <p>手机、平板、桌面统一设计语言，自适应布局，一套代码覆盖全平台</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">⚡</span>
+                    <h3>轻量高性能</h3>
+                    <p>基于原生渲染，无重型依赖，启动快、内存占用低，适合 Android 与 Linux 设备</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🎨</span>
+                    <h3>毛玻璃美学</h3>
+                    <p>原生支持毛玻璃效果、动态光晕、柔滑动画，视觉体验细腻通透</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🔧</span>
+                    <h3>Android 定制</h3>
+                    <p>深度适配 Android 系统特性，支持 Material You、手势导航、暗色模式</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🐧</span>
+                    <h3>Linux 原生</h3>
+                    <p>为 GNOME / KDE 等主流桌面环境优化，支持 Wayland，系统级集成</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🌐</span>
+                    <h3>Web 兼容</h3>
+                    <p>基于 Web 标准构建，可在浏览器中预览，方便开发调试与快速迭代</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        多端展示（手机 · 平板 · 电脑）
+        ============================================================ -->
+        <div id="devices" class="glass glass-padded reveal-on-scroll">
+            <h2 style="color:#fff; font-size: 1.8rem; text-align:center; margin-bottom: 0.2rem;">📱 三端 · 一致体验</h2>
+            <p style="color:rgba(255,255,255,0.3); text-align:center; margin-bottom: 0.5rem;">手机 · 平板 · 电脑 — 同一套界面，同样的优雅</p>
+            <div class="device-showcase">
+                <div class="device-item">
+                    <div class="mockup mockup-phone">
+                        <div class="screen-glow"></div>
+                        <span style="position:relative; z-index:1;">📱</span>
+                    </div>
+                    <div class="device-label">手机</div>
+                    <div class="device-desc">Android · 触控优化</div>
+                </div>
+                <div class="device-item">
+                    <div class="mockup mockup-tablet">
+                        <div class="screen-glow"></div>
+                        <span style="position:relative; z-index:1;">📋</span>
+                    </div>
+                    <div class="device-label">平板</div>
+                    <div class="device-desc">Android · 大屏适配</div>
+                </div>
+                <div class="device-item">
+                    <div class="mockup mockup-desktop">
+                        <div class="screen-glow"></div>
+                        <span style="position:relative; z-index:1;">🖥️</span>
+                    </div>
+                    <div class="device-label">电脑</div>
+                    <div class="device-desc">Linux · 键鼠交互</div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top: 0.5rem;">
+                <span class="badge-glass">📱 Android 12+ 适配</span>
+                <span class="badge-glass" style="margin-left:8px;">🐧 Linux 内核 5.15+</span>
+                <span class="badge-glass" style="margin-left:8px;">🌐 所有现代浏览器</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        亮点数据
+        ============================================================ -->
+        <div class="glass glass-padded reveal-on-scroll" style="background:rgba(255,255,255,0.02);">
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <div class="number">3</div>
+                    <div class="label">全平台覆盖</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="number">&lt;2MB</div>
+                    <div class="label">核心包体积</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="number">60fps</div>
+                    <div class="label">流畅动画</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="number">100%</div>
+                    <div class="label">Kotlin / Rust 原生</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="number">12+</div>
+                    <div class="label">内置组件</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="number">MIT</div>
+                    <div class="label">开源协议</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        技术栈
+        ============================================================ -->
+        <div id="tech" class="glass glass-padded reveal-on-scroll">
+            <h2 style="color:#fff; font-size: 1.8rem; margin-bottom: 0.2rem;">⚙️ 技术栈</h2>
+            <p style="color:rgba(255,255,255,0.3); margin-bottom: 0.8rem;">基于现代技术构建，为 Android 与 Linux 量身打造</p>
+            <div class="tech-tags">
+                <span class="tech-tag">Kotlin Multiplatform</span>
+                <span class="tech-tag">Rust</span>
+                <span class="tech-tag">Jetpack Compose</span>
+                <span class="tech-tag">GTK 4</span>
+                <span class="tech-tag">Wayland</span>
+                <span class="tech-tag">Material You</span>
+                <span class="tech-tag">Skia</span>
+                <span class="tech-tag">WebAssembly</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">CSS 毛玻璃</span>
+            </div>
+            <div style="margin-top:0.8rem; display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                <span class="badge-glass">🧩 模块化架构</span>
+                <span class="badge-glass">🔒 安全内存管理</span>
+                <span class="badge-glass">🔄 响应式数据流</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        代码示例
+        ============================================================ -->
+        <div id="code" class="glass glass-padded reveal-on-scroll">
+            <h2 style="color:#fff; font-size: 1.8rem; margin-bottom: 0.2rem;">💻 代码示例</h2>
+            <p style="color:rgba(255,255,255,0.3); margin-bottom: 0.8rem;">HayUI 简洁优雅的声明式 API</p>
+            <div class="code-block">
+                <span class="comment">// HayUI · Android 端示例</span>
+                <span class="keyword">class</span> <span class="func">MainActivity</span> : <span class="func">HayActivity</span>() {
+                    <span class="keyword">override fun</span> <span class="func">onCreate</span>(savedInstanceState: Bundle?) {
+                        <span class="keyword">super</span>.onCreate(savedInstanceState)
+                        <span class="func">setContent</span> {
+                            <span class="func">HayTheme</span> {
+                                <span class="func">GlassContainer</span>(
+                                    modifier = Modifier.<span class="func">fillMaxSize</span>(),
+                                    blur = 20.<span class="func">dp</span>,
+                                    background = <span class="string">"#1a1a2e"</span>
+                                ) {
+                                    <span class="func">Column</span> {
+                                        <span class="func">Text</span>(<span class="string">"欢迎使用 HayUI"</span>, style = HayTheme.<span class="func">typography</span>.h1)
+                                        <span class="func">Button</span>(onClick = { <span class="func">navigateTo</span>(<span class="string">"/settings"</span>) }) {
+                                            <span class="func">Text</span>(<span class="string">"打开设置"</span>)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                <span class="comment">// HayUI · Linux 端示例 (Rust + GTK4)</span>
+                <span class="keyword">use</span> hayui::prelude::*;
+
+                <span class="keyword">fn</span> <span class="func">main</span>() -> Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+                    <span class="func">HayApp::new</span>()
+                        .<span class="func">window</span>(Window::<span class="func">new</span>()
+                            .<span class="func">title</span>(<span class="string">"HayUI · Linux"</span>)
+                            .<span class="func">size</span>(800, 600)
+                            .<span class="func">glass</span>(GlassConfig::<span class="func">default</span>().<span class="func">blur</span>(20.0))
+                            .<span class="func">child</span>(
+                                <span class="func">Column::new</span>()
+                                    .<span class="func">push</span>(Text::<span class="func">new</span>(<span class="string">"欢迎使用 HayUI"</span>).<span class="func">style</span>(TextStyle::Heading1))
+                                    .<span class="func">push</span>(Button::<span class="func">new</span>(<span class="string">"打开设置"</span>).<span class="func">on_click</span>(|| { <span class="func">navigate</span>(<span class="string">"/settings"</span>); }))
+                            )
+                        )
+                        .<span class="func">run</span>()
+                }
+            </div>
+            <div style="text-align:center; margin-top:0.8rem;">
+                <a href="https://github.com" target="_blank" class="btn-glass btn-glass-primary">📦 查看完整文档</a>
+                <a href="https://github.com" target="_blank" class="btn-glass btn-glass-secondary" style="margin-left:10px;">⭐ 在 GitHub 上 Star</a>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        CTA
+        ============================================================ -->
+        <div class="glass glass-padded reveal-on-scroll" style="text-align:center; background:linear-gradient(135deg, rgba(120,80,255,0.06), rgba(60,40,200,0.03)); border-color:rgba(120,80,255,0.06);">
+            <h2 style="color:#fff; font-size: 1.8rem; margin-bottom: 0.4rem;">🚀 开始使用 HayUI</h2>
+            <p style="color:rgba(255,255,255,0.4); max-width:500px; margin: 0.4rem auto 1.2rem;">
+                为 Android 与 Linux 打造的现代界面框架，让跨平台开发更优雅
+            </p>
+            <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                <a href="https://github.com" target="_blank" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
+                    📦 快速开始
+                </a>
+                <a href="https://github.com" target="_blank" class="btn-glass btn-glass-secondary" style="padding:12px 36px; font-size:1rem;">
+                    📖 阅读文档
+                </a>
+                <!-- 登录入口（CTA 区域也放一个） -->
+                <a href="id.html" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
+                    🔐 登录 LaswI ID
+                </a>
+            </div>
+            <div style="margin-top:0.8rem;">
+                <span class="badge-glass">📱 Android · Linux · Web</span>
+                <span class="badge-glass" style="margin-left:8px;">🔓 完全开源</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        页脚
+        ============================================================ -->
+        <footer>
+            <p>
+                HayUI · 轻量跨平台界面框架 &nbsp;|&nbsp;
+                基于 <a href="https://www.android.com" target="_blank">Android</a> &amp;
+                <a href="https://www.linux.org" target="_blank">Linux</a> 定制改造 &nbsp;|&nbsp;
+                © 2026 HayUI Team
+            </p>
+            <p style="margin-top:4px; color:rgba(255,255,255,0.08); font-size:0.65rem;">
+                由 ❤️ 与 ☕ 驱动 · 开源 MIT 协议
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            //  Reveal on scroll 观察器
+            // ============================================================
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+            revealElements.forEach(el => observer.observe(el));
+
+            // ============================================================
+            //  平滑锚点滚动
+            // ============================================================
+            document.querySelectorAll('.nav-links a[href^="#"], .hero-actions a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+
+            console.log('🌿 HayUI 宣传页面已加载');
+            console.log('📱 支持 Android · Linux · Web 三端');
+            console.log('✨ 基于毛玻璃设计 · 轻量跨平台');
+            console.log('🔐 已添加 LaswI ID 登录入口 (id.html)');
+
+        })();
+    </script>
+</body>
+</html>

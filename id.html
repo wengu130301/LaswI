@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <title>LaswI ID · 登录 / 注册</title>
+    <style>
+        /* ============================================================
+                   全局重置 & 毛玻璃基础（与 hayui.html 一致）
+                   ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'PingFang SC', 'Roboto', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 20% 50%, #1a1a2e 0%, #0f0f1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 动态光晕背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -30%;
+            left: -20%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.12) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat 12s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -15%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat2 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, 40px) scale(1.2);
+            }
+        }
+        @keyframes glowFloat2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-40px, -30px) scale(1.3);
+            }
+        }
+
+        /* 呼吸光晕装饰 */
+        .pulse-ring {
+            position: fixed;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 80, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulseRing 8s ease-in-out infinite;
+        }
+        .pulse-ring.r1 {
+            width: 40vw;
+            height: 40vw;
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+        .pulse-ring.r2 {
+            width: 30vw;
+            height: 30vw;
+            bottom: -5%;
+            left: -5%;
+            animation-delay: 3s;
+        }
+        @keyframes pulseRing {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        /* 容器 */
+        .container {
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s ease;
+            margin-bottom: 1.2rem;
+        }
+        .back-link:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* 毛玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 2.2rem 2rem;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Logo 区域 */
+        .brand {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+        .brand .logo-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #7c5cfc, #5b3fd4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(100, 80, 255, 0.3);
+            margin-bottom: 0.6rem;
+        }
+        .brand h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        .brand h1 .gradient-text {
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .brand p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Tabs 切换 */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            padding: 4px;
+            margin-bottom: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            border-radius: 40px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .tab-btn:hover:not(.active) {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 表单 */
+        .form-container {
+            display: block;
+        }
+        .form-container.hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+        .input-glass {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: 0.25s ease;
+            outline: none;
+            font-family: inherit;
+        }
+        .input-glass::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .input-glass:focus {
+            border-color: rgba(120, 80, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(120, 80, 255, 0.05);
+        }
+        .input-glass.error {
+            border-color: rgba(255, 80, 80, 0.3);
+            box-shadow: 0 0 0 4px rgba(255, 80, 80, 0.05);
+        }
+        .input-error {
+            font-size: 0.75rem;
+            color: rgba(255, 120, 120, 0.7);
+            margin-top: 4px;
+            padding-left: 12px;
+            display: none;
+        }
+        .input-error.show {
+            display: block;
+        }
+
+        /* 额外选项（记住我、忘记密码） */
+        .form-extra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.8rem 0 1.4rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .form-extra label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .form-extra input[type="checkbox"] {
+            accent-color: #7c5cfc;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .form-extra a {
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .form-extra a:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 按钮 */
+        .btn-glass-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.25), rgba(80, 60, 220, 0.15));
+            border: 1px solid rgba(120, 80, 255, 0.2);
+            color: #c4b5ff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+        .btn-glass-submit:hover {
+            background: rgba(120, 80, 255, 0.2);
+            border-color: rgba(120, 80, 255, 0.3);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        .btn-glass-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* 底部协议 */
+        .terms {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.15);
+            line-height: 1.6;
+        }
+        .terms a {
+            color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .terms a:hover {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 反馈消息 */
+        .feedback {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 1rem;
+            min-height: 1.5rem;
+            transition: 0.3s;
+        }
+        .feedback.success {
+            color: rgba(120, 220, 160, 0.7);
+        }
+        .feedback.error {
+            color: rgba(255, 120, 120, 0.7);
+        }
+
+        /* ============================================================
+                   响应式适配
+                   ============================================================ */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .glass-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 32px;
+            }
+            .brand .logo-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+            .brand h1 {
+                font-size: 1.5rem;
+            }
+            .input-glass {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            .tab-btn {
+                font-size: 0.85rem;
+                padding: 8px 0;
+            }
+            .btn-glass-submit {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+            .form-extra {
+                flex-direction: column;
+                gap: 6px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .glass-card {
+                padding: 1.4rem 0.8rem;
+                border-radius: 28px;
+            }
+            .brand h1 {
+                font-size: 1.3rem;
+            }
+            .input-glass {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+            }
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 6px 0;
+            }
+            .btn-glass-submit {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .back-link {
+                font-size: 0.75rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 装饰 -->
+    <div class="pulse-ring r1"></div>
+    <div class="pulse-ring r2"></div>
+
+    <div class="container">
+        <!-- 返回链接 -->
+        <a href="index.html" class="back-link">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            返回官网
+        </a>
+
+        <!-- 毛玻璃卡片 -->
+        <div class="glass-card">
+            <!-- 品牌 -->
+            <div class="brand">
+                <div class="logo-icon">L</div>
+                <h1><span class="gradient-text">LaswI ID</span></h1>
+                <p>统一身份 · 跨端通行</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs" role="tablist">
+                <button class="tab-btn active" data-tab="login" role="tab" aria-selected="true">登录</button>
+                <button class="tab-btn" data-tab="register" role="tab" aria-selected="false">注册</button>
+            </div>
+
+            <!-- 登录表单 -->
+            <div id="login-form" class="form-container">
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="login-email">邮箱 / 用户名</label>
+                        <input type="text" id="login-email" class="input-glass" placeholder="your@email.com" required autocomplete="username" />
+                        <div class="input-error" id="login-email-error">请输入有效的邮箱或用户名</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" class="input-glass" placeholder="••••••••" required autocomplete="current-password" minlength="6" />
+                        <div class="input-error" id="login-password-error">密码至少 6 位</div>
+                    </div>
+                    <div class="form-extra">
+                        <label><input type="checkbox" checked /> 记住我</label>
+                        <a href="#">忘记密码？</a>
+                    </div>
+                    <button type="submit" class="btn-glass-submit">登录 LaswI ID</button>
+                    <div class="feedback" id="login-feedback"></div>
+                </form>
+                <div class="terms">
+                    登录即代表同意 <a href="#">服务条款</a> 和 <a href="#">隐私政策</a>
+                </div>
+            </div>
+
+            <!-- 注册表单 -->
+            <div id="register-form" class="form-container hidden">
+                <form id="registerForm" novalidate>
+                    <div class="form-group">
+                        <label for="reg-username">用户名</label>
+                        <input type="text" id="reg-username" class="input-glass" placeholder="例如: 小饼干" required autocomplete="username" minlength="2" maxlength="20" />
+                        <div class="input-error" id="reg-username-error">用户名 2~20 个字符</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">邮箱</label>
+                        <input type="email" id="reg-email" class="input-glass" placeholder="your@email.com" required autocomplete="email" />
+                        <div class="input-error" id="reg-email-error">请输入有效邮箱</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">密码</label>
+                        <input type="password" id="reg-password" class="input-glass" placeholder="至少 6 位" required autocomplete="new-password" minlength="6" />
+                        <div class="input-error" id="reg-password-error">密码至少 6 位</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password-confirm">确认密码</label>
+                        <input type="password" id="reg-password-confirm" class="input-glass" placeholder="再次输入密码" required autocomplete="new-password" />
+                        <div class="input-error" id="reg-password-confirm-error">密码不一致</div>
+                    </div>
+                    <div class="form-extra">
+                        <label><input type="checkbox" required /> 我同意 <a href="#" style="color:rgba(255,255,255,0.4);">服务条款</a> 和 <a href="#" style="color:rgba(255,255,255,0.4);">隐私政策</a></label>
+                    </div>
+                    <button type="submit" class="btn-glass-submit">注册 LaswI ID</button>
+                    <div class="feedback" id="register-feedback"></div>
+                </form>
+                <div class="terms">
+                    已有账号？ <a href="#" id="switch-to-login" style="color:rgba(255,255,255,0.3);">立即登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            //  Tab 切换逻辑
+            // ============================================================
+            const tabs = document.querySelectorAll('.tab-btn');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+
+            function switchTab(tabId) {
+                // 更新按钮状态
+                tabs.forEach(btn => {
+                    const isActive = btn.dataset.tab === tabId;
+                    btn.classList.toggle('active', isActive);
+                    btn.setAttribute('aria-selected', isActive);
+                });
+
+                // 切换表单显示
+                loginForm.classList.toggle('hidden', tabId !== 'login');
+                registerForm.classList.toggle('hidden', tabId !== 'register');
+
+                // 清空反馈
+                document.querySelectorAll('.feedback').forEach(el => {
+                    el.textContent = '';
+                    el.className = 'feedback';
+                });
+                // 清除输入错误状态
+                document.querySelectorAll('.input-glass').forEach(el => el.classList.remove('error'));
+                document.querySelectorAll('.input-error').forEach(el => el.classList.remove('show'));
+            }
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // 注册表单中的“已有账号？立即登录”切换
+            document.getElementById('switch-to-login').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('login');
+            });
+
+            // ============================================================
+            //  简单表单验证（前端演示）
+            // ============================================================
+            function validateField(input, errorId, condition, errorMsg) {
+                const errorEl = document.getElementById(errorId);
+                if (!condition) {
+                    input.classList.add('error');
+                    errorEl.textContent = errorMsg;
+                    errorEl.classList.add('show');
+                    return false;
+                } else {
+                    input.classList.remove('error');
+                    errorEl.classList.remove('show');
+                    return true;
+                }
+            }
+
+            // 登录表单
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email');
+                const password = document.getElementById('login-password');
+                const feedback = document.getElementById('login-feedback');
+
+                const isEmailValid = validateField(email, 'login-email-error',
+                    email.value.trim().length > 0 && (email.value.includes('@') || email.value.trim().length >= 2),
+                    '请输入有效的邮箱或用户名（至少2个字符）'
+                );
+                const isPassValid = validateField(password, 'login-password-error',
+                    password.value.length >= 6,
+                    '密码至少 6 位'
+                );
+
+                if (isEmailValid && isPassValid) {
+                    feedback.textContent = '✅ 登录成功（演示）';
+                    feedback.className = 'feedback success';
+                    // 实际应跳转到控制台或主页
+                    // window.location.href = '/dashboard';
+                } else {
+                    feedback.textContent = '❌ 请修正表单错误';
+                    feedback.className = 'feedback error';
+                }
+            });
+
+            // 注册表单
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('reg-username');
+                const email = document.getElementById('reg-email');
+                const password = document.getElementById('reg-password');
+                const confirm = document.getElementById('reg-password-confirm');
+                const feedback = document.getElementById('register-feedback');
+
+                const isUsernameValid = validateField(username, 'reg-username-error',
+                    username.value.trim().length >= 2 && username.value.trim().length <= 20,
+                    '用户名 2~20 个字符'
+                );
+                const isEmailValid = validateField(email, 'reg-email-error',
+                    email.value.trim().length > 0 && email.value.includes('@') && email.value.includes('.'),
+                    '请输入有效邮箱'
+                );
+                const isPassValid = validateField(password, 'reg-password-error',
+                    password.value.length >= 6,
+                    '密码至少 6 位'
+                );
+                const isConfirmValid = validateField(confirm, 'reg-password-confirm-error',
+                    confirm.value === password.value && confirm.value.length > 0,
+                    '密码不一致'
+                );
+
+                // 额外检查同意条款（复选框）
+                const termsCheck = document.querySelector('#registerForm input[type="checkbox"]');
+                if (!termsCheck.checked) {
+                    feedback.textContent = '❌ 请先同意服务条款和隐私政策';
+                    feedback.className = 'feedback error';
+                    return;
+                }
+
+                if (isUsernameValid && isEmailValid && isPassValid && isConfirmValid) {
+                    feedback.textContent = '✅ 注册成功（演示）';
+                    feedback.className = 'feedback success';
+                    // 可自动切换到登录
+                    setTimeout(() => switchTab('login'), 1500);
+                } else {
+                    feedback.textContent = '❌ 请修正表单错误';
+                    feedback.className = 'feedback error';
+                }
+            });
+
+            // 输入时清除错误状态
+            document.querySelectorAll('.input-glass').forEach(input => {
+                input.addEventListener('input', function() {
+                    this.classList.remove('error');
+                    const errorEl = this.parentElement.querySelector('.input-error');
+                    if (errorEl) errorEl.classList.remove('show');
+                });
+            });
+
+            // 如果 URL 有 ?register 参数，自动切换到注册
+            if (window.location.search.includes('register')) {
+                switchTab('register');
+            }
+
+            console.log('🔐 LaswI ID 登录/注册页面已加载');
+            console.log('📱 响应式设计，支持手机/平板/电脑');
+
+        })();
+    </script>
+</body>
+</html>
