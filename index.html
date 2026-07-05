@@ -215,6 +215,16 @@
             border-color: rgba(100, 200, 180, 0.35);
             color: #fff;
         }
+        .btn-glass-garden {
+            background: rgba(255, 200, 100, 0.15);
+            border-color: rgba(255, 200, 100, 0.2);
+            color: #ffd54f;
+        }
+        .btn-glass-garden:hover {
+            background: rgba(255, 200, 100, 0.25);
+            border-color: rgba(255, 200, 100, 0.35);
+            color: #fff;
+        }
 
         .badge-glass {
             display: inline-block;
@@ -256,7 +266,6 @@
             line-height: 1.6;
         }
 
-        /* 滚动驱动动画 */
         .scroll-driven-demo {
             text-align: center;
             padding: 2.5rem 2rem;
@@ -410,12 +419,8 @@
             animation: floatSoft 3s infinite alternate;
         }
         @keyframes floatSoft {
-            0% {
-                transform: translateY(0px);
-            }
-            100% {
-                transform: translateY(-10px);
-            }
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
         }
         .pet-text h3 {
             font-size: 1.9rem;
@@ -590,9 +595,6 @@
             background: rgba(255, 255, 255, 0.07);
         }
 
-        /* ============================================================
-                   🖥️ 下载入口卡片（新增）
-                   ============================================================ */
         .download-card {
             display: flex;
             flex-wrap: wrap;
@@ -799,7 +801,7 @@
 
     <div class="container">
         <!-- ============================================================
-        毛玻璃导航栏（新增 📥 下载入口）
+        毛玻璃导航栏（新增 🌤️ 魔法花园 入口）
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
@@ -816,8 +818,9 @@
                 <a href="./games.html" class="nav-highlight">🎯 游戏专页</a>
                 <a href="./hayui.html" class="nav-highlight">🖥️ HayUI</a>
                 <a href="./id.html" style="color:#c4b5ff;">🔐 ID</a>
-                <!-- 📥 新增下载入口 -->
                 <a href="./download.html" class="nav-highlight" style="color:#7cd4c0;">📥 下载</a>
+                <!-- 🌤️ 魔法花园入口（新增） -->
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="nav-highlight" style="color:#ffd54f;">🌤️ 魔法花园</a>
             </div>
         </nav>
 
@@ -834,6 +837,8 @@
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">🍰 尝鲜在线版</a>
                 <a href="./download.html" class="btn-glass btn-glass-download">📦 下载桌面App</a>
                 <a href="./hayui.html" class="btn-glass" style="background:rgba(120,80,255,0.15); border-color:rgba(120,80,255,0.2); color:#c4b5ff;">🖥️ HayUI 框架</a>
+                <!-- 🌤️ 魔法花园入口（新增） -->
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-garden">🌤️ 魔法花园</a>
             </div>
         </div>
 
@@ -953,6 +958,40 @@
         </div>
 
         <!-- ============================================================
+        🌤️ 魔法花园入口卡片（新增）
+        ============================================================ -->
+        <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(255,215,0,0.06), rgba(255,200,100,0.03)); border-color:rgba(255,215,0,0.08);">
+            <div class="section-title-center">
+                <div class="badge-glass" style="color:#ffd54f; border-color:rgba(255,215,0,0.15);">🌤️ 已上线</div>
+                <h2 style="font-size: 1.8rem; color:#fff;">《云端之上 · 魔法花园》</h2>
+                <p style="color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto;">
+                    一款连幼儿园小朋友都能轻松上手的治愈小游戏<br>
+                    拖拽云朵浇花 · 种植花朵 · 收获金币
+                </p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: center; margin-top: 0.5rem;">
+                <div style="flex: 1; min-width: 150px; text-align: center; color: rgba(255,255,255,0.5);">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">☁️</span>
+                    <span>拖拽云朵浇水</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; text-align: center; color: rgba(255,255,255,0.5);">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">🌸</span>
+                    <span>种植 · 生长 · 收获</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; text-align: center; color: rgba(255,255,255,0.5);">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">🪙</span>
+                    <span>金币商店 · 累计库存</span>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1.2rem;">
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-garden" style="padding: 14px 40px; font-size: 1.05rem;">
+                    🌤️ 进入魔法花园
+                </a>
+                <span style="color:rgba(255,255,255,0.15); margin-left: 12px; font-size:0.8rem;">✨ 纯真治愈 · 零门槛</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
         🖥️ HayUI 入口卡片
         ============================================================ -->
         <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(120,80,255,0.06), rgba(60,40,200,0.03)); border-color:rgba(120,80,255,0.06);">
@@ -986,7 +1025,7 @@
         </div>
 
         <!-- ============================================================
-        📥 下载入口卡片（新增）
+        📥 下载入口卡片
         ============================================================ -->
         <div class="download-card reveal-on-scroll">
             <div class="icon-group">
@@ -1229,7 +1268,7 @@
 
             document.querySelectorAll('video').forEach(v => v.play().catch(e => console.log));
 
-            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-glass-download, .btn-love-glass')
+            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-glass-download, .btn-glass-garden, .btn-love-glass')
                 .forEach(anchor => {
                     if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
                         anchor.addEventListener('click', function(e) {
@@ -1244,7 +1283,7 @@
                 });
 
             console.log('🍰 LaswI AI · 毛玻璃官网已加载');
-            console.log('📥 已整合下载页面入口（导航栏 + Hero + 下载卡片）');
+            console.log('🌤️ 已添加「魔法花园」入口 (wengu130301.github.io/hua)');
 
         })();
     </script>
