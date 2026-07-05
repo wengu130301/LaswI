@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
-    <title>《云端之上 · 白墨瑟尔城》- 游戏宣传</title>
+    <title>LaswI · 游戏中心</title>
     <style>
         /* ============================================================
                    全局重置 & 毛玻璃基础
@@ -17,21 +17,53 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'PingFang SC', 'Roboto', sans-serif;
             min-height: 100vh;
-            background: url('./bei.png') center center / cover no-repeat fixed;
+            background: radial-gradient(ellipse at 20% 30%, #1a1a3e 0%, #0f0f1a 60%, #0a0a12 100%);
             color: rgba(255, 255, 255, 0.92);
             overflow-x: hidden;
             position: relative;
         }
+
+        /* 动态光晕 */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(8, 10, 16, 0.50);
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.10) 0%, transparent 70%);
             z-index: 0;
             pointer-events: none;
+            animation: glowFloat 14s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 50%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat2 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, 40px) scale(1.15);
+            }
+        }
+        @keyframes glowFloat2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-40px, -30px) scale(1.2);
+            }
         }
 
         html {
@@ -39,19 +71,19 @@
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             backdrop-filter: blur(4px);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .container {
@@ -66,37 +98,40 @@
                    毛玻璃组件
                    ============================================================ */
         .glass {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px) saturate(1.5);
             -webkit-backdrop-filter: blur(20px) saturate(1.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 48px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .glass:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.08);
         }
         .glass-padded {
-            padding: 2rem 2.2rem;
-            margin: 1.8rem 0;
+            padding: 2rem 2rem;
+            margin: 1.5rem 0;
         }
 
-        /* 导航（毛玻璃） */
+        /* ============================================================
+                   导航
+                   ============================================================ */
         .glass-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            padding: 0.8rem 1.8rem;
+            padding: 0.7rem 1.8rem;
             margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px) saturate(1.4);
             -webkit-backdrop-filter: blur(16px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 60px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
         }
         .logo {
             display: flex;
@@ -107,13 +142,21 @@
             color: #fff;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
         }
-        .logo img {
-            height: 40px;
-            width: auto;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c5cfc, #5b3fd4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(100, 80, 255, 0.25);
         }
         .logo-text {
-            background: linear-gradient(135deg, #fce8d5, #f5d0b0);
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -126,28 +169,57 @@
         }
         .nav-links a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.5);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.25s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
+            transition: width 0.3s ease;
         }
         .nav-links a:hover {
             color: #fff;
         }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
         .nav-links a.nav-highlight {
-            color: #f5d0b0;
+            color: #c4b5ff;
             font-weight: 600;
         }
+        .nav-links a.nav-highlight::after {
+            width: 100%;
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
+        }
+        .nav-links a.nav-gold {
+            color: #ffd54f;
+            font-weight: 600;
+        }
+        .nav-links a.nav-gold::after {
+            width: 100%;
+            background: linear-gradient(90deg, #ffd54f, #ffb300);
+        }
 
+        /* ============================================================
+                   按钮
+                   ============================================================ */
         .btn-glass {
             display: inline-block;
             padding: 10px 28px;
             border-radius: 60px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -155,52 +227,46 @@
             cursor: pointer;
         }
         .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.14);
-            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
             color: #fff;
         }
         .btn-glass-primary {
-            background: rgba(240, 178, 122, 0.2);
-            border-color: rgba(240, 178, 122, 0.2);
-            color: #f5d0b0;
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.25), rgba(80, 60, 220, 0.15));
+            border-color: rgba(120, 80, 255, 0.2);
+            color: #c4b5ff;
         }
         .btn-glass-primary:hover {
-            background: rgba(240, 178, 122, 0.3);
-            border-color: rgba(240, 178, 122, 0.35);
+            background: rgba(120, 80, 255, 0.2);
+            border-color: rgba(120, 80, 255, 0.3);
+            color: #fff;
+        }
+        .btn-glass-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .btn-glass-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+        .btn-glass-gold {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 180, 0, 0.08));
+            border-color: rgba(255, 215, 0, 0.15);
+            color: #ffd54f;
+        }
+        .btn-glass-gold:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.25);
             color: #fff;
         }
 
-        /* ============================================================
-                   英雄区
-                   ============================================================ */
-        .hero-section {
-            text-align: center;
-            padding: 2rem 1rem 1.5rem;
-        }
-        .hero-section h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
-        }
-        .hero-section h1 .gradient-text {
-            background: linear-gradient(135deg, #fce8d5, #f5d0b0, #e8b08a);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-section p {
-            color: rgba(255, 255, 255, 0.5);
-            max-width: 600px;
-            margin: 0.8rem auto 1.5rem;
-            font-size: 1.05rem;
-        }
         .badge-glass {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -208,85 +274,253 @@
             border-radius: 40px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .badge-gold {
+            color: #ffd54f;
+            border-color: rgba(255, 215, 0, 0.15);
+            background: rgba(255, 215, 0, 0.05);
         }
 
         /* ============================================================
-                   视频播放器（毛玻璃包裹）
+                   Hero 区
                    ============================================================ */
-        .video-wrapper {
-            border-radius: 48px;
-            overflow: hidden;
-            box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(0, 0, 0, 0.3);
-        }
-        .video-wrapper video {
-            width: 100%;
-            display: block;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            background: #0a0c12;
-        }
-
-        /* ============================================================
-                   游戏信息
-                   ============================================================ */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .info-item {
+        .hero-section {
             text-align: center;
-            padding: 1.2rem 1rem;
+            padding: 2.5rem 1rem 1.5rem;
+        }
+        .hero-section .badge-glass {
+            margin-bottom: 0.8rem;
+        }
+        .hero-section h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .hero-section h1 .gradient-text {
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0, #6b4fd4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-section h1 .gold-text {
+            background: linear-gradient(135deg, #ffd54f, #ffb300, #ff8f00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-section .subtitle {
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 600px;
+            margin: 0.8rem auto 1.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+                   游戏卡片网格
+                   ============================================================ */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .game-card {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
             border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 32px;
-            transition: all 0.3s ease;
+            padding: 2rem 1.8rem;
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .info-item:hover {
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.02), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        .game-card:hover {
             background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        .info-item .icon {
-            font-size: 2rem;
-            margin-bottom: 0.4rem;
+        .game-card .card-icon {
+            font-size: 3.6rem;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.2));
+            transition: transform 0.4s ease;
         }
-        .info-item .label {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .game-card:hover .card-icon {
+            transform: scale(1.08) rotate(-4deg);
         }
-        .info-item .value {
-            font-size: 1rem;
+        .game-card .card-badge {
+            font-size: 0.6rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 1px;
+            padding: 3px 14px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+        }
+        .game-card .card-badge.gold {
+            color: #ffd54f;
+            border-color: rgba(255, 215, 0, 0.15);
+            background: rgba(255, 215, 0, 0.05);
+        }
+        .game-card .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.5px;
+        }
+        .game-card .card-title .highlight {
+            background: linear-gradient(135deg, #f5d0b0, #e8b08a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .game-card .card-title .highlight-gold {
+            background: linear-gradient(135deg, #ffd54f, #ffb300);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .game-card .card-desc {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0.4rem 0 1rem;
+            max-width: 400px;
+        }
+        .game-card .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .game-card .card-tags span {
+            font-size: 0.65rem;
+            padding: 3px 12px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .game-card .card-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: auto;
+            padding-top: 0.8rem;
+        }
+        /* 特殊：魔法花园卡片金色边框 */
+        .game-card.gold-card {
+            border-color: rgba(255, 215, 0, 0.08);
+            background: rgba(255, 215, 0, 0.02);
+        }
+        .game-card.gold-card:hover {
+            border-color: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.04);
         }
 
         /* ============================================================
-                   描述文字
+                   特色亮点条
                    ============================================================ */
-        .desc-text {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
-            font-size: 1rem;
+        .feature-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
         }
-        .desc-text strong {
-            color: rgba(255, 255, 255, 0.85);
+        .feature-strip .item {
+            text-align: center;
+            padding: 1.2rem 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+        .feature-strip .item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .feature-strip .item .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .feature-strip .item .label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .feature-strip .item .value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ============================================================
+                   页脚
+                   ============================================================ */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.12);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        footer a {
+            color: rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        footer a:hover {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         /* ============================================================
                    响应式
                    ============================================================ */
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .container {
-                padding: 1rem 1.2rem 2.5rem;
+                padding: 0.8rem 1.2rem 2.5rem;
             }
             .glass-nav {
                 flex-direction: column;
@@ -299,24 +533,20 @@
                 justify-content: center;
             }
             .hero-section h1 {
-                font-size: 2.4rem;
+                font-size: 2.8rem;
             }
             .glass-padded {
                 padding: 1.5rem 1.2rem;
             }
-            .info-grid {
+            .games-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-            .logo {
-                font-size: 1.3rem;
-            }
-            .logo img {
-                height: 32px;
+                gap: 1.2rem;
             }
         }
-        @media (max-width: 480px) {
+
+        @media (max-width: 640px) {
             .container {
-                padding: 0.8rem 0.8rem 2rem;
+                padding: 0.6rem 0.8rem 2rem;
             }
             .glass-nav {
                 padding: 0.6rem 0.8rem;
@@ -325,32 +555,77 @@
             .nav-links a {
                 font-size: 0.75rem;
             }
-            .hero-section h1 {
-                font-size: 1.8rem;
+            .logo {
+                font-size: 1.2rem;
             }
-            .hero-section p {
+            .logo-icon {
+                width: 28px;
+                height: 28px;
                 font-size: 0.9rem;
             }
-            .info-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
+            .hero-section h1 {
+                font-size: 2rem;
             }
-            .video-wrapper {
-                border-radius: 28px;
+            .hero-section .subtitle {
+                font-size: 0.9rem;
             }
             .glass-padded {
                 padding: 1.2rem 1rem;
+            }
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .game-card {
+                padding: 1.5rem 1.2rem;
+            }
+            .game-card .card-title {
+                font-size: 1.4rem;
+            }
+            .game-card .card-icon {
+                font-size: 2.8rem;
             }
             .btn-glass {
                 padding: 8px 18px;
                 font-size: 0.8rem;
             }
-            .logo {
-                font-size: 1.1rem;
+            .feature-strip {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
             }
-            .logo img {
-                height: 28px;
+        }
+
+        @media (max-width: 380px) {
+            .hero-section h1 {
+                font-size: 1.6rem;
             }
+            .game-card .card-title {
+                font-size: 1.2rem;
+            }
+            .game-card .card-desc {
+                font-size: 0.8rem;
+            }
+            .feature-strip {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+            .feature-strip .item .icon {
+                font-size: 1.4rem;
+            }
+            .feature-strip .item .value {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* 淡入动画 */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -362,137 +637,179 @@
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
-                <img src="./logo.png" alt="Logo" onerror="this.style.display='none'">
-                <span class="logo-text">云端之上</span>
+                <div class="logo-icon">🎮</div>
+                <span class="logo-text">LaswI · 游戏中心</span>
             </div>
             <div class="nav-links">
-                <a href="./index.html">🏠 官网首页</a>
-                <a href="./index.html#gamepreview">🎮 游戏预告</a>
-                <a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:rgba(255,255,255,0.4);">🔮 LaswI AI</a>
-                <a href="./index.html" class="nav-highlight">✨ 返回奶油梦境</a>
+                <a href="index.html">🏠 官网</a>
+                <a href="hayui.html">🖥️ HayUI</a>
+                <a href="id.html">🔐 ID</a>
+                <a href="download.html">📥 下载</a>
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="nav-gold">🌤️ 魔法花园</a>
+                <a href="index.html" class="nav-highlight">✨ 返回</a>
             </div>
         </nav>
 
         <!-- ============================================================
         Hero
         ============================================================ -->
-        <div class="hero-section">
-            <div class="badge-glass">🎮 2026 · 治愈系叙事卡牌</div>
-            <h1>《<span class="gradient-text">云端之上 · 白墨瑟尔城</span>》</h1>
-            <p>在云海与古城之间，寻找失落的王座。<br>一段关于温柔、孤独与救赎的旅程。</p>
-            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-                <a href="#video" class="btn-glass btn-glass-primary">▶ 观看宣传视频</a>
-                <a href="./index.html" class="btn-glass">📖 了解更多</a>
+        <section class="hero-section reveal-on-scroll">
+            <div class="badge-glass">🎮 LaswI 游戏宇宙</div>
+            <h1>
+                探索 <span class="gradient-text">云端之上</span> 的<br />
+                多彩 <span class="gold-text">游戏世界</span>
+            </h1>
+            <p class="subtitle">
+                从叙事卡牌到治愈种植，每一款游戏都是一段独特的云端旅程。<br />
+                温柔 · 治愈 · 想象力无限
+            </p>
+            <div class="hero-actions">
+                <a href="#games" class="btn-glass btn-glass-primary">✨ 浏览游戏</a>
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-gold">🌤️ 立即体验魔法花园</a>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        游戏卡片
+        ============================================================ -->
+        <div id="games" class="games-grid reveal-on-scroll">
+
+            <!-- ============================================================
+            游戏1：白墨瑟尔城
+            ============================================================ -->
+            <div class="game-card">
+                <div class="card-icon">🏛️</div>
+                <div class="card-badge">✦ 叙事卡牌 · 治愈</div>
+                <div class="card-title">
+                    《云端之上 · <span class="highlight">白墨瑟尔城</span>》
+                </div>
+                <div class="card-desc">
+                    普通少年林小宁，在无数个平凡、压抑的日常里，<br />
+                    意外触达了云端裂隙，抵达了悬浮千年的天空古城。<br />
+                    一段关于温柔、孤独与救赎的旅程。
+                </div>
+                <div class="card-tags">
+                    <span>🎴 卡牌战斗</span>
+                    <span>📖 剧情驱动</span>
+                    <span>☁️ 双线世界</span>
+                    <span>🌙 治愈系</span>
+                </div>
+                <div class="card-actions">
+                    <a href="games.html" class="btn-glass btn-glass-primary">🎮 查看详情</a>
+                    <a href="#" class="btn-glass btn-glass-secondary">📖 试玩 Demo</a>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            游戏2：魔法花园（金色卡片）
+            ============================================================ -->
+            <div class="game-card gold-card">
+                <div class="card-icon">🌤️</div>
+                <div class="card-badge gold">🌟 已上线 · 全年龄</div>
+                <div class="card-title">
+                    《云端之上 · <span class="highlight-gold">魔法花园</span>》
+                </div>
+                <div class="card-desc">
+                    一款连幼儿园小朋友都能轻松上手的治愈小游戏。<br />
+                    拖拽云朵浇灌花朵，种植、生长、收获金币，<br />
+                    在彩虹与花瓣飘落中感受纯真的快乐。
+                </div>
+                <div class="card-tags">
+                    <span>☁️ 拖拽云朵</span>
+                    <span>🌸 种植花朵</span>
+                    <span>🪙 金币商店</span>
+                    <span>🌈 彩虹庆祝</span>
+                    <span>🧒 零门槛</span>
+                </div>
+                <div class="card-actions">
+                    <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-gold">🌤️ 进入魔法花园</a>
+                    <a href="#" class="btn-glass btn-glass-secondary">🎬 观看预告</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        特色亮点
+        ============================================================ -->
+        <div class="glass glass-padded reveal-on-scroll" style="background: rgba(255,255,255,0.02);">
+            <h2 style="color:#fff; font-size: 1.6rem; text-align:center; margin-bottom: 0.2rem;">✨ 为什么选择 LaswI 游戏</h2>
+            <p style="color:rgba(255,255,255,0.3); text-align:center; margin-bottom: 1rem;">每一款游戏都承载着「温柔」与「治愈」的核心理念</p>
+            <div class="feature-strip">
+                <div class="item">
+                    <span class="icon">🎨</span>
+                    <div class="value">毛玻璃美学</div>
+                    <div class="label">统一视觉语言</div>
+                </div>
+                <div class="item">
+                    <span class="icon">🧒</span>
+                    <div class="value">零门槛设计</div>
+                    <div class="label">幼儿园也能玩</div>
+                </div>
+                <div class="item">
+                    <span class="icon">📱</span>
+                    <div class="value">全平台适配</div>
+                    <div class="label">手机 · 平板 · 电脑</div>
+                </div>
+                <div class="item">
+                    <span class="icon">🌙</span>
+                    <div class="value">治愈系叙事</div>
+                    <div class="label">温柔 · 孤独 · 救赎</div>
+                </div>
             </div>
         </div>
 
         <!-- ============================================================
-        宣传视频
+        即将推出
         ============================================================ -->
-        <div id="video" class="video-wrapper glass" style="margin: 1.5rem 0; padding: 0; overflow: hidden;">
-            <video controls playsinline preload="metadata">
-                <source src="./001.mp4" type="video/mp4">
-                您的浏览器不支持视频播放，请升级浏览器后观看。
-            </video>
-        </div>
-
-        <!-- ============================================================
-        游戏信息
-        ============================================================ -->
-        <div class="glass glass-padded">
-            <h2 style="color:#fff; text-align:center; margin-bottom: 0.5rem;">✨ 游戏亮点</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="icon">🌙</div>
-                    <div class="label">类型</div>
-                    <div class="value">叙事卡牌 · 治愈</div>
-                </div>
-                <div class="info-item">
-                    <div class="icon">🎴</div>
-                    <div class="label">卡牌</div>
-                    <div class="value">回合制 · 策略</div>
-                </div>
-                <div class="info-item">
-                    <div class="icon">☁️</div>
-                    <div class="label">世界观</div>
-                    <div class="value">云端 · 古城 · 雨林</div>
-                </div>
-                <div class="info-item">
-                    <div class="icon">🎵</div>
-                    <div class="label">音乐</div>
-                    <div class="value">空灵治愈 · 沉浸</div>
-                </div>
+        <div class="glass glass-padded reveal-on-scroll" style="text-align:center; border-color:rgba(255,255,255,0.03);">
+            <h2 style="color:#fff; font-size: 1.4rem; margin-bottom: 0.2rem;">🚀 更多游戏即将到来</h2>
+            <p style="color:rgba(255,255,255,0.3); font-size: 0.9rem; margin-bottom: 0.4rem;">
+                我们正在打造更多治愈、有趣的云端世界
+            </p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:0.6rem;">
+                <span class="badge-glass">🌌 星空牧场</span>
+                <span class="badge-glass">🍬 糖果云</span>
+                <span class="badge-glass">🐾 咩咩云</span>
+                <span class="badge-glass">🌈 彩虹桥</span>
             </div>
         </div>
 
         <!-- ============================================================
-        故事简介
+        CTA
         ============================================================ -->
-        <div class="glass glass-padded">
-            <h2 style="color:#fff; margin-bottom: 0.8rem;">📖 故事简介</h2>
-            <div class="desc-text">
-                <p style="margin-bottom: 0.8rem;">
-                    <strong>林小宁</strong> —— 一个温柔、内向、常常发呆的普通少年。
-                    他生活在一成不变的日常里，不被理解，也找不到出口。
-                </p>
-                <p style="margin-bottom: 0.8rem;">
-                    直到有一天，他听见了<strong>风中的低语</strong>，穿过了云层的裂隙，
-                    抵达了悬浮千年的天空古城 —— <strong>白墨瑟尔城</strong>。
-                </p>
-                <p style="margin-bottom: 0.8rem;">
-                    这里没有催促，没有压力，只有风、云海、古老的符文，和温柔的云端生灵。
-                    他的人生从此分为两半：地面是平凡的日常，云端是等待他拯救的神域。
-                </p>
-                <p>
-                    而他还不知道的是，那座古城等待的<strong>「天选之人」</strong>，
-                    正是他自己。
-                </p>
+        <div class="glass glass-padded reveal-on-scroll" style="text-align:center; background:linear-gradient(135deg, rgba(120,80,255,0.04), rgba(60,40,200,0.02)); border-color:rgba(120,80,255,0.04);">
+            <h2 style="color:#fff; font-size: 1.6rem; margin-bottom: 0.4rem;">🌤️ 开始你的云端之旅</h2>
+            <p style="color:rgba(255,255,255,0.4); max-width:500px; margin: 0.4rem auto 1.2rem;">
+                选择一款游戏，进入属于你的治愈世界
+            </p>
+            <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-gold" style="padding:12px 36px; font-size:1rem;">
+                    🌤️ 立即体验魔法花园
+                </a>
+                <a href="games.html" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
+                    🏛️ 了解白墨瑟尔城
+                </a>
             </div>
-        </div>
-
-        <!-- ============================================================
-        角色介绍（简洁）
-        ============================================================ -->
-        <div class="glass glass-padded">
-            <h2 style="color:#fff; text-align:center; margin-bottom: 1.2rem;">👥 主要角色</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem;">
-                <div style="text-align:center; background:rgba(255,255,255,0.03); border-radius:28px; padding:1.2rem 0.8rem; border:1px solid rgba(255,255,255,0.03);">
-                    <div style="font-size:2.8rem;">🌙</div>
-                    <div style="font-weight:600; color:#fff; margin-top:4px;">林小宁</div>
-                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4);">温柔 · 自卑 · 天选者</div>
-                </div>
-                <div style="text-align:center; background:rgba(255,255,255,0.03); border-radius:28px; padding:1.2rem 0.8rem; border:1px solid rgba(255,255,255,0.03);">
-                    <div style="font-size:2.8rem;">🗿</div>
-                    <div style="font-weight:600; color:#fff; margin-top:4px;">岩咚</div>
-                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4);">守门人 · 坚定</div>
-                </div>
-                <div style="text-align:center; background:rgba(255,255,255,0.03); border-radius:28px; padding:1.2rem 0.8rem; border:1px solid rgba(255,255,255,0.03);">
-                    <div style="font-size:2.8rem;">🕊️</div>
-                    <div style="font-weight:600; color:#fff; margin-top:4px;">云翎</div>
-                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4);">守护者 · 温柔</div>
-                </div>
-                <div style="text-align:center; background:rgba(255,255,255,0.03); border-radius:28px; padding:1.2rem 0.8rem; border:1px solid rgba(255,255,255,0.03);">
-                    <div style="font-size:2.8rem;">🌿</div>
-                    <div style="font-weight:600; color:#fff; margin-top:4px;">珍妮</div>
-                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4);">探险家 · 热情</div>
-                </div>
+            <div style="margin-top:0.8rem;">
+                <span class="badge-glass">🎮 两款游戏</span>
+                <span class="badge-glass">🌱 持续更新</span>
+                <span class="badge-glass">❤️ 用爱制作</span>
             </div>
-        </div>
-
-        <!-- ============================================================
-        底部返回
-        ============================================================ -->
-        <div style="text-align: center; margin-top: 2.5rem;">
-            <a href="./index.html" class="btn-glass" style="padding: 12px 36px;">
-                🏠 返回官网 · 奶油梦境
-            </a>
         </div>
 
         <!-- ============================================================
         页脚
         ============================================================ -->
-        <footer style="text-align:center; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); font-size:0.75rem; letter-spacing:0.5px;">
-            🍰 2026 LaswI AI · 奶油梦境 · 《云端之上·白墨瑟尔城》 🍰
+        <footer>
+            <p>
+                LaswI · 游戏中心 &nbsp;|&nbsp;
+                云端之上系列 &nbsp;|&nbsp;
+                © 2026 LaswI Team
+            </p>
+            <p style="margin-top:4px; color:rgba(255,255,255,0.06); font-size:0.65rem;">
+                由 ❤️ 与 ☁️ 驱动 · 治愈 · 开放
+            </p>
         </footer>
     </div>
 
@@ -500,40 +817,36 @@
         (function() {
             'use strict';
 
-            // 自动播放视频（带声音控制）
-            const video = document.querySelector('video');
-            if (video) {
-                // 用户点击页面后尝试播放（解决自动播放策略）
-                document.addEventListener('click', function() {
-                    if (video.paused) {
-                        video.play().catch(function(e) {
-                            console.log('视频播放需要用户交互');
-                        });
+            // Reveal on scroll
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
-                }, { once: true });
-
-                // 如果视频加载完成，尝试自动播放（静音策略）
-                video.addEventListener('loadedmetadata', function() {
-                    // 大部分浏览器允许静音自动播放
-                    video.muted = true;
-                    video.play().catch(function(e) {
-                        console.log('自动播放被阻止，等待用户交互');
-                    });
                 });
+            }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+            revealElements.forEach(el => observer.observe(el));
 
-                // 用户悬停时取消静音（可选）
-                video.addEventListener('mouseenter', function() {
-                    video.muted = false;
+            // 平滑锚点滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
                 });
-                video.addEventListener('mouseleave', function() {
-                    // 不强制静音，让用户控制
-                });
+            });
 
-                // 控制台提示
-                console.log('🎬 宣传视频已加载，点击页面可播放');
-            }
+            console.log('🎮 LaswI · 游戏中心已加载');
+            console.log('🌤️ 包含《白墨瑟尔城》和《魔法花园》两款游戏');
+            console.log('🌟 魔法花园入口: https://wengu130301.github.io/hua');
 
-            console.log('🌿 《云端之上·白墨瑟尔城》游戏宣传页已加载');
         })();
     </script>
 </body>
