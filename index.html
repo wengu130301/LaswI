@@ -6,7 +6,7 @@
     <title>LaswI AI · 奶油梦境</title>
     <style>
         /* ============================================================
-                   全局重置 & 毛玻璃基础
+                   全局重置 & 毛玻璃基础LaswI Studio
                    ============================================================ */
         * {
             margin: 0;
@@ -22,7 +22,6 @@
             overflow-x: hidden;
             position: relative;
         }
-        /* 暗色叠加层 */
         body::before {
             content: '';
             position: fixed;
@@ -39,7 +38,6 @@
             scroll-behavior: smooth;
         }
 
-        /* 自定义滚动条 */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -56,7 +54,6 @@
             background: rgba(255, 255, 255, 0.35);
         }
 
-        /* 全局进度条 */
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -77,7 +74,6 @@
             z-index: 1;
         }
 
-        /* 毛玻璃卡片 */
         .glass {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(20px) saturate(1.4);
@@ -102,7 +98,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* 毛玻璃导航 */
         .glass-nav {
             display: flex;
             justify-content: space-between;
@@ -176,7 +171,6 @@
             width: 100%;
         }
 
-        /* 毛玻璃按钮 */
         .btn-glass {
             display: inline-block;
             padding: 12px 30px;
@@ -218,28 +212,18 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* 文字样式 */
-        h1, h2, h3 {
-            font-weight: 700;
-            letter-spacing: -0.01em;
+        /* 新增：下载按钮风格（与在线体验区分） */
+        .btn-glass-download {
+            background: rgba(100, 200, 180, 0.15);
+            border-color: rgba(100, 200, 180, 0.2);
+            color: #7cd4c0;
+        }
+        .btn-glass-download:hover {
+            background: rgba(100, 200, 180, 0.25);
+            border-color: rgba(100, 200, 180, 0.35);
             color: #fff;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
         }
-        h1 {
-            font-size: 3.6rem;
-            line-height: 1.15;
-        }
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        p, .text-muted {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-        .text-glow {
-            text-shadow: 0 0 40px rgba(255, 200, 170, 0.15);
-        }
+
         .badge-glass {
             display: inline-block;
             background: rgba(255, 255, 255, 0.08);
@@ -259,6 +243,25 @@
             background-clip: text;
             color: transparent;
             text-shadow: none;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 3.6rem;
+            line-height: 1.15;
+        }
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        p, .text-muted {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
         }
 
         /* 滚动驱动动画 */
@@ -323,7 +326,6 @@
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* 特性网格 */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -358,7 +360,6 @@
             line-height: 1.4;
         }
 
-        /* 标签矩阵 */
         .matrix-tags {
             display: flex;
             flex-wrap: wrap;
@@ -383,7 +384,6 @@
             color: #fff;
         }
 
-        /* 视频包装器 */
         .video-wrapper {
             border-radius: 48px;
             overflow: hidden;
@@ -398,7 +398,6 @@
             object-fit: cover;
         }
 
-        /* 宠物展示 */
         .pet-showcase {
             display: flex;
             flex-wrap: wrap;
@@ -430,7 +429,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* 表单 */
         .glass-form {
             padding: 2.2rem 2.2rem;
             margin: 2rem 0;
@@ -498,7 +496,6 @@
             color: #fff;
         }
 
-        /* 富文本 */
         .rich-text {
             columns: 2 260px;
             column-gap: 2rem;
@@ -521,7 +518,6 @@
             column-span: all;
         }
 
-        /* 游戏预告区 */
         .game-preview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -578,7 +574,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* 消息板 */
         .message-board {
             display: flex;
             flex-direction: column;
@@ -599,7 +594,6 @@
             background: rgba(255, 255, 255, 0.07);
         }
 
-        /* 页脚 */
         footer {
             text-align: center;
             margin-top: 3.5rem;
@@ -610,7 +604,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Reveal 动画 */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -625,122 +618,48 @@
                    响应式
                    ============================================================ */
         @media (max-width: 800px) {
-            .container {
-                padding: 1rem 1.2rem 2.5rem;
-            }
-            .glass-nav {
-                flex-direction: column;
-                gap: 12px;
-                padding: 1rem 1.2rem;
-                border-radius: 40px;
-            }
-            .nav-links {
-                gap: 1rem;
-                justify-content: center;
-            }
-            h1 {
-                font-size: 2.4rem;
-            }
-            h2 {
-                font-size: 1.7rem;
-            }
-            .scroll-driven-object {
-                width: 110px;
-                height: 110px;
-                font-size: 2.5rem;
-            }
-            .scroll-progress-value {
-                font-size: 1.8rem;
-            }
-            .game-preview-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            .game-preview-item img {
-                height: 140px;
-            }
-            .game-poster-wrapper img {
-                max-height: 350px;
-            }
-            .rich-text {
-                columns: 1;
-            }
-            .pet-showcase {
-                padding: 1.8rem 1.2rem;
-            }
-            .glass-padded {
-                padding: 1.5rem 1.2rem;
-            }
-            .glass-form {
-                padding: 1.5rem 1.2rem;
-            }
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            .logo {
-                font-size: 1.4rem;
-            }
-            .logo img {
-                height: 34px;
-            }
+            .container { padding: 1rem 1.2rem 2.5rem; }
+            .glass-nav { flex-direction: column; gap: 12px; padding: 1rem 1.2rem; border-radius: 40px; }
+            .nav-links { gap: 1rem; justify-content: center; }
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.7rem; }
+            .scroll-driven-object { width: 110px; height: 110px; font-size: 2.5rem; }
+            .scroll-progress-value { font-size: 1.8rem; }
+            .game-preview-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .game-preview-item img { height: 140px; }
+            .game-poster-wrapper img { max-height: 350px; }
+            .rich-text { columns: 1; }
+            .pet-showcase { padding: 1.8rem 1.2rem; }
+            .glass-padded { padding: 1.5rem 1.2rem; }
+            .glass-form { padding: 1.5rem 1.2rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .logo { font-size: 1.4rem; }
+            .logo img { height: 34px; }
         }
         @media (max-width: 480px) {
-            .container {
-                padding: 0.8rem 0.8rem 2rem;
-            }
-            .glass-nav {
-                border-radius: 28px;
-                padding: 0.8rem 1rem;
-            }
-            .nav-links {
-                gap: 0.6rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav-links a {
-                font-size: 0.8rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-            }
-            .game-preview-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-            .game-preview-item img {
-                height: 120px;
-            }
-            .game-poster-wrapper img {
-                max-height: 280px;
-            }
-            .scroll-driven-object {
-                width: 90px;
-                height: 90px;
-                font-size: 2rem;
-            }
-            .btn-glass {
-                padding: 10px 20px;
-                font-size: 0.85rem;
-            }
-            .glass-padded {
-                padding: 1.2rem 1rem;
-            }
-            .feature-item {
-                padding: 1.2rem 1rem;
-            }
+            .container { padding: 0.8rem 0.8rem 2rem; }
+            .glass-nav { border-radius: 28px; padding: 0.8rem 1rem; }
+            .nav-links { gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+            .nav-links a { font-size: 0.8rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            .game-preview-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .game-preview-item img { height: 120px; }
+            .game-poster-wrapper img { max-height: 280px; }
+            .scroll-driven-object { width: 90px; height: 90px; font-size: 2rem; }
+            .btn-glass { padding: 10px 20px; font-size: 0.85rem; }
+            .glass-padded { padding: 1.2rem 1rem; }
+            .feature-item { padding: 1.2rem 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 滚动进度条 -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <div class="container">
         <!-- ============================================================
-        毛玻璃导航栏 (新增 HayUI 入口)
+        毛玻璃导航栏
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
@@ -755,14 +674,13 @@
                 <a href="#gamepreview">🎮 游戏预告</a>
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#f5d0b0;">🔮 在线体验</a>
                 <a href="./games.html" class="nav-highlight">🎯 游戏专页</a>
-                <!-- 🔥 新增 HayUI 入口 -->
                 <a href="./hayui.html" class="nav-highlight">🖥️ HayUI</a>
                 <a href="./id.html" style="color:#c4b5ff;">🔐 ID</a>
             </div>
         </nav>
 
         <!-- ============================================================
-        Hero 区域
+        Hero 区域（已恢复“下载桌面App”按钮）
         ============================================================ -->
         <div class="reveal-on-scroll" style="margin-bottom: 2rem;">
             <div class="badge-glass">🍦 温柔智能纪元 · 毛玻璃质感</div>
@@ -772,8 +690,8 @@
             </p>
             <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">🍰 尝鲜在线版</a>
-                <a href="#" class="btn-glass btn-glass-primary-inverse">📦 下载桌面App</a>
-                <!-- 新增 HayUI 按钮 -->
+                <!-- ✅ 已恢复“下载桌面App”按钮 -->
+                <a href="#" class="btn-glass btn-glass-download">📦 下载桌面App</a>
                 <a href="./hayui.html" class="btn-glass" style="background:rgba(120,80,255,0.15); border-color:rgba(120,80,255,0.2); color:#c4b5ff;">🖥️ HayUI 框架</a>
             </div>
         </div>
@@ -866,8 +784,6 @@
                     一款治愈系叙事卡牌游戏 · 在云海与古城之间，寻找失落的王座
                 </p>
             </div>
-
-            <!-- 三张预告图 -->
             <div class="game-preview-grid">
                 <div class="game-preview-item">
                     <img src="./001.png" alt="游戏预告 01" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E001.png%3C/text%3E%3C/svg%3E'">
@@ -882,15 +798,12 @@
                     <div class="caption">⚔️ 卡牌 · 试炼</div>
                 </div>
             </div>
-
-            <!-- 竖版海报 -->
             <div class="game-poster-wrapper">
                 <img src="./haibao.png" alt="游戏竖版海报" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
                 <div style="display:none; color:rgba(255,255,255,0.3); text-align:center; padding:40px 0;">
                     🎴 竖版海报 <br> haibao.png
                 </div>
             </div>
-
             <div style="text-align: center; margin-top: 1.5rem;">
                 <a href="./games.html" class="btn-glass btn-glass-primary" style="padding: 14px 40px; font-size: 1.05rem;">
                     🎯 前往游戏专页 · 观看宣传视频
@@ -899,7 +812,7 @@
         </div>
 
         <!-- ============================================================
-        🖥️ HayUI 入口卡片（新增）
+        🖥️ HayUI 入口卡片
         ============================================================ -->
         <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(120,80,255,0.06), rgba(60,40,200,0.03)); border-color:rgba(120,80,255,0.06);">
             <div class="section-title-center">
@@ -1023,9 +936,7 @@
         (function() {
             'use strict';
 
-            // ============================================================
-            //  进度条 + 滚动驱动动画
-            // ============================================================
+            // 进度条 + 滚动驱动动画
             const progressBar = document.getElementById('scrollProgress');
             const animatedObj = document.getElementById('scrollAnimatedObject');
             const livePercentSpan = document.getElementById('liveProgressPercent');
@@ -1086,9 +997,7 @@
             window.addEventListener('resize', onScrollHandler);
             onScrollHandler();
 
-            // ============================================================
-            //  Reveal on scroll 观察器
-            // ============================================================
+            // Reveal on scroll
             const revealElements = document.querySelectorAll('.reveal-on-scroll');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1100,9 +1009,7 @@
             }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
             revealElements.forEach(el => observer.observe(el));
 
-            // ============================================================
-            //  表单
-            // ============================================================
+            // 表单
             const loveForm = document.getElementById('loveFormGlass');
             if (loveForm) {
                 loveForm.addEventListener('submit', (e) => {
@@ -1159,15 +1066,9 @@
                 }
             }
 
-            // ============================================================
-            //  视频自动播放
-            // ============================================================
             document.querySelectorAll('video').forEach(v => v.play().catch(e => console.log));
 
-            // ============================================================
-            //  导航锚点平滑滚动
-            // ============================================================
-            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-love-glass')
+            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-glass-download, .btn-love-glass')
                 .forEach(anchor => {
                     if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
                         anchor.addEventListener('click', function(e) {
@@ -1182,8 +1083,9 @@
                 });
 
             console.log('🍰 LaswI AI · 毛玻璃官网已加载');
-            console.log('🎮 游戏预告区已嵌入');
-            console.log('🖥️ HayUI 入口已添加 (导航栏 + 内容卡片)');
+            console.log('📦 已恢复「下载桌面App」按钮');
+            console.log('🖥️ HayUI 入口已添加');
+            //HaySo: Say-< Hallo World >_L
 
         })();
     </script>
