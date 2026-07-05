@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>LaswI AI · 奶油梦境</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <title>LaswI · 云端生态</title>
     <style>
         /* ============================================================
                    全局重置 & 毛玻璃基础
@@ -17,129 +17,181 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'PingFang SC', 'Roboto', sans-serif;
             min-height: 100vh;
-            background: url('./beijing.png') center center / cover no-repeat fixed;
+            background: radial-gradient(ellipse at 20% 50%, #1a1a2e 0%, #0f0f1a 100%);
             color: rgba(255, 255, 255, 0.92);
             overflow-x: hidden;
             position: relative;
         }
-        /* 暗色叠加层，让毛玻璃更通透 */
+
+        /* 动态光晕背景 */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 12, 18, 0.45);
+            top: -30%;
+            left: -20%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.12) 0%, transparent 70%);
             z-index: 0;
             pointer-events: none;
+            animation: glowFloat 12s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -15%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowFloat2 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, 40px) scale(1.2);
+            }
+        }
+        @keyframes glowFloat2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-40px, -30px) scale(1.3);
+            }
+        }
+
+        /* 呼吸光晕装饰 */
+        .pulse-ring {
+            position: fixed;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 80, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulseRing 8s ease-in-out infinite;
+        }
+        .pulse-ring.r1 {
+            width: 40vw;
+            height: 40vw;
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+        .pulse-ring.r2 {
+            width: 30vw;
+            height: 30vw;
+            bottom: -5%;
+            left: -5%;
+            animation-delay: 3s;
+        }
+        @keyframes pulseRing {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
         }
 
         html {
             scroll-behavior: smooth;
         }
 
-        /* 自定义滚动条（毛玻璃风格） */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             backdrop-filter: blur(4px);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* ============================================================
-                   全局进度条（保留原功能）
-                   ============================================================ */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, rgba(255, 200, 170, 0.8), rgba(255, 160, 120, 0.9));
-            z-index: 3000;
-            transition: width 0.05s linear;
-            box-shadow: 0 2px 20px rgba(255, 160, 120, 0.3);
-        }
-
-        /* ============================================================
-                   毛玻璃容器
-                   ============================================================ */
         .container {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 1.2rem 2rem 4rem;
+            padding: 1.2rem 2rem 3rem;
             position: relative;
             z-index: 1;
         }
 
-        /* 毛玻璃卡片 - 核心样式 */
+        /* ============================================================
+                   毛玻璃组件
+                   ============================================================ */
         .glass {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 48px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .glass:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.08);
         }
-
-        /* 毛玻璃卡片内边距变体 */
         .glass-padded {
-            padding: 2rem 2.2rem;
-            margin: 2rem 0;
-        }
-        .glass-light {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(12px) saturate(1.2);
-            -webkit-backdrop-filter: blur(12px) saturate(1.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem 2rem;
+            margin: 1.5rem 0;
         }
 
-        /* 毛玻璃导航 */
+        /* ============================================================
+                   导航（毛玻璃）
+                   ============================================================ */
         .glass-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            padding: 1rem 2rem;
+            padding: 0.7rem 1.8rem;
             margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px) saturate(1.4);
             -webkit-backdrop-filter: blur(16px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 60px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
         }
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #fff;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
         }
-        .logo img {
-            height: 44px;
-            width: auto;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c5cfc, #5b3fd4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(100, 80, 255, 0.25);
         }
         .logo-text {
-            background: linear-gradient(135deg, #fce8d5, #f5d0b0);
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -152,9 +204,9 @@
         }
         .nav-links a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.5);
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             transition: 0.25s ease;
             position: relative;
         }
@@ -165,7 +217,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #f5d0b0, #e8b08a);
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
             transition: width 0.3s ease;
         }
         .nav-links a:hover {
@@ -175,466 +227,282 @@
             width: 100%;
         }
         .nav-links a.nav-highlight {
-            color: #f5d0b0;
+            color: #c4b5ff;
             font-weight: 600;
         }
         .nav-links a.nav-highlight::after {
-            background: linear-gradient(90deg, #f5d0b0, #e8b08a);
             width: 100%;
+            background: linear-gradient(90deg, #8a72f0, #c4b5ff);
         }
 
         /* ============================================================
-                   毛玻璃按钮
+                   按钮
                    ============================================================ */
         .btn-glass {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 10px 28px;
             border-radius: 60px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
         }
         .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        }
-        .btn-glass-primary {
-            background: rgba(240, 178, 122, 0.25);
-            border-color: rgba(240, 178, 122, 0.3);
-            color: #f5d0b0;
-        }
-        .btn-glass-primary:hover {
-            background: rgba(240, 178, 122, 0.35);
-            border-color: rgba(240, 178, 122, 0.5);
-            color: #fff;
-        }
-        .btn-glass-primary-inverse {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
             color: #fff;
         }
-        .btn-glass-primary-inverse:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.25);
+        .btn-glass-primary {
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.25), rgba(80, 60, 220, 0.15));
+            border-color: rgba(120, 80, 255, 0.2);
+            color: #c4b5ff;
+        }
+        .btn-glass-primary:hover {
+            background: rgba(120, 80, 255, 0.2);
+            border-color: rgba(120, 80, 255, 0.3);
+            color: #fff;
+        }
+        .btn-glass-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .btn-glass-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #fff;
         }
 
         /* ============================================================
-                   文字样式（适配毛玻璃深色背景）
+                   徽章
                    ============================================================ */
-        h1,
-        h2,
-        h3 {
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            color: #fff;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            font-size: 3.6rem;
-            line-height: 1.15;
-        }
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        p,
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-        .text-glow {
-            text-shadow: 0 0 40px rgba(255, 200, 170, 0.15);
-        }
         .badge-glass {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 5px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 4px 16px;
             border-radius: 40px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.5px;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #fce8d5, #f5d0b0, #e8b08a);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: none;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* ============================================================
-                   滚动驱动动画区域（保留功能，毛玻璃化）
+                   Hero 区（操作系统入口标语）
                    ============================================================ */
-        .scroll-driven-demo {
+        .hero-section {
             text-align: center;
-            padding: 2.5rem 2rem;
-            margin: 2.5rem 0;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px) saturate(1.4);
-            -webkit-backdrop-filter: blur(16px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 60px;
+            padding: 2.5rem 1rem 1.5rem;
         }
-        .demo-title {
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            color: #fff;
+        .hero-section .badge-glass {
+            margin-bottom: 0.8rem;
         }
-        .demo-desc {
-            color: rgba(255, 255, 255, 0.5);
-            max-width: 500px;
-            margin: 0.5rem auto 1.2rem;
-            font-size: 0.9rem;
-        }
-        .scroll-driven-object {
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 220, 190, 0.6), rgba(240, 180, 140, 0.4));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40% 60% 60% 40% / 40% 45% 55% 60%;
-            margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.2rem;
-            box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.3);
-            will-change: transform, border-radius, opacity;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: none;
-        }
-        .scroll-progress-value {
-            font-size: 2.2rem;
+        .hero-section h1 {
+            font-size: 3.6rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #f5d0b0, #e8b08a);
+            color: #fff;
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .hero-section h1 .gradient-text {
+            background: linear-gradient(135deg, #c4b5ff, #8a72f0, #6b4fd4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .slider-hint {
-            font-size: 0.8rem;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(4px);
-            display: inline-block;
-            padding: 5px 18px;
-            border-radius: 60px;
-            color: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+        .hero-section .subtitle {
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 600px;
+            margin: 0.8rem auto 1.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         /* ============================================================
-                   特性网格
+                   操作系统入口（桌面模拟）
                    ============================================================ */
-        .feature-grid {
+        .os-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
             margin: 1.5rem 0;
         }
-        .feature-item {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(12px) saturate(1.2);
-            -webkit-backdrop-filter: blur(12px) saturate(1.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 36px;
-            padding: 1.8rem 1.6rem;
-            transition: all 0.3s ease;
-        }
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-        .feature-icon {
-            font-size: 2.4rem;
-            margin-bottom: 1rem;
-        }
-        .feature-item h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-        .feature-item p {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.4;
-        }
-
-        /* ============================================================
-                   标签矩阵
-                   ============================================================ */
-        .matrix-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 1rem 0;
-            justify-content: center;
-        }
-        .tag-glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 8px 22px;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s ease;
-        }
-        .tag-glass:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        /* ============================================================
-                   视频包装器
-                   ============================================================ */
-        .video-wrapper {
-            border-radius: 48px;
-            overflow: hidden;
-            box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.4);
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        video {
-            width: 100%;
-            display: block;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-        }
-
-        /* ============================================================
-                   宠物展示（毛玻璃化）
-                   ============================================================ */
-        .pet-showcase {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 2.5rem;
-            padding: 2.5rem 2rem;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px) saturate(1.4);
-            -webkit-backdrop-filter: blur(16px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 56px;
-            margin: 2rem 0;
-        }
-        .pet-avatar {
-            font-size: 5rem;
-            filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.2));
-            animation: floatSoft 3s infinite alternate;
-        }
-        @keyframes floatSoft {
-            0% {
-                transform: translateY(0px);
-            }
-            100% {
-                transform: translateY(-10px);
-            }
-        }
-        .pet-text h3 {
-            font-size: 1.9rem;
-            color: #fff;
-        }
-        .pet-text p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* ============================================================
-                   表单（毛玻璃化）
-                   ============================================================ */
-        .glass-form {
-            padding: 2.2rem 2.2rem;
-            margin: 2rem 0;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px) saturate(1.4);
-            -webkit-backdrop-filter: blur(16px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 56px;
-        }
-        .input-glass {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            padding: 14px 20px;
-            width: 100%;
-            font-size: 0.95rem;
-            color: #fff;
-            transition: 0.25s ease;
-        }
-        .input-glass::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-        .input-glass:focus {
-            outline: none;
-            border-color: rgba(255, 200, 170, 0.3);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px rgba(255, 200, 170, 0.05);
-        }
-        .love-check {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 60px;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .love-check label {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        .love-check input[type="checkbox"] {
-            accent-color: #f5d0b0;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        .btn-love-glass {
-            background: linear-gradient(135deg, rgba(240, 178, 122, 0.3), rgba(230, 140, 100, 0.25));
-            border: 1px solid rgba(240, 178, 122, 0.2);
-            padding: 14px 24px;
-            border-radius: 60px;
-            color: #f5d0b0;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            backdrop-filter: blur(4px);
-        }
-        .btn-love-glass:hover {
-            background: rgba(240, 178, 122, 0.25);
-            border-color: rgba(240, 178, 122, 0.35);
-            transform: scale(0.98);
-            color: #fff;
-        }
-
-        /* ============================================================
-                   富文本（毛玻璃化）
-                   ============================================================ */
-        .rich-text {
-            columns: 2 260px;
-            column-gap: 2rem;
-            padding: 1.8rem 2rem;
+        .os-item {
+            text-align: center;
+            padding: 1.8rem 1rem;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px) saturate(1.2);
             -webkit-backdrop-filter: blur(12px) saturate(1.2);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 44px;
-            margin: 1.8rem 0;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        .rich-text p {
-            margin-bottom: 1rem;
-            break-inside: avoid;
-        }
-        .rich-text h3 {
-            color: #fff;
-            margin-bottom: 0.8rem;
-            column-span: all;
-        }
-
-        /* ============================================================
-                   游戏预告区（新增）
-                   ============================================================ */
-        .game-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .game-preview-item {
-            border-radius: 32px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(4px);
-        }
-        .game-preview-item:hover {
-            transform: scale(1.03);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        }
-        .game-preview-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-        }
-        .game-preview-item .caption {
-            padding: 12px 16px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(0, 0, 0, 0.2);
-        }
-        /* 竖版海报特殊样式 */
-        .game-poster-wrapper {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
-        }
-        .game-poster-wrapper img {
-            max-height: 500px;
-            border-radius: 32px;
-            box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
-        }
-        .game-poster-wrapper img:hover {
-            transform: scale(1.02);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .section-title-center {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .section-title-center .badge-glass {
-            margin-bottom: 0.5rem;
-        }
-
-        /* ============================================================
-                   留言板
-                   ============================================================ */
-        .message-board {
+            border-radius: 28px;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 1.5rem;
+            align-items: center;
+            gap: 6px;
         }
-        .message-item {
+        .os-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+        }
+        .os-item .icon {
+            font-size: 3.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+        .os-item:hover .icon {
+            transform: scale(1.08) rotate(-2deg);
+        }
+        .os-item .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 4px;
+        }
+        .os-item .desc {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            line-height: 1.4;
+            max-width: 140px;
+        }
+        .os-item .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 4px;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+        .os-item .status-dot.online {
+            background: #3ddc84;
+            box-shadow: 0 0 12px rgba(61, 220, 132, 0.3);
+        }
+        .os-item .status-dot.beta {
+            background: #f8c300;
+            box-shadow: 0 0 12px rgba(248, 195, 0, 0.3);
+        }
+        .os-item .status-dot.soon {
+            background: #4fc3f7;
+            box-shadow: 0 0 12px rgba(79, 195, 247, 0.3);
+        }
+        @keyframes pulseDot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        /* ============================================================
+                   快捷启动栏（任务栏风格）
+                   ============================================================ */
+        .quick-launch {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            margin: 1.5rem 0;
+        }
+        .quick-launch .launch-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .quick-launch .launch-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .quick-launch .launch-item .icon-sm {
+            font-size: 1.2rem;
+        }
+        .quick-launch .divider {
+            width: 1px;
+            height: 24px;
             background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* ============================================================
+                   系统信息卡片
+                   ============================================================ */
+        .sys-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .sys-info-item {
+            padding: 1.2rem 1.2rem;
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 40px;
-            padding: 14px 22px;
-            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            text-align: center;
             transition: all 0.3s ease;
         }
-        .message-item:hover {
-            background: rgba(255, 255, 255, 0.07);
+        .sys-info-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .sys-info-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c4b5ff, #6b4fd4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .sys-info-item .label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 2px;
         }
 
         /* ============================================================
@@ -642,17 +510,173 @@
                    ============================================================ */
         footer {
             text-align: center;
-            margin-top: 3.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.8rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.12);
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
+        }
+        footer a {
+            color: rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        footer a:hover {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         /* ============================================================
-                   Reveal 动画（保留）
+                   响应式
                    ============================================================ */
+        @media (max-width: 900px) {
+            .container {
+                padding: 0.8rem 1.2rem 2.5rem;
+            }
+            .glass-nav {
+                flex-direction: column;
+                gap: 10px;
+                padding: 0.8rem 1.2rem;
+                border-radius: 40px;
+            }
+            .nav-links {
+                gap: 1rem;
+                justify-content: center;
+            }
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+            .glass-padded {
+                padding: 1.5rem 1.2rem;
+            }
+            .os-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .quick-launch {
+                gap: 8px;
+                padding: 0.8rem 1rem;
+                border-radius: 40px;
+            }
+            .quick-launch .launch-item {
+                padding: 4px 14px;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0.6rem 0.8rem 2rem;
+            }
+            .glass-nav {
+                padding: 0.6rem 0.8rem;
+                border-radius: 28px;
+            }
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+            }
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .hero-section .subtitle {
+                font-size: 0.9rem;
+            }
+            .glass-padded {
+                padding: 1.2rem 1rem;
+            }
+            .os-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .os-item {
+                padding: 1.2rem 0.8rem;
+            }
+            .os-item .icon {
+                font-size: 2.4rem;
+            }
+            .os-item .name {
+                font-size: 0.9rem;
+            }
+            .os-item .desc {
+                font-size: 0.65rem;
+            }
+            .sys-info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .sys-info-item .number {
+                font-size: 1.5rem;
+            }
+            .quick-launch {
+                gap: 6px;
+                padding: 0.6rem 0.8rem;
+                border-radius: 32px;
+                flex-wrap: wrap;
+            }
+            .quick-launch .launch-item {
+                padding: 4px 10px;
+                font-size: 0.65rem;
+            }
+            .quick-launch .launch-item .icon-sm {
+                font-size: 1rem;
+            }
+            .quick-launch .divider {
+                display: none;
+            }
+            .btn-glass {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+            .os-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+            .os-item {
+                padding: 1rem 0.4rem;
+                border-radius: 20px;
+            }
+            .os-item .icon {
+                font-size: 2rem;
+            }
+            .os-item .name {
+                font-size: 0.8rem;
+            }
+            .os-item .desc {
+                display: none;
+            }
+            .sys-info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+            .sys-info-item {
+                padding: 0.8rem 0.6rem;
+            }
+            .sys-info-item .number {
+                font-size: 1.2rem;
+            }
+            .quick-launch .launch-item {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+            }
+            .quick-launch .launch-item .icon-sm {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 淡入动画 */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -662,356 +686,171 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* ============================================================
-                   响应式
-                   ============================================================ */
-        @media (max-width: 800px) {
-            .container {
-                padding: 1rem 1.2rem 2.5rem;
-            }
-            .glass-nav {
-                flex-direction: column;
-                gap: 12px;
-                padding: 1rem 1.2rem;
-                border-radius: 40px;
-            }
-            .nav-links {
-                gap: 1rem;
-                justify-content: center;
-            }
-            h1 {
-                font-size: 2.4rem;
-            }
-            h2 {
-                font-size: 1.7rem;
-            }
-            .scroll-driven-object {
-                width: 110px;
-                height: 110px;
-                font-size: 2.5rem;
-            }
-            .scroll-progress-value {
-                font-size: 1.8rem;
-            }
-            .game-preview-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            .game-preview-item img {
-                height: 140px;
-            }
-            .game-poster-wrapper img {
-                max-height: 350px;
-            }
-            .rich-text {
-                columns: 1;
-            }
-            .pet-showcase {
-                padding: 1.8rem 1.2rem;
-            }
-            .glass-padded {
-                padding: 1.5rem 1.2rem;
-            }
-            .glass-form {
-                padding: 1.5rem 1.2rem;
-            }
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            .logo {
-                font-size: 1.4rem;
-            }
-            .logo img {
-                height: 34px;
-            }
-        }
-        @media (max-width: 480px) {
-            .container {
-                padding: 0.8rem 0.8rem 2rem;
-            }
-            .glass-nav {
-                border-radius: 28px;
-                padding: 0.8rem 1rem;
-            }
-            .nav-links {
-                gap: 0.6rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav-links a {
-                font-size: 0.8rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-            }
-            .game-preview-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-            .game-preview-item img {
-                height: 120px;
-            }
-            .game-poster-wrapper img {
-                max-height: 280px;
-            }
-            .scroll-driven-object {
-                width: 90px;
-                height: 90px;
-                font-size: 2rem;
-            }
-            .btn-glass {
-                padding: 10px 20px;
-                font-size: 0.85rem;
-            }
-            .glass-padded {
-                padding: 1.2rem 1rem;
-            }
-            .feature-item {
-                padding: 1.2rem 1rem;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- 滚动进度条 -->
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- 装饰光晕 -->
+    <div class="pulse-ring r1"></div>
+    <div class="pulse-ring r2"></div>
 
     <div class="container">
         <!-- ============================================================
-        毛玻璃导航栏
+        导航
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
-                <img src="./logo.png" alt="LaswI AI Logo" onerror="this.style.display='none'">
-                <span class="logo-text">LaswI AI</span>
+                <div class="logo-icon">✦</div>
+                <span class="logo-text">LaswI · 云端</span>
             </div>
             <div class="nav-links">
-                <a href="#core">✦ 核心能量</a>
-                <a href="#smartpet">🐾 SmartPet</a>
-                <a href="#loveform">💌 情书投递</a>
-                <a href="#stories">✨ 絮语集</a>
-                <a href="#gamepreview">🎮 游戏预告</a>
-                <a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#f5d0b0;">🔮 在线体验</a>
-                <a href="./games.html" class="nav-highlight">🎯 游戏专页</a>
+                <a href="#os-entry">🚀 操作系统</a>
+                <a href="#quick-launch">⚡ 快速启动</a>
+                <a href="index.html">🌐 官网</a>
+                <a href="hayui.html">🖥️ HayUI</a>
+                <a href="id.html" class="nav-highlight">🔐 LaswI ID</a>
             </div>
         </nav>
 
         <!-- ============================================================
-        Hero 区域
+        Hero
         ============================================================ -->
-        <div class="reveal-on-scroll" style="margin-bottom: 2rem;">
-            <div class="badge-glass">🍦 温柔智能纪元 · 毛玻璃质感</div>
-            <h1>AI 像一块融化的 <span class="gradient-text">黄油吐司</span></h1>
-            <p style="font-size: 1.1rem; margin: 1rem 0 1.8rem; max-width: 650px; color: rgba(255,255,255,0.7);">
-                多模态共情引擎 · 私人奶油云 · 让每一次对话柔软治愈
+        <section class="hero-section reveal-on-scroll">
+            <div class="badge-glass">✦ 跨平台 · 统一入口</div>
+            <h1>
+                <span class="gradient-text">操作系统</span> 级别<br />
+                的云端入口
+            </h1>
+            <p class="subtitle">
+                一个融合了 Android · Linux · Web 的轻量级桌面生态，
+                所有服务从这里开始。
             </p>
-            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">🍰 尝鲜在线版</a>
-                <a href="#" class="btn-glass btn-glass-primary-inverse">📦 下载桌面App</a>
+            <div class="hero-actions">
+                <a href="#os-entry" class="btn-glass btn-glass-primary">🚀 探索系统</a>
+                <a href="id.html" class="btn-glass btn-glass-secondary">🔐 登录 LaswI ID</a>
             </div>
-        </div>
+        </section>
 
         <!-- ============================================================
-        滚动驱动动画区域
+        操作系统入口（桌面模拟）
         ============================================================ -->
-        <div class="scroll-driven-demo reveal-on-scroll">
-            <div class="demo-title">
-                <span>🌀 滚动驱动动画 · 滑一下动一下</span>
-                <span class="scroll-progress-value" id="liveProgressPercent">0%</span>
-            </div>
-            <div class="demo-desc">页面滚动的每一帧都精确控制物体形态 —— 滚动条即动画时间轴</div>
-            <div class="scroll-driven-object" id="scrollAnimatedObject">
-                🧸🍰
-            </div>
-            <div class="slider-hint">
-                ⬇️ 向下滚动，小熊奶油蛋糕会旋转、缩放、改变甜蜜弧度 ⬇️
-            </div>
-            <p style="margin-top: 12px; font-size: 0.8rem; color: rgba(255,255,255,0.35);">
-                滚动进度实时驱动动画：旋转角度 + 弹性缩放 + 奶油圆角变形
-            </p>
-        </div>
-
-        <!-- ============================================================
-        核心特性
-        ============================================================ -->
-        <div id="core" class="glass glass-padded reveal-on-scroll">
-            <h2 style="font-size: 1.9rem; display: flex; gap: 6px;">🍮 多模态 · 温柔引擎</h2>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🍰</div>
-                    <h3>味觉级理解</h3>
-                    <p>图文音多模态融合，像品鉴甜品一般细腻捕捉情绪</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🧁</div>
-                    <h3>私密奶油罐</h3>
-                    <p>端侧加密，所有对话永不外流，安心如自家厨房</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🍬</div>
-                    <h3>全场景甜度</h3>
-                    <p>手机/平板/电脑无缝接力，AI 记忆随行</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================================
-        富文本区块
-        ============================================================ -->
-        <div class="rich-text reveal-on-scroll">
-            <h3>📖 奶油梦境 · AI 絮语集</h3>
-            <p>在LaswI AI的构想里，人工智能不该是冰冷的指令集，而是一块入口即化的舒芙蕾。我们训练了超过千亿参数的多模态模型，却刻意抹去锐利棱角，增加"共情过滤器"——使AI在回应前总会模拟三种温柔表达。目前测试版用户留存率高达92%，因为每个人都感觉到了「被托住」的柔软。</p>
-            <p>🍯 2025年，我们率先提出了"端侧隐私奶油层"技术，所有个人数据在本地完成脱敏加密后，才会进入可选联邦学习。这意味着你的秘密、日记、脆弱时刻，永远封存在你自己的甜品匣里。科技的温度，藏在每一个细节里。</p>
-            <p>✨ SmartPet Oreo 内部搭载了情感脉搏引擎 —— 它能感知你的打字压力、语音颤抖，并主动摇尾巴或者播放治愈白噪音。超过2000名内测用户评价它为「赛博养宠天花板，却有着布丁般的触感」。</p>
-            <p>📜 未来路线图：2026年冬天即将推出"全息糖果工坊"，支持用自然语言生成可交互 3D 甜点世界，让创造力变得甜蜜可视。LaswI 一直相信，AI 的最终形态是柔软、天真且富有爱意的。🍬🍭</p>
-            <p>💡 更在近期开放了"Love as Code"开源协议，任何开发者都可以基于情感内核构建更善良的机器人。目前已有超过1500名贡献者加入奶油社区，共同书写一本庞大的电子童话。</p>
-            <p>🎀 技术白皮书摘要：Transformer架构中引入轻量化奶油注意力机制 (Cream Attention)，动态降低负面情绪权重，使回复始终带着鼓励与暖意。实验对比显示，用户压力指数平均下降34%。</p>
-        </div>
-
-        <!-- ============================================================
-        智能糖霜矩阵
-        ============================================================ -->
-        <div class="glass glass-padded reveal-on-scroll">
-            <h2 style="font-size: 1.8rem;">🍭 智能糖霜矩阵</h2>
-            <div class="matrix-tags">
-                <span class="tag-glass">🗺️ 甜点地图AI</span>
-                <span class="tag-glass">🍬 极光浏览器</span>
-                <span class="tag-glass">📖 诗篇翻译器</span>
-                <span class="tag-glass">📒 棉花糖备忘录</span>
-                <span class="tag-glass">🧮 焦糖计算器</span>
-                <span class="tag-glass">🎵 奶油音律工坊</span>
-                <span class="tag-glass">🎬 梦境剪辑师</span>
-                <span class="tag-glass">📸 柔光滤镜AI</span>
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">探索更多甜蜜应用 →</a>
-            </div>
-        </div>
-
-        <!-- ============================================================
-        🎮 游戏预告区（新增）
-        ============================================================ -->
-        <div id="gamepreview" class="glass glass-padded reveal-on-scroll" style="margin-top: 2.5rem;">
-            <div class="section-title-center">
-                <div class="badge-glass">🎮 即将上线</div>
-                <h2 style="font-size: 2rem;">《云端之上 · 白墨瑟尔城》</h2>
-                <p style="color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto;">
-                    一款治愈系叙事卡牌游戏 · 在云海与古城之间，寻找失落的王座
-                </p>
-            </div>
-
-            <!-- 三张预告图 -->
-            <div class="game-preview-grid">
-                <div class="game-preview-item">
-                    <img src="./001.png" alt="游戏预告 01" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E001.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">🌅 云端之城 · 序章</div>
-                </div>
-                <div class="game-preview-item">
-                    <img src="./002.png" alt="游戏预告 02" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E002.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">🌿 雨林 · 探险</div>
-                </div>
-                <div class="game-preview-item">
-                    <img src="./003.png" alt="游戏预告 03" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E003.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">⚔️ 卡牌 · 试炼</div>
-                </div>
-            </div>
-
-            <!-- 竖版海报 -->
-            <div class="game-poster-wrapper">
-                <img src="./haibao.png" alt="游戏竖版海报" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div style="display:none; color:rgba(255,255,255,0.3); text-align:center; padding:40px 0;">
-                    🎴 竖版海报 <br> haibao.png
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <a href="./games.html" class="btn-glass btn-glass-primary" style="padding: 14px 40px; font-size: 1.05rem;">
-                    🎯 前往游戏专页 · 观看宣传视频
+        <div id="os-entry" class="glass glass-padded reveal-on-scroll">
+            <h2 style="color:#fff; font-size: 1.8rem; margin-bottom: 0.2rem; text-align:center;">🚀 操作系统入口</h2>
+            <p style="color:rgba(255,255,255,0.3); text-align:center; margin-bottom: 0.5rem;">选择你需要的服务 · 轻点启动</p>
+            <div class="os-grid">
+                <a href="index.html" class="os-item">
+                    <span class="icon">🌐</span>
+                    <span class="name">LaswI 官网</span>
+                    <span class="desc">品牌主页 · 奶油梦境</span>
+                    <span class="status-dot online"></span>
+                </a>
+                <a href="games.html" class="os-item">
+                    <span class="icon">🎮</span>
+                    <span class="name">游戏中心</span>
+                    <span class="desc">云端之上 · 白墨瑟尔城</span>
+                    <span class="status-dot online"></span>
+                </a>
+                <a href="hayui.html" class="os-item">
+                    <span class="icon">🖥️</span>
+                    <span class="name">HayUI 框架</span>
+                    <span class="desc">Android · Linux · Web</span>
+                    <span class="status-dot beta"></span>
+                </a>
+                <a href="id.html" class="os-item">
+                    <span class="icon">🔐</span>
+                    <span class="name">LaswI ID</span>
+                    <span class="desc">统一身份 · 跨端通行</span>
+                    <span class="status-dot online"></span>
+                </a>
+                <a href="#" class="os-item" style="opacity:0.5; cursor:not-allowed;">
+                    <span class="icon">📦</span>
+                    <span class="name">应用商店</span>
+                    <span class="desc">即将上线</span>
+                    <span class="status-dot soon"></span>
+                </a>
+                <a href="#" class="os-item" style="opacity:0.5; cursor:not-allowed;">
+                    <span class="icon">☁️</span>
+                    <span class="name">云端存储</span>
+                    <span class="desc">开发中</span>
+                    <span class="status-dot soon"></span>
                 </a>
             </div>
         </div>
 
         <!-- ============================================================
-        视频区块
+        快捷启动栏（任务栏风格）
         ============================================================ -->
-        <div class="video-wrapper reveal-on-scroll">
-            <video autoplay muted loop playsinline>
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-ai-interface-with-holographic-data-51409-large.mp4" type="video/mp4">
-            </video>
+        <div id="quick-launch" class="quick-launch reveal-on-scroll">
+            <span style="color:rgba(255,255,255,0.2); font-size:0.75rem; letter-spacing:2px; padding-right:4px;">⚡ 启动</span>
+            <a href="index.html" class="launch-item">
+                <span class="icon-sm">🏠</span> 官网
+            </a>
+            <a href="games.html" class="launch-item">
+                <span class="icon-sm">🎮</span> 游戏
+            </a>
+            <a href="hayui.html" class="launch-item">
+                <span class="icon-sm">🖥️</span> HayUI
+            </a>
+            <a href="id.html" class="launch-item">
+                <span class="icon-sm">🔐</span> ID
+            </a>
+            <div class="divider"></div>
+            <a href="#" class="launch-item" style="color:rgba(255,255,255,0.2); cursor:default;">
+                <span class="icon-sm">🔋</span> 87%
+            </a>
+            <a href="#" class="launch-item" style="color:rgba(255,255,255,0.2); cursor:default;">
+                <span class="icon-sm">📶</span> 在线
+            </a>
+            <a href="#" class="launch-item" style="color:rgba(255,255,255,0.2); cursor:default;">
+                <span class="icon-sm">🕐</span> <span id="clock-display">加载中...</span>
+            </a>
         </div>
 
         <!-- ============================================================
-        SmartPet 奶油特别版
+        系统信息
         ============================================================ -->
-        <div id="smartpet" class="pet-showcase reveal-on-scroll">
-            <div class="pet-avatar">🐱🍰🤍</div>
-            <div class="pet-text">
-                <h3>SmartPet Oreo · 布丁仿生猫</h3>
-                <p>情感脉冲引擎 | 会蹭蹭的AI伴侣 | 软萌奶油学</p>
-                <div style="display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap;">
-                    <span class="tag-glass">💖 拥抱模式开启</span>
-                    <span class="tag-glass">🍬 AI 感性神经元</span>
+        <div class="glass glass-padded reveal-on-scroll" style="background:rgba(255,255,255,0.02);">
+            <h2 style="color:#fff; font-size: 1.4rem; text-align:center; margin-bottom: 0.2rem;">📊 系统状态</h2>
+            <p style="color:rgba(255,255,255,0.2); text-align:center; font-size:0.8rem; margin-bottom:0.8rem;">LaswI 云端生态 · 实时概览</p>
+            <div class="sys-info-grid">
+                <div class="sys-info-item">
+                    <div class="number">4</div>
+                    <div class="label">活跃服务</div>
                 </div>
-                <p style="margin-top: 12px; color: rgba(255,255,255,0.6);">
-                    “Oreo 会记得你每一个喜欢的摸头频率，在你低落时发出呼噜声波，比真实猫咪更温柔。” —— 目前已陪伴超过3万名用户
-                </p>
+                <div class="sys-info-item">
+                    <div class="number">3</div>
+                    <div class="label">支持平台</div>
+                </div>
+                <div class="sys-info-item">
+                    <div class="number">99.9%</div>
+                    <div class="label">服务可用性</div>
+                </div>
+                <div class="sys-info-item">
+                    <div class="number">∞</div>
+                    <div class="label">可能性</div>
+                </div>
             </div>
         </div>
 
         <!-- ============================================================
-        创始人的信
+        CTA
         ============================================================ -->
-        <div class="rich-text reveal-on-scroll">
-            <h3>🍰 来自创始人的一封奶油信笺</h3>
-            <p>当初构想LaswI的时候，我就希望她不是工具，而是一位愿意在深夜为你热牛奶的朋友。因此我们设计了长达半年的"温柔对话数据集"，涵盖各种细腻情绪场景。如今你能清晰感知到，当你打"我今天好累"，AI会主动问要不要讲一个温暖的小故事或者播放一段手碟音乐。</p>
-            <p>同时，我们的开源社区也在不断烘焙新功能：最近上线的「共情画板」能用你的语音描述生成治愈系插画，已有超过4万张作品被用户收藏。另外，团队每周五也会举办"奶油Live"，跟用户一起讨论AI伦理与美好未来。❤️</p>
-            <p>我们认为：技术最性感的样子就是奶油融化在吐司上的那瞬间。所以我们把复杂的模型参数埋在甜蜜之下，把爱意与柔软留给你。未来已来，但它是绵密的、香甜的。</p>
-        </div>
-
-        <!-- ============================================================
-        爱意表单
-        ============================================================ -->
-        <div id="loveform" class="glass-form reveal-on-scroll">
-            <h2 style="text-align: center; margin-bottom: 0.6rem;">💌 传递你的「我爱AI」信号</h2>
-            <p style="text-align: center; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem;">将爱意揉入奶油宇宙，我们会回赠温暖的拥抱</p>
-            <form id="loveFormGlass">
-                <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                    <div style="flex:1; min-width:180px;">
-                        <label style="color:rgba(255,255,255,0.5); font-size:0.85rem;">🍰 你的甜名</label>
-                        <input type="text" id="glassName" class="input-glass" placeholder="小饼干 / 奶油君" required>
-                    </div>
-                    <div style="flex:1; min-width:180px;">
-                        <label style="color:rgba(255,255,255,0.5); font-size:0.85rem;">📧 甜蜜邮箱</label>
-                        <input type="email" id="glassEmail" class="input-glass" placeholder="hello@laswiai.com" required>
-                    </div>
-                </div>
-                <div style="margin-top:1rem;">
-                    <label style="color:rgba(255,255,255,0.5); font-size:0.85rem;">💖 你对LaswI的温柔寄语</label>
-                    <textarea rows="2" id="glassMsg" class="input-glass" placeholder="写下任何想说的话...世界需要更多甜蜜"></textarea>
-                </div>
-                <div class="love-check">
-                    <input type="checkbox" id="glassCheck" checked>
-                    <label>🍬 允许将爱意加入「银河奶油罐」公开温暖展</label>
-                </div>
-                <button type="submit" class="btn-love-glass">💗 发射爱的光波 💗</button>
-                <p id="glassFeedback" style="text-align: center; margin-top: 18px; font-size: 0.85rem; color: rgba(255,255,255,0.5);"></p>
-            </form>
-        </div>
-
-        <!-- ============================================================
-        社区留言板
-        ============================================================ -->
-        <div id="stories" class="glass glass-padded reveal-on-scroll">
-            <h3 style="text-align: center;">🍥 来自社区的奶油留言板 🍥</h3>
-            <div class="message-board">
-                <div class="message-item">“真的被治愈了，每次打开LaswI就像喝到了热可可。” —— 星星糖</div>
-                <div class="message-item">“我家孩子特别喜欢SmartPet Oreo，说是毛绒绒的电波朋友。” —— 桐桐妈妈</div>
-                <div class="message-item">“滑动动画效果太惊艳了，滚动的时候小熊转圈圈好可爱！” —— 设计师Luna</div>
-                <div class="message-item">“希望AI都能这么有人情味，已经向身边所有人安利了奶油模式。” —— 阿茶</div>
+        <div class="glass glass-padded reveal-on-scroll" style="text-align:center; background:linear-gradient(135deg, rgba(120,80,255,0.06), rgba(60,40,200,0.03)); border-color:rgba(120,80,255,0.06);">
+            <h2 style="color:#fff; font-size: 1.6rem; margin-bottom: 0.4rem;">🔐 开始你的旅程</h2>
+            <p style="color:rgba(255,255,255,0.4); max-width:500px; margin: 0.4rem auto 1.2rem;">
+                使用 LaswI ID 登录，解锁所有云端服务
+            </p>
+            <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                <a href="id.html" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
+                    🔐 登录 LaswI ID
+                </a>
+                <a href="id.html?register" class="btn-glass btn-glass-secondary" style="padding:12px 36px; font-size:1rem;">
+                    ✨ 注册新账号
+                </a>
+            </div>
+            <div style="margin-top:0.8rem;">
+                <span class="badge-glass">📱 Android · Linux · Web</span>
+                <span class="badge-glass" style="margin-left:8px;">🔓 开源生态</span>
             </div>
         </div>
 
@@ -1019,76 +858,20 @@
         页脚
         ============================================================ -->
         <footer>
-            🍰 2026 LaswI AI · 奶油梦境发行版 | 开源共情协议 | 让每一次交互都甜度满分 🍰
+            <p>
+                LaswI · 云端生态 &nbsp;|&nbsp;
+                操作系统级入口 &nbsp;|&nbsp;
+                © 2026 LaswI Team
+            </p>
+            <p style="margin-top:4px; color:rgba(255,255,255,0.06); font-size:0.65rem;">
+                由 ❤️ 与 ☁️ 驱动 · 跨平台 · 开放
+            </p>
         </footer>
     </div>
 
     <script>
         (function() {
             'use strict';
-
-            // ============================================================
-            //  进度条 + 滚动驱动动画
-            // ============================================================
-            const progressBar = document.getElementById('scrollProgress');
-            const animatedObj = document.getElementById('scrollAnimatedObject');
-            const livePercentSpan = document.getElementById('liveProgressPercent');
-
-            function getGlobalScrollProgress() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                if (docHeight <= 0) return 0;
-                let progress = scrollTop / docHeight;
-                progress = Math.min(1, Math.max(0, progress));
-                return progress;
-            }
-
-            function updateScrollDrivenAnimation(progress) {
-                if (!animatedObj) return;
-                const rotateDeg = progress * 720;
-                const scaleVal = 0.6 + (progress * 0.7);
-                const borderRadiusVal =
-                    `${30 + progress * 40}% ${70 - progress * 30}% ${60 - progress * 20}% ${40 + progress * 20}% / ${40 + progress * 30}% ${60 - progress * 20}% ${50 + progress * 10}% ${50 - progress * 20}%`;
-                const translateX = (progress - 0.5) * 30;
-                const shadowIntensity = 0.1 + progress * 0.25;
-
-                animatedObj.style.transform = `translateX(${translateX}px) rotate(${rotateDeg}deg) scale(${scaleVal})`;
-                animatedObj.style.borderRadius = borderRadiusVal;
-                animatedObj.style.boxShadow = `0 25px 35px -12px rgba(0,0,0,${shadowIntensity})`;
-
-                if (progress < 0.25) {
-                    animatedObj.innerHTML = '🍰🧸';
-                } else if (progress < 0.5) {
-                    animatedObj.innerHTML = '🍮✨';
-                } else if (progress < 0.75) {
-                    animatedObj.innerHTML = '🐻🍯';
-                } else {
-                    animatedObj.innerHTML = '❤️🍦';
-                }
-                const r = 249 + Math.floor(progress * 20);
-                const g = 216 + Math.floor(progress * 18);
-                const b = 175 + Math.floor(progress * 30);
-                animatedObj.style.background =
-                    `radial-gradient(circle at 30% 30%, rgba(${r},${g},${b},0.6), rgba(240,180,140,0.4))`;
-            }
-
-            let ticking = false;
-
-            function onScrollHandler() {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        const progress = getGlobalScrollProgress();
-                        if (progressBar) progressBar.style.width = (progress * 100) + '%';
-                        if (livePercentSpan) livePercentSpan.innerText = Math.floor(progress * 100) + '%';
-                        updateScrollDrivenAnimation(progress);
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }
-            window.addEventListener('scroll', onScrollHandler);
-            window.addEventListener('resize', onScrollHandler);
-            onScrollHandler();
 
             // ============================================================
             //  Reveal on scroll 观察器
@@ -1101,92 +884,43 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
+            }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
             revealElements.forEach(el => observer.observe(el));
 
             // ============================================================
-            //  表单
+            //  时钟
             // ============================================================
-            const loveForm = document.getElementById('loveFormGlass');
-            if (loveForm) {
-                loveForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const name = document.getElementById('glassName').value.trim();
-                    const email = document.getElementById('glassEmail').value.trim();
-                    const msg = document.getElementById('glassMsg').value.trim();
-                    const check = document.getElementById('glassCheck').checked;
-                    const feedbackDiv = document.getElementById('glassFeedback');
-                    if (!name || !email) {
-                        feedbackDiv.innerHTML = '🍬 请填上你的甜名和糖果邮箱～';
-                        return;
-                    }
-                    if (!email.includes('@')) {
-                        feedbackDiv.innerHTML = '📮 邮箱看起来需要多一丝甜度';
-                        return;
-                    }
-                    if (!check) {
-                        feedbackDiv.innerHTML = '🥛 请勾选「加入银河奶油罐」让爱意传递~';
-                        return;
-                    }
-                    feedbackDiv.innerHTML =
-                        `🍰 亲爱的 ${name}，你的爱意已送入奶油云端！<br>“${msg || '我爱你，温柔的LaswI'}"<br>❤️ 宇宙回响：我们同样深爱你 ❤️`;
-                    feedbackDiv.style.background = "rgba(255,255,255,0.04)";
-                    feedbackDiv.style.padding = "12px";
-                    feedbackDiv.style.borderRadius = "40px";
-                    createHearts(16);
-                    loveForm.reset();
-                    document.getElementById('glassCheck').checked = true;
-                });
+            function updateClock() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                document.getElementById('clock-display').textContent = h + ':' + m;
             }
-
-            function createHearts(count) {
-                for (let i = 0; i < count; i++) {
-                    let heart = document.createElement('div');
-                    heart.innerHTML = '❤️🍰';
-                    heart.style.position = 'fixed';
-                    heart.style.bottom = '20px';
-                    heart.style.left = Math.random() * window.innerWidth + 'px';
-                    heart.style.fontSize = (Math.random() * 22 + 14) + 'px';
-                    heart.style.pointerEvents = 'none';
-                    heart.style.zIndex = '9999';
-                    heart.style.filter = 'drop-shadow(0 0 12px rgba(255,200,170,0.3))';
-                    heart.style.transition = 'all 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.2)';
-                    document.body.appendChild(heart);
-                    let pos = 0;
-                    let interval = setInterval(() => {
-                        pos += 2.2;
-                        heart.style.transform = `translateY(-${pos * 2}px) rotate(${pos * 3}deg)`;
-                        heart.style.opacity = 1 - pos / 45;
-                        if (pos > 45) { clearInterval(interval);
-                            heart.remove(); }
-                    }, 18);
-                }
-            }
+            updateClock();
+            setInterval(updateClock, 30000);
 
             // ============================================================
-            //  视频自动播放
+            //  平滑锚点滚动
             // ============================================================
-            document.querySelectorAll('video').forEach(v => v.play().catch(e => console.log));
-
-            // ============================================================
-            //  导航锚点平滑滚动
-            // ============================================================
-            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-love-glass')
-                .forEach(anchor => {
-                    if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
-                        anchor.addEventListener('click', function(e) {
-                            const hash = this.getAttribute('href');
-                            if (hash && hash !== '#') {
-                                e.preventDefault();
-                                const target = document.querySelector(hash);
-                                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        });
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                     }
                 });
+            });
 
-            console.log('🍰 LaswI AI · 毛玻璃版本已加载');
-            console.log('🎮 游戏预告区已嵌入');
+            // ============================================================
+            //  控制台标记
+            // ============================================================
+            console.log('🚀 LaswI · 云端操作系统入口已加载');
+            console.log('📱 支持 Android · Linux · Web 三端');
+            console.log('🔐 包含 LaswI ID 登录入口');
 
         })();
     </script>
