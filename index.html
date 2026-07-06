@@ -225,6 +225,36 @@
             border-color: rgba(255, 200, 100, 0.35);
             color: #fff;
         }
+        .btn-glass-tv {
+            background: rgba(200, 100, 255, 0.12);
+            border-color: rgba(200, 100, 255, 0.15);
+            color: #d4a0ff;
+        }
+        .btn-glass-tv:hover {
+            background: rgba(200, 100, 255, 0.2);
+            border-color: rgba(200, 100, 255, 0.25);
+            color: #fff;
+        }
+        .btn-glass-cartoon {
+            background: rgba(255, 150, 50, 0.12);
+            border-color: rgba(255, 150, 50, 0.15);
+            color: #ffb74d;
+        }
+        .btn-glass-cartoon:hover {
+            background: rgba(255, 150, 50, 0.2);
+            border-color: rgba(255, 150, 50, 0.25);
+            color: #fff;
+        }
+        .btn-glass-hayjyny {
+            background: rgba(255, 100, 150, 0.12);
+            border-color: rgba(255, 100, 150, 0.15);
+            color: #ff8a9e;
+        }
+        .btn-glass-hayjyny:hover {
+            background: rgba(255, 100, 150, 0.2);
+            border-color: rgba(255, 100, 150, 0.25);
+            color: #fff;
+        }
 
         .badge-glass {
             display: inline-block;
@@ -239,6 +269,16 @@
             color: rgba(255, 255, 255, 0.7);
             letter-spacing: 0.5px;
         }
+        .badge-live {
+            background: rgba(100, 255, 150, 0.12);
+            border-color: rgba(100, 255, 150, 0.15);
+            color: #7ddfa0;
+        }
+        .badge-soon {
+            background: rgba(255, 200, 100, 0.12);
+            border-color: rgba(255, 200, 100, 0.15);
+            color: #ffd54f;
+        }
         .gradient-text {
             background: linear-gradient(135deg, #fce8d5, #f5d0b0, #e8b08a);
             -webkit-background-clip: text;
@@ -247,7 +287,9 @@
             text-shadow: none;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             font-weight: 700;
             letter-spacing: -0.01em;
             color: #fff;
@@ -261,7 +303,8 @@
             font-size: 2.2rem;
             margin-bottom: 1rem;
         }
-        p, .text-muted {
+        p,
+        .text-muted {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
         }
@@ -419,8 +462,12 @@
             animation: floatSoft 3s infinite alternate;
         }
         @keyframes floatSoft {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-10px); }
+            0% {
+                transform: translateY(0px);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
         }
         .pet-text h3 {
             font-size: 1.9rem;
@@ -519,60 +566,99 @@
             column-span: all;
         }
 
-        .game-preview-grid {
+        /* ===== 游戏动态双栏 ===== */
+        .game-dynamic-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
             margin: 1.5rem 0;
         }
-        .game-preview-item {
-            border-radius: 32px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(4px);
-        }
-        .game-preview-item:hover {
-            transform: scale(1.03);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        }
-        .game-preview-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-        }
-        .game-preview-item .caption {
-            padding: 12px 16px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(0, 0, 0, 0.2);
-        }
-        .game-poster-wrapper {
+        .game-dynamic-grid .game-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 36px;
+            padding: 1.8rem 1.6rem;
+            transition: all 0.3s ease;
             display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .game-poster-wrapper img {
-            max-height: 500px;
-            border-radius: 32px;
-            box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
-        }
-        .game-poster-wrapper img:hover {
-            transform: scale(1.02);
+        .game-dynamic-grid .game-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
             border-color: rgba(255, 255, 255, 0.12);
         }
-        .section-title-center {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .section-title-center .badge-glass {
+        .game-dynamic-grid .game-card .game-icon {
+            font-size: 3.6rem;
             margin-bottom: 0.5rem;
+        }
+        .game-dynamic-grid .game-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            color: #fff;
+        }
+        .game-dynamic-grid .game-card p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+        .game-dynamic-grid .game-card .badge-glass {
+            margin-bottom: 0.6rem;
+        }
+        .game-dynamic-grid .game-card .btn-glass {
+            margin-top: 0.2rem;
+        }
+        .game-dynamic-grid .game-card .game-thumb {
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 0.5rem 0 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== 品牌入口卡片 ===== */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+        .brand-grid .brand-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            padding: 1.4rem 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .brand-grid .brand-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+        .brand-grid .brand-card .brand-icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .brand-grid .brand-card .brand-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .brand-grid .brand-card .brand-desc {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 0.1rem;
         }
 
         .message-board {
@@ -688,14 +774,11 @@
             .scroll-progress-value {
                 font-size: 1.8rem;
             }
-            .game-preview-grid {
+            .game-dynamic-grid {
+                grid-template-columns: 1fr;
+            }
+            .brand-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            .game-preview-item img {
-                height: 140px;
-            }
-            .game-poster-wrapper img {
-                max-height: 350px;
             }
             .rich-text {
                 columns: 1;
@@ -748,15 +831,28 @@
             h2 {
                 font-size: 1.4rem;
             }
-            .game-preview-grid {
+            .game-dynamic-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .game-dynamic-grid .game-card {
+                padding: 1.2rem 1rem;
+            }
+            .game-dynamic-grid .game-card .game-icon {
+                font-size: 2.8rem;
+            }
+            .brand-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 0.8rem;
             }
-            .game-preview-item img {
-                height: 120px;
+            .brand-grid .brand-card {
+                padding: 1rem 0.6rem;
             }
-            .game-poster-wrapper img {
-                max-height: 280px;
+            .brand-grid .brand-card .brand-icon {
+                font-size: 2rem;
+            }
+            .brand-grid .brand-card .brand-name {
+                font-size: 0.85rem;
             }
             .scroll-driven-object {
                 width: 90px;
@@ -801,7 +897,7 @@
 
     <div class="container">
         <!-- ============================================================
-        毛玻璃导航栏（新增 🌤️ 魔法花园 入口）
+        毛玻璃导航栏
         ============================================================ -->
         <nav class="glass-nav">
             <div class="logo">
@@ -813,13 +909,15 @@
                 <a href="#smartpet">🐾 SmartPet</a>
                 <a href="#loveform">💌 情书投递</a>
                 <a href="#stories">✨ 絮语集</a>
-                <a href="#gamepreview">🎮 游戏预告</a>
+                <a href="#gamezone">🎮 游戏动态</a>
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" style="color:#f5d0b0;">🔮 在线体验</a>
                 <a href="./games.html" class="nav-highlight">🎯 游戏专页</a>
-                <a href="./hayui.html" class="nav-highlight">🖥️ HayUI</a>
+                <!-- 移除 HayUI，新增 TV / Cartoon / HayJyny -->
+                <a href="./tv.html" class="nav-highlight" style="color:#d4a0ff;">📺 LaswI TV</a>
+                <a href="./cartoon.html" class="nav-highlight" style="color:#ffb74d;">🎨 LaswI Cartoon</a>
+                <a href="./hayjyny.html" class="nav-highlight" style="color:#ff8a9e;">🍭 HayJyny</a>
                 <a href="./id.html" style="color:#c4b5ff;">🔐 ID</a>
                 <a href="./download.html" class="nav-highlight" style="color:#7cd4c0;">📥 下载</a>
-                <!-- 🌤️ 魔法花园入口（新增） -->
                 <a href="https://wengu130301.github.io/hua" target="_blank" class="nav-highlight" style="color:#ffd54f;">🌤️ 魔法花园</a>
             </div>
         </nav>
@@ -836,8 +934,8 @@
             <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                 <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-glass-primary">🍰 尝鲜在线版</a>
                 <a href="./download.html" class="btn-glass btn-glass-download">📦 下载桌面App</a>
-                <a href="./hayui.html" class="btn-glass" style="background:rgba(120,80,255,0.15); border-color:rgba(120,80,255,0.2); color:#c4b5ff;">🖥️ HayUI 框架</a>
-                <!-- 🌤️ 魔法花园入口（新增） -->
+                <!-- HayUI 入口已移除，改为 HayJyny -->
+                <a href="./hayjyny.html" class="btn-glass btn-glass-hayjyny">🍭 HayJyny</a>
                 <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-garden">🌤️ 魔法花园</a>
             </div>
         </div>
@@ -920,45 +1018,55 @@
         </div>
 
         <!-- ============================================================
-        🎮 游戏预告区
+        🎮 游戏动态区（已上线 + 即将上线）
         ============================================================ -->
-        <div id="gamepreview" class="glass glass-padded reveal-on-scroll" style="margin-top: 2.5rem;">
+        <div id="gamezone" class="glass glass-padded reveal-on-scroll" style="margin-top: 2.5rem;">
             <div class="section-title-center">
-                <div class="badge-glass">🎮 即将上线</div>
-                <h2 style="font-size: 2rem;">《云端之上 · 白墨瑟尔城》</h2>
+                <div class="badge-glass">🎮 游戏动态</div>
+                <h2 style="font-size: 2rem;">🍭 已上线 · 即将上线</h2>
                 <p style="color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto;">
-                    一款治愈系叙事卡牌游戏 · 在云海与古城之间，寻找失落的王座
+                    从云端古城到午夜后宫，LaswI 的游戏宇宙持续扩展
                 </p>
             </div>
-            <div class="game-preview-grid">
-                <div class="game-preview-item">
-                    <img src="./001.png" alt="游戏预告 01" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E001.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">🌅 云端之城 · 序章</div>
+
+            <div class="game-dynamic-grid">
+                <!-- 左：已上线 · 白墨瑟尔城 -->
+                <div class="game-card">
+                    <span class="badge-glass badge-live">✅ 已上线</span>
+                    <div class="game-icon">🏰</div>
+                    <h3>《云端之上 · 白墨瑟尔城》</h3>
+                    <p>治愈系叙事卡牌 · 在云海与古城之间，寻找失落的王座</p>
+                    <img src="./001.png" alt="白墨瑟尔城" class="game-thumb" onerror="this.style.display='none'">
+                    <a href="https://wengu130301.github.io/WitMorser-City/" target="_blank" class="btn-glass btn-glass-primary" style="padding: 10px 28px; font-size:0.9rem;">
+                        🎮 立即游玩
+                    </a>
                 </div>
-                <div class="game-preview-item">
-                    <img src="./002.png" alt="游戏预告 02" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E002.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">🌿 雨林 · 探险</div>
-                </div>
-                <div class="game-preview-item">
-                    <img src="./003.png" alt="游戏预告 03" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22180%22%3E%3Crect fill=%22rgba(255,255,255,0.05)%22 width=%22300%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22rgba(255,255,255,0.2)%22 font-size=%2216%22 font-family=%22sans-serif%22%3E003.png%3C/text%3E%3C/svg%3E'">
-                    <div class="caption">⚔️ 卡牌 · 试炼</div>
+
+                <!-- 右：即将上线 · 汩汩的午夜后宫 -->
+                <div class="game-card">
+                    <span class="badge-glass badge-soon">🔜 即将上线</span>
+                    <div class="game-icon">🌙</div>
+                    <h3>《汩汩的午夜后宫》</h3>
+                    <p>悬疑解谜 · 在午夜钟声响起时，探索汩汩深处的秘密</p>
+                    <div class="game-thumb" style="display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.03); font-size:3.2rem; min-height:120px; border-radius:20px; border:1px solid rgba(255,255,255,0.04);">
+                        🕯️🔮
+                    </div>
+                    <span style="color:rgba(255,255,255,0.3); font-size:0.8rem; margin:0.2rem 0 0.6rem;">敬请期待 · 2026 冬</span>
+                    <a href="#" class="btn-glass" style="padding: 10px 28px; font-size:0.9rem; background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.06); color:rgba(255,255,255,0.5); cursor:default;">
+                        ⏳ 预约提醒
+                    </a>
                 </div>
             </div>
-            <div class="game-poster-wrapper">
-                <img src="./haibao.png" alt="游戏竖版海报" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div style="display:none; color:rgba(255,255,255,0.3); text-align:center; padding:40px 0;">
-                    🎴 竖版海报 <br> haibao.png
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 1.5rem;">
+
+            <div style="text-align: center; margin-top: 1.2rem;">
                 <a href="./games.html" class="btn-glass btn-glass-primary" style="padding: 14px 40px; font-size: 1.05rem;">
-                    🎯 前往游戏专页 · 观看宣传视频
+                    🎯 前往游戏专页 · 更多动态
                 </a>
             </div>
         </div>
 
         <!-- ============================================================
-        🌤️ 魔法花园入口卡片（新增）
+        🌤️ 魔法花园入口卡片
         ============================================================ -->
         <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(255,215,0,0.06), rgba(255,200,100,0.03)); border-color:rgba(255,215,0,0.08);">
             <div class="section-title-center">
@@ -992,35 +1100,35 @@
         </div>
 
         <!-- ============================================================
-        🖥️ HayUI 入口卡片
+        🍭 子品牌入口卡片（HayJyny · LaswI TV · LaswI Cartoon）
         ============================================================ -->
-        <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(120,80,255,0.06), rgba(60,40,200,0.03)); border-color:rgba(120,80,255,0.06);">
+        <div class="glass glass-padded reveal-on-scroll" style="margin-top: 1.5rem; background:linear-gradient(135deg, rgba(255,100,150,0.04), rgba(200,100,255,0.03)); border-color:rgba(255,100,150,0.06);">
             <div class="section-title-center">
-                <div class="badge-glass">🖥️ 跨平台框架</div>
-                <h2 style="font-size: 1.8rem;">HayUI · 轻量界面框架</h2>
+                <div class="badge-glass">🍭 子品牌星系</div>
+                <h2 style="font-size: 1.8rem;">LaswI 宇宙 · 探索更多</h2>
                 <p style="color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto;">
-                    基于 Android &amp; Linux 定制改造 · 毛玻璃设计 · 三端统一
+                    TV · 漫画 · 新子品牌 —— 奶油宇宙持续膨胀
                 </p>
             </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: center; margin-top: 0.5rem;">
-                <div style="flex: 1; min-width: 200px; text-align: center; color: rgba(255,255,255,0.5);">
-                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">📱</span>
-                    <span>手机 · 平板 · 电脑</span>
-                </div>
-                <div style="flex: 1; min-width: 200px; text-align: center; color: rgba(255,255,255,0.5);">
-                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">⚡</span>
-                    <span>轻量 · 高性能 · 原生</span>
-                </div>
-                <div style="flex: 1; min-width: 200px; text-align: center; color: rgba(255,255,255,0.5);">
-                    <span style="font-size: 3rem; display: block; margin-bottom: 0.2rem;">🎨</span>
-                    <span>毛玻璃美学 · 现代设计</span>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 1.2rem;">
-                <a href="./hayui.html" class="btn-glass" style="background:linear-gradient(135deg, rgba(120,80,255,0.2), rgba(80,60,220,0.1)); border-color:rgba(120,80,255,0.2); color:#c4b5ff; padding: 14px 40px; font-size:1.05rem;">
-                    🖥️ 探索 HayUI 框架
+            <div class="brand-grid">
+                <a href="./tv.html" class="brand-card" style="border-color:rgba(200,100,255,0.1);">
+                    <span class="brand-icon">📺</span>
+                    <span class="brand-name" style="color:#d4a0ff;">LaswI TV</span>
+                    <span class="brand-desc">AI 影音 · 治愈频道</span>
                 </a>
-                <span style="color:rgba(255,255,255,0.15); margin-left: 12px; font-size:0.8rem;">Android · Linux · Web</span>
+                <a href="./cartoon.html" class="brand-card" style="border-color:rgba(255,150,50,0.1);">
+                    <span class="brand-icon">🎨</span>
+                    <span class="brand-name" style="color:#ffb74d;">LaswI Cartoon</span>
+                    <span class="brand-desc">AI 漫画 · 故事工坊</span>
+                </a>
+                <a href="./hayjyny.html" class="brand-card" style="border-color:rgba(255,100,150,0.12);">
+                    <span class="brand-icon">🍭</span>
+                    <span class="brand-name" style="color:#ff8a9e;">HayJyny</span>
+                    <span class="brand-desc">轻量框架 · 设计语言</span>
+                </a>
+            </div>
+            <div style="text-align: center; margin-top: 0.8rem; color:rgba(255,255,255,0.2); font-size:0.75rem;">
+                ✦ 原 HayUI 已升级为 HayJyny · 更轻更甜 ✦
             </div>
         </div>
 
@@ -1268,7 +1376,7 @@
 
             document.querySelectorAll('video').forEach(v => v.play().catch(e => console.log));
 
-            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-glass-download, .btn-glass-garden, .btn-love-glass')
+            document.querySelectorAll('.nav-links a, .btn-glass, .btn-glass-primary, .btn-glass-primary-inverse, .btn-glass-download, .btn-glass-garden, .btn-glass-tv, .btn-glass-cartoon, .btn-glass-hayjyny, .btn-love-glass')
                 .forEach(anchor => {
                     if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
                         anchor.addEventListener('click', function(e) {
@@ -1283,7 +1391,10 @@
                 });
 
             console.log('🍰 LaswI AI · 毛玻璃官网已加载');
-            console.log('🌤️ 已添加「魔法花园」入口 (wengu130301.github.io/hua)');
+            console.log('✅ 白墨瑟尔城已上线 → https://wengu130301.github.io/WitMorser-City/');
+            console.log('🌙 《汩汩的午夜后宫》即将上线');
+            console.log('📺 新增 LaswI TV · 🎨 LaswI Cartoon · 🍭 HayJyny');
+            console.log('❌ 已移除 HayUI 入口');
 
         })();
     </script>
