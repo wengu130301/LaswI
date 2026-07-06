@@ -236,6 +236,16 @@
             border-color: rgba(255, 215, 0, 0.25);
             color: #fff;
         }
+        .btn-glass-midnight {
+            background: linear-gradient(135deg, rgba(100, 150, 255, 0.15), rgba(60, 80, 200, 0.08));
+            border-color: rgba(100, 150, 255, 0.15);
+            color: #7ab7ff;
+        }
+        .btn-glass-midnight:hover {
+            background: rgba(100, 150, 255, 0.2);
+            border-color: rgba(100, 150, 255, 0.25);
+            color: #fff;
+        }
 
         .badge-glass {
             display: inline-block;
@@ -260,6 +270,11 @@
             color: #ff8a65;
             border-color: rgba(255, 138, 101, 0.15);
             background: rgba(255, 138, 101, 0.05);
+        }
+        .badge-live {
+            color: #7ddfa0;
+            border-color: rgba(100, 255, 150, 0.12);
+            background: rgba(100, 255, 150, 0.05);
         }
 
         /* ============================================================
@@ -311,7 +326,7 @@
                    ============================================================ */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin: 2rem 0;
         }
@@ -382,6 +397,11 @@
             border-color: rgba(255, 138, 101, 0.15);
             background: rgba(255, 138, 101, 0.05);
         }
+        .game-card .card-badge.live {
+            color: #7ddfa0;
+            border-color: rgba(100, 255, 150, 0.12);
+            background: rgba(100, 255, 150, 0.05);
+        }
         .game-card .card-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -397,6 +417,12 @@
         }
         .game-card .card-title .highlight-gold {
             background: linear-gradient(135deg, #ffd54f, #ffb300);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .game-card .card-title .highlight-midnight {
+            background: linear-gradient(135deg, #7ab7ff, #4a8ad4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -439,6 +465,15 @@
         .game-card.gold-card:hover {
             border-color: rgba(255, 215, 0, 0.2);
             background: rgba(255, 215, 0, 0.04);
+        }
+        /* 特殊：午夜后宫卡片深蓝边框 */
+        .game-card.midnight-card {
+            border-color: rgba(100, 150, 255, 0.06);
+            background: rgba(60, 80, 200, 0.02);
+        }
+        .game-card.midnight-card:hover {
+            border-color: rgba(100, 150, 255, 0.15);
+            background: rgba(60, 80, 200, 0.04);
         }
 
         /* ============================================================
@@ -651,16 +686,16 @@
         </section>
 
         <!-- ============================================================
-        游戏卡片
+        游戏卡片（三款游戏：白墨瑟尔城·已上线 / 魔法花园·已上线 / 汩汩的午夜后宫·即将上线）
         ============================================================ -->
         <div id="games" class="games-grid reveal-on-scroll">
 
             <!-- ============================================================
-            游戏1：白墨瑟尔城（即将上线）
+            游戏1：白墨瑟尔城（已上线 ✅）
             ============================================================ -->
             <div class="game-card">
                 <div class="card-icon">🏛️</div>
-                <div class="card-badge soon">⏳ 即将上线</div>
+                <div class="card-badge live">✅ 已上线</div>
                 <div class="card-title">
                     《云端之上 · <span class="highlight">白墨瑟尔城</span>》
                 </div>
@@ -676,13 +711,13 @@
                     <span>🌙 治愈系</span>
                 </div>
                 <div class="card-actions">
-                    <a href="games.html" class="btn-glass btn-glass-primary">🎮 了解详情</a>
-                    <span class="btn-glass btn-glass-secondary disabled">⏳ 即将上线</span>
+                    <a href="https://wengu130301.github.io/WitMorser-City/" target="_blank" class="btn-glass btn-glass-primary">🎮 立即游玩</a>
+                    <a href="games.html" class="btn-glass btn-glass-secondary">📖 了解更多</a>
                 </div>
             </div>
 
             <!-- ============================================================
-            游戏2：魔法花园（已上线）
+            游戏2：魔法花园（已上线 🌟）
             ============================================================ -->
             <div class="game-card gold-card">
                 <div class="card-icon">🌤️</div>
@@ -705,6 +740,32 @@
                 <div class="card-actions">
                     <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-gold">🌤️ 进入魔法花园</a>
                     <a href="#" class="btn-glass btn-glass-secondary">🎬 观看预告</a>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            游戏3：汩汩的午夜后宫（即将上线 ⏳）
+            ============================================================ -->
+            <div class="game-card midnight-card">
+                <div class="card-icon">🌙</div>
+                <div class="card-badge soon">⏳ 即将上线</div>
+                <div class="card-title">
+                    《<span class="highlight-midnight">汩汩的午夜后宫</span>》
+                </div>
+                <div class="card-desc">
+                    在午夜钟声敲响之际，古老宅邸的深处传来汩汩水声。<br />
+                    解开层层谜题，探寻被遗忘的家族秘密。<br />
+                    悬疑 · 解谜 · 沉浸式叙事。
+                </div>
+                <div class="card-tags">
+                    <span>🕯️ 悬疑解谜</span>
+                    <span>🔍 探索</span>
+                    <span>📜 家族秘史</span>
+                    <span>🌙 午夜氛围</span>
+                </div>
+                <div class="card-actions">
+                    <span class="btn-glass btn-glass-secondary disabled">⏳ 预约提醒</span>
+                    <span class="btn-glass btn-glass-secondary disabled" style="opacity:0.2;">🔔 即将开放</span>
                 </div>
             </div>
 
@@ -741,10 +802,10 @@
         </div>
 
         <!-- ============================================================
-        即将推出
+        即将推出（占位标签，保持活跃感）
         ============================================================ -->
         <div class="glass glass-padded reveal-on-scroll" style="text-align:center; border-color:rgba(255,255,255,0.03);">
-            <h2 style="color:#fff; font-size: 1.4rem; margin-bottom: 0.2rem;">🚀 更多游戏即将到来</h2>
+            <h2 style="color:#fff; font-size: 1.4rem; margin-bottom: 0.2rem;">🚀 更多游戏正在筹备</h2>
             <p style="color:rgba(255,255,255,0.3); font-size: 0.9rem; margin-bottom: 0.4rem;">
                 我们正在打造更多治愈、有趣的云端世界
             </p>
@@ -768,12 +829,15 @@
                 <a href="https://wengu130301.github.io/hua" target="_blank" class="btn-glass btn-glass-gold" style="padding:12px 36px; font-size:1rem;">
                     🌤️ 立即体验魔法花园
                 </a>
-                <a href="games.html" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
-                    🏛️ 了解白墨瑟尔城
+                <a href="https://wengu130301.github.io/WitMorser-City/" target="_blank" class="btn-glass btn-glass-primary" style="padding:12px 36px; font-size:1rem;">
+                    🏛️ 探索白墨瑟尔城
+                </a>
+                <a href="#" class="btn-glass btn-glass-midnight" style="padding:12px 36px; font-size:1rem; opacity:0.5; cursor:default;">
+                    🌙 午夜后宫 · 预约
                 </a>
             </div>
             <div style="margin-top:0.8rem;">
-                <span class="badge-glass">🎮 两款游戏</span>
+                <span class="badge-glass">🎮 三款游戏</span>
                 <span class="badge-glass">🌱 持续更新</span>
                 <span class="badge-glass">❤️ 用爱制作</span>
             </div>
@@ -825,8 +889,9 @@
             });
 
             console.log('🎮 LaswI Games · 游戏中心已加载');
-            console.log('🌤️ 包含《白墨瑟尔城》（即将上线）和《魔法花园》（已上线）两款游戏');
-            console.log('🌟 魔法花园入口: https://wengu130301.github.io/hua');
+            console.log('✅ 白墨瑟尔城 已上线 → https://wengu130301.github.io/WitMorser-City/');
+            console.log('🌤️ 魔法花园 已上线 → https://wengu130301.github.io/hua');
+            console.log('🌙 汩汩的午夜后宫 即将上线');
 
         })();
     </script>
