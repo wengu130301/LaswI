@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>LaswI HowGo · 端对端加密</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- PeerJS (WebRTC 信令与连接库) -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js">
+    </script>
+    <style>
+        /* ===== 全局重置 & 变量 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #a29bfe;
+            --primary-dark: #4a3db8;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #1a1a2e;
+            --text-light: #6b7280;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+            --radius: 24px;
+            --radius-sm: 14px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 60px;
+            --footer-height: 70px;
+        }
+
+        body {
+            background: var(--bg);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            margin: 0;
+            color: var(--text);
+        }
+
+        /* ===== 容器 ===== */
+        .app-wrapper {
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            max-height: 820px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        /* ============================================================ */
+        /* ===== 认证页 (登录 / 注册) ===== */
+        /* ============================================================ */
+        .auth-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 32px 24px;
+            background: linear-gradient(145deg, #fafaff 0%, #f0f3ff 100%);
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .auth-page .brand {
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+        .auth-page .brand span {
+            color: var(--text);
+        }
+        .auth-page .brand-sub {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+        .auth-page .brand-sub i {
+            margin: 0 4px;
+        }
+
+        /* 切换 tabs */
+        .auth-tabs {
+            display: flex;
+            background: #eef0f8;
+            border-radius: 40px;
+            padding: 4px;
+            width: 100%;
+            max-width: 280px;
+            margin-bottom: 28px;
+        }
+        .auth-tabs button {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .auth-tabs button.active {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 2px 12px rgba(108, 92, 231, 0.15);
+        }
+        .auth-tabs button:hover {
+            color: var(--text);
+        }
+
+        .auth-form {
+            width: 100%;
+            max-width: 320px;
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            animation: fade-up 0.3s ease-out;
+        }
+        .auth-form.active {
+            display: flex;
+        }
+
+        @keyframes fade-up {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-form .input-group {
+            position: relative;
+            width: 100%;
+        }
+        .auth-form .input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            opacity: 0.5;
+            font-size: 16px;
+        }
+        .auth-form .input-group input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #e5e7f0;
+            border-radius: 50px;
+            font-size: 15px;
+            background: #f9fafc;
+            outline: none;
+            transition: var(--transition);
+            color: var(--text);
+        }
+        .auth-form .input-group input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.08);
+        }
+        .auth-form .input-group input::placeholder {
+            color: #b0b8c8;
+        }
+
+        .auth-form .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.25);
+        }
+        .auth-form .btn-auth:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(108, 92, 231, 0.35);
+        }
+        .auth-form .btn-auth:active {
+            transform: scale(0.97);
+        }
+        .auth-form .btn-auth:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .auth-form .error-msg {
+            color: #e74c6f;
+            font-size: 13px;
+            background: #fee8ed;
+            padding: 8px 14px;
+            border-radius: 30px;
+            text-align: center;
+            display: none;
+        }
+        .auth-form .error-msg.show {
+            display: block;
+        }
+
+        .auth-divider {
+            color: var(--text-light);
+            font-size: 13px;
+            opacity: 0.5;
+            margin: 4px 0;
+        }
+
+        /* ============================================================ */
+        /* ===== 聊天主界面 ===== */
+        /* ============================================================ */
+        .chat-page {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            background: var(--card-bg);
+        }
+        .chat-page.active {
+            display: flex;
+        }
+
+        /* ---- 顶栏 ---- */
+        .chat-header {
+            height: var(--header-height);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f0f0f5;
+            background: #fafaff;
+            flex-shrink: 0;
+        }
+        .chat-header .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .chat-header .left .avatar-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .chat-header .left .info {
+            line-height: 1.2;
+            overflow: hidden;
+        }
+        .chat-header .left .info .my-id {
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chat-header .left .info .status {
+            font-size: 11px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .chat-header .left .info .status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #34c759;
+            display: inline-block;
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .chat-header .right {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .chat-header .right button {
+            background: transparent;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .chat-header .right button:hover {
+            background: #f0f0f8;
+            color: var(--text);
+        }
+        .chat-header .right .logout-btn {
+            color: #e74c6f;
+        }
+        .chat-header .right .logout-btn:hover {
+            background: #fee8ed;
+            color: #c0395a;
+        }
+
+        /* ---- 连接栏 ---- */
+        .connect-bar {
+            padding: 10px 16px;
+            background: #f8f9fe;
+            border-bottom: 1px solid #f0f0f5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .connect-bar .peer-input {
+            flex: 1;
+            min-width: 100px;
+            padding: 8px 16px;
+            border: 2px solid #e5e7f0;
+            border-radius: 30px;
+            font-size: 14px;
+            background: #ffffff;
+            outline: none;
+            transition: var(--transition);
+        }
+        .connect-bar .peer-input:focus {
+            border-color: var(--primary);
+        }
+        .connect-bar .peer-input::placeholder {
+            color: #b0b8c8;
+        }
+        .connect-bar .btn-connect {
+            padding: 8px 18px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .connect-bar .btn-connect:hover {
+            background: var(--primary-dark);
+            transform: scale(1.02);
+        }
+        .connect-bar .btn-connect:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .connect-bar .conn-status {
+            font-size: 12px;
+            color: var(--text-light);
+            padding: 4px 10px;
+            background: #eef0f7;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+        .connect-bar .conn-status.connected {
+            background: #dff0e6;
+            color: #1a7a4a;
+        }
+
+        /* ---- 消息区 ---- */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 14px 8px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #fafbff;
+            scroll-behavior: smooth;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #d0d5e0;
+            border-radius: 20px;
+        }
+
+        .message {
+            max-width: 84%;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 14.5px;
+            line-height: 1.5;
+            word-break: break-word;
+            animation: msg-in 0.2s ease-out;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+        @keyframes msg-in {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .message.sent {
+            align-self: flex-end;
+            background: var(--primary);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .message.received {
+            align-self: flex-start;
+            background: #ffffff;
+            color: var(--text);
+            border-bottom-left-radius: 4px;
+            border: 1px solid #f0f0f8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .message .msg-meta {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+            margin-top: 5px;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        .message.sent .msg-meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .message.received .msg-meta {
+            color: var(--text-light);
+        }
+        .message .msg-meta .sender {
+            margin-right: auto;
+            font-weight: 500;
+        }
+        .message.received .msg-meta .sender {
+            color: var(--primary);
+        }
+        .message .msg-meta .time {
+            white-space: nowrap;
+        }
+        .message .msg-meta .e2ee-badge {
+            font-size: 9px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0 6px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .message.sent .msg-meta .e2ee-badge {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .system-message {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+            padding: 4px 14px;
+            background: #eef0f7;
+            border-radius: 30px;
+            align-self: center;
+            max-width: 70%;
+            margin: 2px 0;
+            opacity: 0.8;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+        }
+        .empty-state i {
+            font-size: 44px;
+            opacity: 0.15;
+            margin-bottom: 10px;
+        }
+        .empty-state p {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* ---- 底部输入 ---- */
+        .chat-footer {
+            height: var(--footer-height);
+            padding: 8px 14px 14px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid #f0f0f5;
+            background: #fafaff;
+            flex-shrink: 0;
+        }
+        .chat-footer .input-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #f1f3fa;
+            border-radius: 50px;
+            padding: 0 4px 0 18px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .chat-footer .input-wrap:focus-within {
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+        .chat-footer .input-wrap input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 11px 6px 11px 0;
+            font-size: 15px;
+            outline: none;
+            color: var(--text);
+            min-width: 0;
+        }
+        .chat-footer .input-wrap input::placeholder {
+            color: #b0b8c8;
+        }
+        .chat-footer .send-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(108, 92, 231, 0.25);
+        }
+        .chat-footer .send-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.04);
+        }
+        .chat-footer .send-btn:active {
+            transform: scale(0.92);
+        }
+        .chat-footer .send-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 520px) {
+            body {
+                padding: 0;
+                background: var(--card-bg);
+            }
+            .app-wrapper {
+                max-height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .auth-page {
+                padding: 24px 16px;
+            }
+            .auth-page .brand {
+                font-size: 36px;
+            }
+            .connect-bar {
+                padding: 8px 12px;
+            }
+            .connect-bar .peer-input {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            .chat-messages {
+                padding: 10px 10px 4px 10px;
+            }
+            .message {
+                max-width: 88%;
+                font-size: 14px;
+                padding: 8px 14px;
+            }
+            .chat-footer {
+                padding: 6px 10px 12px 10px;
+            }
+            .chat-footer .send-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .auth-page .brand {
+                font-size: 30px;
+            }
+            .chat-header .left .info .my-id {
+                font-size: 13px;
+            }
+            .message {
+                font-size: 13px;
+            }
+        }
+
+        /* 辅助 */
+        .hidden {
+            display: none !important;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper" id="app">
+
+        <!-- ============================================================ -->
+        <!-- 认证页 -->
+        <!-- ============================================================ -->
+        <div class="auth-page" id="authPage">
+            <div class="brand">LaswI <span>HowGo</span></div>
+            <div class="brand-sub"><i class="fas fa-lock"></i> 端对端加密 · 真实人类</div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs" id="authTabs">
+                <button class="active" data-tab="login">登录</button>
+                <button data-tab="register">注册</button>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="auth-form active" id="loginForm">
+                <div class="input-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="loginId" placeholder="LaswI ID" maxlength="20" autocomplete="username" />
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="密码" maxlength="30" autocomplete="current-password" />
+                </div>
+                <div class="error-msg" id="loginError"></div>
+                <button class="btn-auth" id="loginBtn"><i class="fas fa-sign-in-alt"></i> 登录</button>
+                <div class="auth-divider">使用 LaswI ID 安全连接</div>
+            </div>
+
+            <!-- 注册表单 -->
+            <div class="auth-form" id="registerForm">
+                <div class="input-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="registerId" placeholder="设置 LaswI ID" maxlength="20" autocomplete="off" />
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="registerPassword" placeholder="密码" maxlength="30" autocomplete="new-password" />
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-check-circle"></i>
+                    <input type="password" id="registerConfirm" placeholder="确认密码" maxlength="30" autocomplete="new-password" />
+                </div>
+                <div class="error-msg" id="registerError"></div>
+                <button class="btn-auth" id="registerBtn"><i class="fas fa-user-plus"></i> 注册 LaswI ID</button>
+                <div class="auth-divider">ID 全球唯一，抢注即得</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 聊天主界面 -->
+        <!-- ============================================================ -->
+        <div class="chat-page" id="chatPage">
+            <!-- 顶栏 -->
+            <div class="chat-header">
+                <div class="left">
+                    <div class="avatar-badge" id="myAvatarBadge">L</div>
+                    <div class="info">
+                        <div class="my-id" id="myIdDisplay">laswi_id</div>
+                        <div class="status">
+                            <span class="dot"></span> <span id="peerStatusText">未连接</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <button id="logoutBtn" class="logout-btn" title="退出登录">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 连接栏 -->
+            <div class="connect-bar">
+                <input type="text" class="peer-input" id="remoteIdInput" placeholder="输入对方 LaswI ID" maxlength="20" />
+                <button class="btn-connect" id="connectBtn"><i class="fas fa-link"></i> 连接</button>
+                <span class="conn-status" id="connStatusLabel"><i class="fas fa-circle" style="color:#b0b8c8;font-size:8px;"></i> 离线</span>
+            </div>
+
+            <!-- 消息列表 -->
+            <div class="chat-messages" id="messageContainer">
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>端对端加密 · 连接后开始聊天</p>
+                </div>
+            </div>
+
+            <!-- 底部输入 -->
+            <div class="chat-footer">
+                <div class="input-wrap">
+                    <input type="text" id="messageInput" placeholder="输入消息..." maxlength="500" autocomplete="off" />
+                </div>
+                <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- DOM 引用 ----------
+            const authPage = document.getElementById('authPage');
+            const chatPage = document.getElementById('chatPage');
+            const authTabs = document.getElementById('authTabs');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginId = document.getElementById('loginId');
+            const loginPassword = document.getElementById('loginPassword');
+            const loginError = document.getElementById('loginError');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerId = document.getElementById('registerId');
+            const registerPassword = document.getElementById('registerPassword');
+            const registerConfirm = document.getElementById('registerConfirm');
+            const registerError = document.getElementById('registerError');
+            const registerBtn = document.getElementById('registerBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            const myIdDisplay = document.getElementById('myIdDisplay');
+            const myAvatarBadge = document.getElementById('myAvatarBadge');
+            const remoteIdInput = document.getElementById('remoteIdInput');
+            const connectBtn = document.getElementById('connectBtn');
+            const connStatusLabel = document.getElementById('connStatusLabel');
+            const messageContainer = document.getElementById('messageContainer');
+            const emptyState = document.getElementById('emptyState');
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const peerStatusText = document.getElementById('peerStatusText');
+
+            // ---------- 状态 ----------
+            let currentUser = null; // { id, password }
+            let peer = null; // PeerJS 实例
+            let currentConn = null; // 当前 DataConnection
+            let isConnected = false;
+            let isLoggedIn = false;
+            let messages = [];
+            let messageIdCounter = 0;
+
+            // ---------- 工具函数 ----------
+            function formatTime(date) {
+                const h = String(date.getHours()).padStart(2, '0');
+                const m = String(date.getMinutes()).padStart(2, '0');
+                return h + ':' + m;
+            }
+
+            function getTodayStr() {
+                const d = new Date();
+                return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
+                    '0');
+            }
+
+            function generateId() { return ++messageIdCounter; }
+
+            function scrollToBottom() {
+                setTimeout(() => {
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                }, 30);
+            }
+
+            // 模拟数据库 (localStorage)
+            function getUsersDB() {
+                try {
+                    return JSON.parse(localStorage.getItem('laswi_users_db')) || {};
+                } catch (_) { return {}; }
+            }
+
+            function saveUsersDB(db) {
+                localStorage.setItem('laswi_users_db', JSON.stringify(db));
+            }
+
+            function getCurrentSession() {
+                try {
+                    return JSON.parse(localStorage.getItem('laswi_session')) || null;
+                } catch (_) { return null; }
+            }
+
+            function saveSession(session) {
+                localStorage.setItem('laswi_session', JSON.stringify(session));
+            }
+
+            function clearSession() {
+                localStorage.removeItem('laswi_session');
+            }
+
+            // ---------- 渲染消息 ----------
+            function renderMessages() {
+                // 清空容器 (保留 emptyState)
+                const children = messageContainer.children;
+                for (let i = children.length - 1; i >= 0; i--) {
+                    const child = children[i];
+                    if (child.id !== 'emptyState') {
+                        messageContainer.removeChild(child);
+                    }
+                }
+
+                if (messages.length === 0) {
+                    emptyState.classList.remove('hidden');
+                } else {
+                    emptyState.classList.add('hidden');
+                }
+
+                let lastDate = '';
+                messages.forEach((msg) => {
+                    const msgDate = new Date(msg.time);
+                    const dateStr = msgDate.getFullYear() + '-' + String(msgDate.getMonth() + 1).padStart(2, '0') +
+                        '-' + String(msgDate.getDate()).padStart(2, '0');
+
+                    if (dateStr !== lastDate) {
+                        lastDate = dateStr;
+                        const divider = document.createElement('div');
+                        divider.className = 'date-divider';
+                        const span = document.createElement('span');
+                        span.textContent = (dateStr === getTodayStr()) ? '今天' : dateStr;
+                        divider.appendChild(span);
+                        messageContainer.appendChild(divider);
+                    }
+
+                    if (msg.type === 'system') {
+                        const sys = document.createElement('div');
+                        sys.className = 'system-message';
+                        sys.textContent = msg.text;
+                        messageContainer.appendChild(sys);
+                        return;
+                    }
+
+                    const el = document.createElement('div');
+                    el.className = 'message ' + (msg.type === 'sent' ? 'sent' : 'received');
+
+                    const textNode = document.createElement('div');
+                    textNode.textContent = msg.text;
+                    el.appendChild(textNode);
+
+                    const meta = document.createElement('div');
+                    meta.className = 'msg-meta';
+
+                    if (msg.type === 'received') {
+                        const senderSpan = document.createElement('span');
+                        senderSpan.className = 'sender';
+                        senderSpan.textContent = msg.sender || '未知';
+                        meta.appendChild(senderSpan);
+                    }
+
+                    const timeSpan = document.createElement('span');
+                    timeSpan.className = 'time';
+                    timeSpan.textContent = formatTime(msgDate);
+                    meta.appendChild(timeSpan);
+
+                    // 端对端标记
+                    const e2ee = document.createElement('span');
+                    e2ee.className = 'e2ee-badge';
+                    e2ee.innerHTML = '<i class="fas fa-lock" style="font-size:8px;"></i> E2EE';
+                    meta.appendChild(e2ee);
+
+                    el.appendChild(meta);
+                    messageContainer.appendChild(el);
+                });
+
+                scrollToBottom();
+            }
+
+            function addMessage(sender, text, type, time) {
+                const now = time || new Date();
+                const msg = {
+                    id: generateId(),
+                    sender: sender,
+                    text: text.trim(),
+                    time: now,
+                    type: type // 'sent' or 'received' or 'system'
+                };
+                messages.push(msg);
+                renderMessages();
+                return msg;
+            }
+
+            function addSystemMessage(text) {
+                addMessage('系统', text, 'system');
+            }
+
+            // ---------- 发送消息 (P2P) ----------
+            function sendMessage(text) {
+                text = text.trim();
+                if (!text || !isLoggedIn || !isConnected || !currentConn) {
+                    if (!isConnected) {
+                        addSystemMessage('⚠️ 请先连接对方 ID');
+                    }
+                    return;
+                }
+
+                // 添加本地消息
+                addMessage(currentUser.id, text, 'sent');
+
+                // 通过 P2P 发送
+                try {
+                    currentConn.send({
+                        type: 'chat',
+                        payload: {
+                            text: text,
+                            sender: currentUser.id,
+                            time: new Date().toISOString()
+                        }
+                    });
+                } catch (err) {
+                    addSystemMessage('⚠️ 发送失败: ' + err.message);
+                }
+                messageInput.value = '';
+                messageInput.focus();
+            }
+
+            // ---------- 处理接收消息 ----------
+            function handleIncomingMessage(data) {
+                if (data.type === 'chat') {
+                    const payload = data.payload;
+                    addMessage(payload.sender || '对方', payload.text, 'received', new Date(payload.time));
+                } else if (data.type === 'system') {
+                    addSystemMessage(data.payload || '系统通知');
+                }
+            }
+
+            // ---------- PeerJS 连接管理 ----------
+            function initPeer(id) {
+                return new Promise((resolve, reject) => {
+                    if (peer) {
+                        peer.destroy();
+                        peer = null;
+                    }
+
+                    peer = new Peer(id, {
+                        debug: 0,
+                        // 使用 PeerJS 公共云服务器 (0.peerjs.com)
+                    });
+
+                    peer.on('open', (peerId) => {
+                        console.log('[Peer] 已打开，ID:', peerId);
+                        if (peerId === id) {
+                            resolve(peer);
+                        } else {
+                            // 理论上 ID 冲突会导致 error，但以防万一
+                            reject(new Error('ID 不匹配，可能已被占用'));
+                        }
+                    });
+
+                    peer.on('error', (err) => {
+                        console.error('[Peer] 错误:', err);
+                        reject(err);
+                    });
+
+                    // 监听 incoming 连接
+                    peer.on('connection', (conn) => {
+                        console.log('[Peer] 收到来自', conn.peer, '的连接请求');
+                        if (currentConn) {
+                            // 如果已有连接，可以选择拒绝或替换，这里我们关闭旧的
+                            try { currentConn.close(); } catch (_) {}
+                        }
+                        setupConnection(conn);
+                    });
+
+                    // 超时处理
+                    setTimeout(() => {
+                        if (!peer || !peer.id) {
+                            reject(new Error('连接信令服务器超时，请检查网络'));
+                        }
+                    }, 15000);
+                });
+            }
+
+            function setupConnection(conn) {
+                currentConn = conn;
+                isConnected = false;
+
+                conn.on('open', () => {
+                    console.log('[DataConn] 已打开，与', conn.peer);
+                    isConnected = true;
+                    updateConnectionUI(true, conn.peer);
+                    addSystemMessage('🔗 已与 ' + conn.peer + ' 建立端对端加密连接');
+                    // 发送一条握手消息
+                    try {
+                        conn.send({
+                            type: 'system',
+                            payload: '🔐 已建立安全连接 (E2EE)'
+                        });
+                    } catch (_) {}
+                    // 清空输入框占位
+                    messageInput.placeholder = '输入消息...';
+                    messageInput.focus();
+                });
+
+                conn.on('data', (data) => {
+                    console.log('[DataConn] 收到数据:', data);
+                    handleIncomingMessage(data);
+                });
+
+                conn.on('close', () => {
+                    console.log('[DataConn] 连接关闭');
+                    isConnected = false;
+                    updateConnectionUI(false, null);
+                    addSystemMessage('⚠️ 连接已断开');
+                    if (currentConn === conn) {
+                        currentConn = null;
+                    }
+                });
+
+                conn.on('error', (err) => {
+                    console.error('[DataConn] 错误:', err);
+                    addSystemMessage('⚠️ 连接错误: ' + err.message);
+                });
+
+                // 如果连接已经打开 (极少数情况)
+                if (conn.open) {
+                    conn.emit('open');
+                }
+            }
+
+            function connectToPeer(remoteId) {
+                if (!peer) {
+                    addSystemMessage('⚠️ 请先登录');
+                    return;
+                }
+                if (remoteId === currentUser.id) {
+                    addSystemMessage('⚠️ 不能连接自己');
+                    return;
+                }
+                if (remoteId.trim() === '') {
+                    addSystemMessage('⚠️ 请输入对方 LaswI ID');
+                    return;
+                }
+
+                // 如果已有连接，先关闭
+                if (currentConn) {
+                    try { currentConn.close(); } catch (_) {}
+                    currentConn = null;
+                    isConnected = false;
+                    updateConnectionUI(false, null);
+                }
+
+                addSystemMessage('⏳ 正在连接 ' + remoteId + ' ...');
+
+                const conn = peer.connect(remoteId, {
+                    reliable: true,
+                });
+
+                setupConnection(conn);
+
+                // 超时
+                setTimeout(() => {
+                    if (!isConnected && conn && !conn.open) {
+                        addSystemMessage('⚠️ 连接超时，请检查 ID 是否正确或对方在线');
+                        try { conn.close(); } catch (_) {}
+                        if (currentConn === conn) {
+                            currentConn = null;
+                            isConnected = false;
+                            updateConnectionUI(false, null);
+                        }
+                    }
+                }, 12000);
+            }
+
+            function updateConnectionUI(connected, remoteId) {
+                if (connected) {
+                    connStatusLabel.className = 'conn-status connected';
+                    connStatusLabel.innerHTML = '<i class="fas fa-link" style="color:#34c759;"></i> 已加密连接';
+                    peerStatusText.textContent = '与 ' + remoteId + ' 通话中';
+                    connectBtn.disabled = false;
+                    connectBtn.innerHTML = '<i class="fas fa-link"></i> 已连接';
+                    connectBtn.style.background = '#34c759';
+                    remoteIdInput.disabled = true;
+                } else {
+                    connStatusLabel.className = 'conn-status';
+                    connStatusLabel.innerHTML = '<i class="fas fa-circle" style="color:#b0b8c8;font-size:8px;"></i> 离线';
+                    peerStatusText.textContent = '未连接';
+                    connectBtn.disabled = false;
+                    connectBtn.innerHTML = '<i class="fas fa-link"></i> 连接';
+                    connectBtn.style.background = '';
+                    remoteIdInput.disabled = false;
+                }
+                // 更新发送按钮状态
+                sendBtn.disabled = !connected;
+            }
+
+            // ---------- 登出 & 销毁 ----------
+            function logout() {
+                if (!isLoggedIn) return;
+
+                // 关闭连接
+                if (currentConn) {
+                    try { currentConn.close(); } catch (_) {}
+                    currentConn = null;
+                    isConnected = false;
+                }
+                if (peer) {
+                    peer.destroy();
+                    peer = null;
+                }
+
+                clearSession();
+                isLoggedIn = false;
+                messages = [];
+                messageIdCounter = 0;
+
+                chatPage.classList.remove('active');
+                authPage.style.display = 'flex';
+                loginId.value = '';
+                loginPassword.value = '';
+                updateConnectionUI(false, null);
+                renderMessages();
+
+                // 重置 connect 按钮
+                connectBtn.innerHTML = '<i class="fas fa-link"></i> 连接';
+                connectBtn.style.background = '';
+                remoteIdInput.disabled = false;
+
+                // 清空输入
+                messageInput.value = '';
+                messageInput.placeholder = '请先登录...';
+                sendBtn.disabled = true;
+
+                addSystemMessage('已安全退出');
+            }
+
+            // ---------- 认证逻辑 ----------
+            function handleLogin(id, password) {
+                if (!id || !password) {
+                    loginError.textContent = '请填写完整信息';
+                    loginError.classList.add('show');
+                    return;
+                }
+                const db = getUsersDB();
+                if (!db[id]) {
+                    loginError.textContent = '❌ LaswI ID 不存在，请先注册';
+                    loginError.classList.add('show');
+                    return;
+                }
+                if (db[id] !== password) {
+                    loginError.textContent = '❌ 密码错误';
+                    loginError.classList.add('show');
+                    return;
+                }
+
+                loginError.classList.remove('show');
+                doLogin(id, password);
+            }
+
+            function handleRegister(id, password, confirm) {
+                if (!id || !password || !confirm) {
+                    registerError.textContent = '请填写完整信息';
+                    registerError.classList.add('show');
+                    return;
+                }
+                if (password !== confirm) {
+                    registerError.textContent = '❌ 两次密码不一致';
+                    registerError.classList.add('show');
+                    return;
+                }
+                if (password.length < 4) {
+                    registerError.textContent = '❌ 密码至少 4 位';
+                    registerError.classList.add('show');
+                    return;
+                }
+                const db = getUsersDB();
+                if (db[id]) {
+                    registerError.textContent = '❌ LaswI ID 已被占用';
+                    registerError.classList.add('show');
+                    return;
+                }
+
+                // 保存用户
+                db[id] = password;
+                saveUsersDB(db);
+                registerError.classList.remove('show');
+                registerError.textContent = '✅ 注册成功！请登录';
+                registerError.classList.add('show');
+                registerError.style.color = '#1a7a4a';
+                registerError.style.background = '#dff0e6';
+
+                // 切换到登录
+                document.querySelector('[data-tab="login"]').click();
+                loginId.value = id;
+                loginPassword.value = password;
+                registerId.value = '';
+                registerPassword.value = '';
+                registerConfirm.value = '';
+
+                setTimeout(() => {
+                    registerError.classList.remove('show');
+                    registerError.style.color = '';
+                    registerError.style.background = '';
+                }, 2500);
+            }
+
+            function doLogin(id, password) {
+                // 保存 session
+                currentUser = { id, password };
+                saveSession(currentUser);
+
+                // 初始化 Peer
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 连接中...';
+
+                initPeer(id)
+                    .then((p) => {
+                        peer = p;
+                        isLoggedIn = true;
+                        // 切换界面
+                        authPage.style.display = 'none';
+                        chatPage.classList.add('active');
+                        myIdDisplay.textContent = id;
+                        myAvatarBadge.textContent = id.charAt(0).toUpperCase();
+
+                        // 清空消息，加入系统提示
+                        messages = [];
+                        messageIdCounter = 0;
+                        addSystemMessage('🔐 端对端加密已就绪 (WebRTC)');
+                        addSystemMessage('👋 欢迎 ' + id + '，输入对方 LaswI ID 开始聊天');
+
+                        messageInput.placeholder = '输入对方 ID 并连接...';
+                        sendBtn.disabled = true;
+                        remoteIdInput.value = '';
+                        updateConnectionUI(false, null);
+
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 登录';
+                        messageInput.focus();
+
+                        // 自动填入最近连接？（可选）
+                    })
+                    .catch((err) => {
+                        console.error('登录失败:', err);
+                        loginError.textContent = '❌ ' + (err.message || '连接失败，请重试');
+                        loginError.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 登录';
+                        if (peer) { peer.destroy();
+                            peer = null; }
+                    });
+            }
+
+            // ---------- 检查自动登录 ----------
+            function tryAutoLogin() {
+                const session = getCurrentSession();
+                if (session && session.id && session.password) {
+                    const db = getUsersDB();
+                    if (db[session.id] === session.password) {
+                        // 静默登录
+                        doLogin(session.id, session.password);
+                        return true;
+                    } else {
+                        clearSession();
+                    }
+                }
+                return false;
+            }
+
+            // ---------- 事件绑定 ----------
+
+            // Tabs 切换
+            document.querySelectorAll('[data-tab]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tab = this.dataset.tab;
+                    if (tab === 'login') {
+                        loginForm.classList.add('active');
+                        registerForm.classList.remove('active');
+                        loginError.classList.remove('show');
+                        registerError.classList.remove('show');
+                    } else {
+                        registerForm.classList.add('active');
+                        loginForm.classList.remove('active');
+                        loginError.classList.remove('show');
+                        registerError.classList.remove('show');
+                    }
+                });
+            });
+
+            // 登录按钮
+            loginBtn.addEventListener('click', function() {
+                handleLogin(loginId.value.trim(), loginPassword.value);
+            });
+
+            // 回车登录
+            loginId.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault();
+                    loginBtn.click(); } });
+            loginPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault();
+                    loginBtn.click(); } });
+
+            // 注册按钮
+            registerBtn.addEventListener('click', function() {
+                handleRegister(registerId.value.trim(), registerPassword.value, registerConfirm.value);
+            });
+
+            // 回车注册
+            registerId.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault();
+                    registerBtn.click(); } });
+            registerPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault();
+                    registerBtn.click(); } });
+            registerConfirm.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault();
+                    registerBtn.click(); } });
+
+            // 退出
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('确定退出 LaswI HowGo 吗？')) {
+                    logout();
+                }
+            });
+
+            // 连接按钮
+            connectBtn.addEventListener('click', function() {
+                const remoteId = remoteIdInput.value.trim();
+                connectToPeer(remoteId);
+            });
+
+            remoteIdInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    connectBtn.click();
+                }
+            });
+
+            // 发送消息
+            sendBtn.addEventListener('click', function() {
+                sendMessage(messageInput.value);
+            });
+
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(messageInput.value);
+                }
+            });
+
+            // ---------- 启动 ----------
+            const auto = tryAutoLogin();
+            if (!auto) {
+                authPage.style.display = 'flex';
+                chatPage.classList.remove('active');
+                loginId.focus();
+            }
+
+            // 初始化时禁用发送
+            sendBtn.disabled = true;
+            messageInput.placeholder = '请先登录...';
+
+            console.log('🔐 LaswI HowGo 已启动 (端对端加密)');
+        })();
+    </script>
+</body>
+</html>
