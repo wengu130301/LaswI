@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LaswI AI · 液态玻璃</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ── 全局重置 ── */
@@ -33,7 +32,9 @@
             z-index: 0;
             display: block;
             pointer-events: none;
-            /* 让点击穿透到内容层 */;
+            /* 让点击穿透到内容层 */
+            touch-action: none;
+            user-select: none;
         }
 
         /* ── 内容层（浮在玻璃球之上） ── */
@@ -48,8 +49,8 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 1.8rem 2.4rem 1.6rem;
-            pointer-events: none;
-            /* 父级不拦截事件，由子元素控制 */;
+            pointer-events: auto;
+            /* 整个内容层可交互 */;
         }
 
         /* ── 导航 ── */
@@ -69,7 +70,6 @@
             box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
             max-width: 100%;
             transition: background 0.3s;
-            cursor: default;
         }
         .nav:hover {
             background: rgba(255, 255, 255, 0.07);
@@ -83,11 +83,13 @@
             color: #fff;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             user-select: none;
+            pointer-events: none;
         }
         .logo img {
             height: 32px;
             width: auto;
             filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
+            pointer-events: none;
         }
         .logo-text {
             background: linear-gradient(135deg, #fce8d5, #f5d0b0);
@@ -100,6 +102,7 @@
             gap: 1.2rem;
             flex-wrap: wrap;
             align-items: center;
+            pointer-events: auto;
         }
         .nav-links a {
             text-decoration: none;
@@ -110,6 +113,7 @@
             position: relative;
             cursor: pointer;
             pointer-events: auto;
+            padding: 2px 0;
         }
         .nav-links a::after {
             content: '';
@@ -143,6 +147,14 @@
             background: linear-gradient(90deg, #7cd4c0, #4db8a0);
             width: 100%;
         }
+        .nav-links a.hayjyny {
+            color: #ff8a9e;
+            font-weight: 600;
+        }
+        .nav-links a.hayjyny::after {
+            background: linear-gradient(90deg, #ff8a9e, #ff6b8a);
+            width: 100%;
+        }
 
         /* ── 中央英雄区 ── */
         .hero {
@@ -152,7 +164,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            pointer-events: none;
+            pointer-events: auto;
             padding: 1rem 0 2rem;
         }
         .hero * {
@@ -292,6 +304,16 @@
         .btn-howgo:hover {
             background: rgba(124, 212, 192, 0.24);
             border-color: rgba(124, 212, 192, 0.24);
+            color: #fff;
+        }
+        .btn-hayjyny {
+            background: rgba(255, 100, 150, 0.12);
+            border-color: rgba(255, 100, 150, 0.12);
+            color: #ff8a9e;
+        }
+        .btn-hayjyny:hover {
+            background: rgba(255, 100, 150, 0.22);
+            border-color: rgba(255, 100, 150, 0.22);
             color: #fff;
         }
 
@@ -439,6 +461,7 @@
             <div class="nav-links">
                 <a href="#" class="primary">在线体验</a>
                 <a href="#" class="howgo">💬 HowGo</a>
+                <a href="#" class="hayjyny">🍭 HayJyny</a>
                 <a href="#">下载</a>
                 <a href="#">游戏</a>
                 <a href="#">TV</a>
@@ -461,6 +484,7 @@
                 <a href="#" class="btn-glass btn-primary">🍰 在线体验</a>
                 <a href="#" class="btn-glass btn-download">📦 桌面 App</a>
                 <a href="#" class="btn-glass btn-howgo">💬 HowGo 聊天</a>
+                <a href="./hayjyny.html" class="btn-glass btn-hayjyny">🍭 HayJyny</a>
             </div>
         </div>
 
