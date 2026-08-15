@@ -32,12 +32,11 @@
             z-index: 0;
             display: block;
             pointer-events: none;
-            /* 让点击穿透到内容层 */
             touch-action: none;
             user-select: none;
         }
 
-        /* ── 内容层（浮在玻璃球之上） ── */
+        /* ── 内容层 ── */
         .content-overlay {
             position: fixed;
             top: 0;
@@ -50,7 +49,6 @@
             justify-content: space-between;
             padding: 1.8rem 2.4rem 1.6rem;
             pointer-events: auto;
-            /* 整个内容层可交互 */;
         }
 
         /* ── 导航 ── */
@@ -446,7 +444,7 @@
     <!-- ─── 玻璃球 Canvas ─── -->
     <canvas id="orb" aria-label="动态液态玻璃球"></canvas>
 
-    <!-- ─── 状态提示（WebGPU 错误时显示） ─── -->
+    <!-- ─── 状态提示 ─── -->
     <div id="status" hidden></div>
 
     <!-- ─── 内容层 ─── -->
@@ -459,12 +457,12 @@
                 <span class="logo-text">LaswI AI</span>
             </div>
             <div class="nav-links">
-                <a href="#" class="primary">在线体验</a>
-                <a href="#" class="howgo">💬 HowGo</a>
-                <a href="#" class="hayjyny">🍭 HayJyny</a>
-                <a href="#">下载</a>
-                <a href="#">游戏</a>
-                <a href="#">TV</a>
+                <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="primary">在线体验</a>
+                <a href="howgo.html" class="howgo">💬 HowGo</a>
+                <a href="hayjyny.html" class="hayjyny">🍭 HayJyny</a>
+                <a href="download.html">下载</a>
+                <a href="game.html">游戏</a>
+                <a href="tv.html">TV</a>
             </div>
         </nav>
 
@@ -481,10 +479,10 @@
             </h1>
             <p>多模态共情引擎 · 私人奶油云 · 让每一次对话柔软治愈</p>
             <div class="hero-buttons">
-                <a href="#" class="btn-glass btn-primary">🍰 在线体验</a>
-                <a href="#" class="btn-glass btn-download">📦 桌面 App</a>
-                <a href="#" class="btn-glass btn-howgo">💬 HowGo 聊天</a>
-                <a href="./hayjyny.html" class="btn-glass btn-hayjyny">🍭 HayJyny</a>
+                <a href="https://laswi-ai-production.up.railway.app" target="_blank" class="btn-glass btn-primary">🍰 在线体验</a>
+                <a href="download.html" class="btn-glass btn-download">📦 桌面 App</a>
+                <a href="howgo.html" class="btn-glass btn-howgo">💬 HowGo 聊天</a>
+                <a href="hayjyny.html" class="btn-glass btn-hayjyny">🍭 HayJyny</a>
             </div>
         </div>
 
