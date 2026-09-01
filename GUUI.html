@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GUUI — 蓝色虎皮鹦鹉设计语言 · 万物生态互联 · 晓松AI 语音助手。基于 LineageOS 深度定制的轻量 Android 系统，专为小米 MIX 2S 打造。">
+<meta name="keywords" content="GUUI, 蓝鹦鹉, 虎皮鹦鹉, 晓松AI, 汩汩互联, LaswI, MIX 2S, Android, 定制系统, ROM">
+<meta name="theme-color" content="#0A1624">
+<title>GUUI · 蓝色虎皮鹦鹉 · 万物生态互联</title>
+<style>
+  :root {
+    --bg-900: #060B1A;
+    --bg-800: #0A1624;
+    --bg-700: #0F1E2E;
+    --bg-600: #16293F;
+    --blue-500: #1E88E5;
+    --blue-400: #42A5F5;
+    --blue-300: #64B5F6;
+    --blue-200: #BBDEFB;
+    --cyan: #00D4FF;
+    --text-hi: #FFFFFF;
+    --text-mid: #B8C7D9;
+    --text-low: #7A8CA0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+    background: radial-gradient(1200px 800px at 70% -10%, #0F2A4A 0%, transparent 60%),
+                radial-gradient(900px 600px at 10% 10%, #0B1E33 0%, transparent 55%),
+                var(--bg-900);
+    color: var(--text-hi);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- 星空粒子背景 ---------- */
+  #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+  /* ---------- 导航 ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(6, 11, 26, 0.72);
+    border-bottom: 1px solid rgba(30, 136, 229, 0.18);
+  }
+  .nav {
+    max-width: 1120px; margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; letter-spacing: .5px; }
+  .brand .dot {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue-500));
+    display: grid; place-items: center; font-size: 18px;
+    box-shadow: 0 0 20px rgba(0, 212, 255, .35);
+  }
+  .brand small { color: var(--text-low); font-weight: 500; font-size: 13px; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: var(--text-mid); font-size: 15px; transition: color .2s; }
+  .nav-links a:hover { color: var(--blue-300); }
+  .btn-nav {
+    padding: 9px 20px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--blue-500), var(--cyan));
+    color: #04121f !important; font-weight: 700; font-size: 14px;
+    box-shadow: 0 4px 18px rgba(30, 136, 229, .35);
+  }
+
+  /* ---------- 通用容器 ---------- */
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  section { padding: 88px 0; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 110px 0 70px; text-align: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px; border-radius: 999px; font-size: 13px;
+    color: var(--blue-200); border: 1px solid rgba(30, 136, 229, .35);
+    background: rgba(30, 136, 229, .08); margin-bottom: 28px;
+  }
+  .badge .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+    box-shadow: 0 0 0 0 rgba(0,212,255,.6); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,212,255,.55); }
+    70% { box-shadow: 0 0 0 9px rgba(0,212,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,212,255,0); }
+  }
+  .hero h1 {
+    font-size: clamp(48px, 9vw, 92px); font-weight: 800; letter-spacing: 2px;
+    background: linear-gradient(120deg, #fff 0%, var(--blue-200) 45%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.05; margin-bottom: 20px;
+  }
+  .hero .tagline {
+    font-size: clamp(17px, 2.6vw, 23px); color: var(--text-mid);
+    font-weight: 500; margin-bottom: 14px;
+  }
+  .hero .sub {
+    font-size: 15px; color: var(--text-low); max-width: 640px; margin: 0 auto 42px;
+  }
+  .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 34px; border-radius: 14px; font-size: 16px; font-weight: 700;
+    transition: transform .18s, box-shadow .18s; cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue-500), var(--cyan));
+    color: #04121f; box-shadow: 0 8px 30px rgba(0, 212, 255, .35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0, 212, 255, .45); }
+  .btn-ghost {
+    background: rgba(30, 136, 229, .08); color: var(--blue-200);
+    border: 1px solid rgba(30, 136, 229, .4);
+  }
+  .btn-ghost:hover { transform: translateY(-3px); background: rgba(30,136,229,.16); }
+
+  /* 蓝鹦鹉 SVG 舞台 */
+  .bird-stage { margin: 54px auto 0; max-width: 460px; position: relative; }
+  .bird-stage svg { width: 100%; height: auto; filter: drop-shadow(0 20px 50px rgba(30,136,229,.28)); }
+  .orbit {
+    position: absolute; inset: -8%; border: 1px dashed rgba(100,181,246,.25);
+    border-radius: 50%; animation: spin 40s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- 段落标题 ---------- */
+  .sec-head { text-align: center; margin-bottom: 56px; }
+  .sec-head .kicker {
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 12px; font-weight: 600;
+  }
+  .sec-head h2 { font-size: clamp(28px, 4.5vw, 42px); font-weight: 800; letter-spacing: 1px; }
+  .sec-head p { color: var(--text-low); margin-top: 14px; max-width: 620px; margin-left: auto; margin-right: auto; }
+
+  /* ---------- 特性网格 ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .card {
+    background: linear-gradient(160deg, rgba(22,41,63,.85), rgba(10,22,36,.92));
+    border: 1px solid rgba(30,136,229,.18); border-radius: 20px; padding: 30px;
+    position: relative; overflow: hidden; transition: transform .25s, border-color .25s;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(0,212,255,.45); }
+  .card::before {
+    content: ""; position: absolute; top: -60px; right: -60px; width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(0,212,255,.16), transparent 70%);
+  }
+  .card .icon {
+    width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+    font-size: 26px; margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(30,136,229,.25), rgba(0,212,255,.15));
+    border: 1px solid rgba(30,136,229,.3);
+  }
+  .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+  .card p { color: var(--text-mid); font-size: 14.5px; }
+
+  /* ---------- 技术规格 ---------- */
+  .specs {
+    background: linear-gradient(180deg, rgba(15,30,46,.6), rgba(6,11,26,.6));
+    border: 1px solid rgba(30,136,229,.16); border-radius: 22px; padding: 44px;
+  }
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
+  .spec .k { font-size: 13px; color: var(--text-low); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .spec .v { font-size: 17px; font-weight: 700; color: var(--blue-200); }
+
+  /* ---------- 下载 CTA ---------- */
+  .cta {
+    text-align: center; padding: 90px 0;
+    background: radial-gradient(700px 400px at 50% 0%, rgba(30,136,229,.22), transparent 65%);
+  }
+  .cta .panel {
+    max-width: 720px; margin: 0 auto; padding: 52px 40px;
+    background: linear-gradient(160deg, rgba(22,41,63,.9), rgba(10,22,36,.95));
+    border: 1px solid rgba(0,212,255,.3); border-radius: 26px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  }
+  .cta h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; margin-bottom: 14px; }
+  .cta .ver { color: var(--cyan); font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+  .cta .note { color: var(--text-low); font-size: 14px; margin-bottom: 34px; }
+  .file-meta {
+    display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;
+  }
+  .file-meta span {
+    font-size: 13px; color: var(--text-mid); padding: 8px 16px;
+    background: rgba(30,136,229,.08); border-radius: 999px; border: 1px solid rgba(30,136,229,.22);
+  }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    border-top: 1px solid rgba(30,136,229,.15); padding: 44px 0 60px; text-align: center;
+    color: var(--text-low); font-size: 13.5px;
+  }
+  footer .heart { color: var(--cyan); }
+
+  /* ---------- 滚动显现动画 ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .nav-links a:not(.btn-nav) { display: none; }
+    section { padding: 60px 0; }
+    .specs { padding: 30px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="dot">🐦</div>
+      <div>GUUI<small> · 智雅系统</small></div>
+    </div>
+    <nav class="nav-links">
+      <a href="#features">特性</a>
+      <a href="#specs">规格</a>
+      <a href="#download" class="btn-nav">立即下载</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero wrap">
+  <div class="badge"><span class="pulse"></span> GUUI v0.0.1 · 现已发布</div>
+  <h1>GUUI</h1>
+  <div class="tagline">蓝色虎皮鹦鹉 · 万物生态互联</div>
+  <p class="sub">
+    基于 LineageOS 深度定制的轻量 Android 系统，以「蓝色虎皮鹦鹉」为核心设计语言，
+    内置晓松 AI 语音助手与汩汩万物互联，专为小米 MIX 2S 重新设计每一个角落。
+  </p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://LaswI.com.cn/GUUI_v0.0.1_MIX2S.zip">⬇ 下载 GUUI v0.0.1</a>
+    <a class="btn btn-ghost" href="#features">了解更多</a>
+  </div>
+
+  <div class="bird-stage">
+    <div class="orbit"></div>
+    <!-- 蓝色虎皮鹦鹉 -->
+    <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bodyG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#42A5F5"/>
+          <stop offset="0.55" stop-color="#1E88E5"/>
+          <stop offset="1" stop-color="#0D47A1"/>
+        </linearGradient>
+        <linearGradient id="wingG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#64B5F6"/>
+          <stop offset="1" stop-color="#1565C0"/>
+        </linearGradient>
+        <radialGradient id="headG" cx="0.35" cy="0.35" r="0.9">
+          <stop offset="0" stop-color="#BBDEFB"/>
+          <stop offset="0.5" stop-color="#42A5F5"/>
+          <stop offset="1" stop-color="#1E88E5"/>
+        </radialGradient>
+      </defs>
+      <!-- 尾羽 -->
+      <path d="M205 210 L235 300 L215 292 L210 305 L195 290 L190 302 L178 282 Z" fill="#0D47A1"/>
+      <path d="M210 215 L240 296 L226 288 L220 298 L206 284 L202 295 L188 278 Z" fill="#1565C0"/>
+      <!-- 身体 -->
+      <ellipse cx="205" cy="175" rx="80" ry="95" fill="url(#bodyG)"/>
+      <!-- 腹部 -->
+      <ellipse cx="205" cy="205" rx="55" ry="62" fill="#64B5F6" opacity="0.55"/>
+      <!-- 翅膀 -->
+      <path d="M155 130 Q205 95 258 130 Q268 165 252 195 Q205 175 155 170 Q148 150 155 130 Z" fill="url(#wingG)"/>
+      <path d="M160 138 Q205 108 252 138" stroke="#BBDEFB" stroke-width="2.5" fill="none" opacity="0.7"/>
+      <path d="M158 155 Q205 126 250 155" stroke="#BBDEFB" stroke-width="2" fill="none" opacity="0.5"/>
+      <!-- 头部 -->
+      <circle cx="200" cy="85" r="48" fill="url(#headG)"/>
+      <!-- 虎皮纹 -->
+      <path d="M175 72 Q200 68 225 72" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
+      <path d="M178 88 Q200 84 222 88" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
+      <path d="M180 104 Q200 100 220 104" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
+      <!-- 眼睛 -->
+      <circle cx="216" cy="80" r="8" fill="#FFFFFF"/>
+      <circle cx="218" cy="81" r="4.5" fill="#04121f"/>
+      <circle cx="220" cy="79" r="1.8" fill="#FFFFFF"/>
+      <!-- 喙 -->
+      <path d="M238 92 L262 98 L238 106 Z" fill="#FFB74D"/>
+      <!-- 脚 -->
+      <path d="M185 268 L180 285 M185 268 L192 286 M185 268 L187 288" stroke="#0D47A1" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M225 268 L220 285 M225 268 L232 286 M225 268 L227 288" stroke="#0D47A1" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- 特性 -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Features</div>
+      <h2>为互联而生</h2>
+      <p>不只是一套换肤的主题，而是从系统底层到每一个像素，都围绕「蓝鹦鹉」与「生态互联」重新设计。</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal">
+        <div class="icon">🎙️</div>
+        <h3>晓松 AI · 语音助手</h3>
+        <p>离线唤醒词「你好晓松」，全程本地识别，不依赖任何云端。唤醒后悬浮窗浮于所有应用之上，接入私有部署的大模型接口，对话、问答一呼即达。</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🔗</div>
+        <h3>汩汩万物互联</h3>
+        <p>扫码即可配对入网，跨设备剪贴板同步、通知中继、高速文件传输、多设备远程控制。指定一台设备为「生态中枢」，跨网流量经你自有的硬件中转，零第三方服务器。</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🏝️</div>
+        <h3>汩汩岛 · 灵动交互</h3>
+        <p>状态栏常驻的灵动岛组件。点一下震动反馈，长按展开大岛查看前台任务，下拉即可秒开实时应用，黑蓝渐变胶囊处处呼应蓝鹦鹉羽色。</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🎨</div>
+        <h3>蓝鹦鹉设计语言</h3>
+        <p>从开机动画、壁纸、系统图标，到弹窗圆角、通知卡片、快速设置面板，全局统一蓝鹦鹉蓝配色体系，深蓝黑底 + 羽色渐变，克制而华丽。</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🔒</div>
+        <h3>隐私 · 本地优先</h3>
+        <p>本地唯一 LaswI-ID 永不上传；互联全程端到端加密；AI 接口地址可自配，指向你信任的私有服务。数据的主权，始终在你手里。</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">⚡</div>
+        <h3>轻量 · 流畅</h3>
+        <p>基于 Android 11，去除冗余预装，保留完整硬件能力（通话 / 相机 / NFC / 指纹 / 蓝牙）。为骁龙 845 的 MIX 2S 精打细算，续航与流畅兼得。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 技术规格 -->
+<section id="specs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Specifications</div>
+      <h2>技术规格</h2>
+    </div>
+    <div class="specs reveal">
+      <div class="spec-grid">
+        <div class="spec"><div class="k">系统版本</div><div class="v">GUUI v0.0.1</div></div>
+        <div class="spec"><div class="k">底层内核</div><div class="v">Android 11</div></div>
+        <div class="spec"><div class="k">适配机型</div><div class="v">小米 MIX 2S (polaris)</div></div>
+        <div class="spec"><div class="k">处理器</div><div class="v">骁龙 845</div></div>
+        <div class="spec"><div class="k">设计语言</div><div class="v">蓝色虎皮鹦鹉</div></div>
+        <div class="spec"><div class="k">品牌方</div><div class="v">LaswI Studio</div></div>
+        <div class="spec"><div class="k">刷入方式</div><div class="v">Fastboot 四件套</div></div>
+        <div class="spec"><div class="k">开源协议</div><div class="v">Apache 2.0</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 下载 CTA -->
+<section class="cta" id="download">
+  <div class="wrap">
+    <div class="panel reveal">
+      <div class="ver">GUUI v0.0.1</div>
+      <h2>准备好体验了吗？</h2>
+      <p class="note">适用于小米 MIX 2S，需已解锁 Bootloader 并安装 Android 10 底固件。</p>
+      <div class="file-meta">
+        <span>📦 GUUI_v0.0.1_MIX2S.zip</span>
+        <span>📱 polaris</span>
+        <span>🛠 Fastboot</span>
+      </div>
+      <a class="btn btn-primary" href="https://LaswI.com.cn/GUUI_v0.0.1_MIX2S.zip" style="font-size:17px;padding:17px 44px;">
+        ⬇ 立即下载
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>GUUI · 蓝色虎皮鹦鹉 · 万物生态互联</p>
+    <p style="margin-top:8px;">© 2026 LaswI Studio · 以 <span class="heart">❤</span> 重新设计每一个角落</p>
+  </div>
+</footer>
+
+<script>
+  // 星空粒子背景
+  (function () {
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const N = 90;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    for (let i = 0; i < N; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.3,
+        a: Math.random() * 0.6 + 0.2,
+        v: Math.random() * 0.25 + 0.05,
+        hue: Math.random() < 0.25 ? '0,212,255' : '100,181,246'
+      });
+    }
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const s of stars) {
+        s.y -= s.v;
+        if (s.y < -2) { s.y = canvas.height + 2; s.x = Math.random() * canvas.width; }
+        const tw = 0.6 + 0.4 * Math.sin(Date.now() / 1000 + s.x);
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${s.hue},${(s.a * tw).toFixed(3)})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  // 滚动显现
+  (function () {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>
