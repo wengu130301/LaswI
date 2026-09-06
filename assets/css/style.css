@@ -1083,3 +1083,26 @@ img.brand-logo {
   height: 34px !important;
   object-fit: contain;
 }
+
+
+/* ===== v4.2：无logo合作伙伴的文字徽标（小明之父工作室 XMZF） ===== */
+.partner-simple .partner-logo.partner-logo-text {
+  padding: 20px 34px;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1.1;
+  color: #073a93;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 3px rgba(4, 40, 120, 0.28);
+  background:
+    radial-gradient(120% 160% at 28% 10%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0) 64%),
+    linear-gradient(180deg, #ffffff 0%, #eaf6ff 55%, #d2e9fd 100%);
+}
+@media (max-width: 900px) {
+  .partner-simple .partner-logo.partner-logo-text {
+    font-size: 30px;
+    padding: 14px 26px;
+  }
+}
