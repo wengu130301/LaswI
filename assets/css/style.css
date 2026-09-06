@@ -1106,3 +1106,32 @@ img.brand-logo {
     padding: 14px 26px;
   }
 }
+
+
+/* ===== v5：拟物化矢量图标 =====
+   卡片图标由“简单线条 SVG”升级为“自绘拟物玻璃盘+立体符号”。
+   .card-icon 原蓝渐变小方块让位，改由 svg 独立绘制圆润盘体、
+   顶部高光、地面投影与立体符号，形成拟物化矢量图质感。 */
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0;
+  font-size: 0;
+  margin-bottom: 14px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.card-icon svg {
+  display: block;
+  width: 62px;
+  height: 62px;
+  filter: drop-shadow(0 7px 11px rgba(6, 44, 140, 0.4));
+}
