@@ -1,1116 +1,249 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="GUUI · 蓝色虎皮鹦鹉 · 万物生态互联。基于 LineageOS 深度定制的轻量 Android 系统，内置晓松 AI 语音助手与汩汩万物互联，专为小米 MIX 2S 重新设计每一个角落。" />
-<meta name="keywords" content="GUUI, 蓝鹦鹉, 虎皮鹦鹉, 晓松AI, 汩汩互联, LaswI, MIX 2S, Android, 定制系统, ROM" />
-<title>GUUI · 蓝色虎皮鹦鹉 · 万物生态互联</title>
-<style>
-/* ============================================================
-   GUUI Official Website — Aqua "Candy Jelly" Theme
-   视觉完全对齐 laswi.com.cn 主站（浅色玻璃拟物体系）
-   ============================================================ */
-:root {
-  --aqua-ink: #07398f;
-  --aqua-ink-deep: #03285f;
-  --aqua-deep: #0a4bb0;
-  --aqua-mid: #1683e8;
-  --aqua-bright: #3fb6ff;
-  --aqua-cyan: #9be8ff;
-}
-
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
-  color: #10355f;
-  background-color: #bfe2f9;
-  background-image:
-    radial-gradient(120% 70% at 12% -12%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.45) 38%, rgba(255,255,255,0) 64%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.80) 0px, rgba(255,255,255,0.80) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 5px),
-    repeating-linear-gradient(90deg, rgba(70,150,235,0.07) 0px, rgba(70,150,235,0.07) 1px, rgba(70,150,235,0) 1px, rgba(70,150,235,0) 13px),
-    linear-gradient(180deg, #d3edff 0%, #ddf3ff 22%, #bfe2fb 58%, #9ec6ea 100%);
-  background-attachment: fixed;
-  line-height: 1.62;
-  -webkit-font-smoothing: antialiased;
-}
-
-img { max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-
-/* 湿润半透明滚动条 */
-::-webkit-scrollbar { width: 12px; height: 12px; }
-::-webkit-scrollbar-track {
-  background: linear-gradient(180deg, rgba(160,205,245,0.5), rgba(230,245,255,0.5));
-  box-shadow: inset 0 0 0 1px rgba(8,60,150,0.12);
-}
-::-webkit-scrollbar-thumb {
-  border: 2px solid rgba(255,255,255,0.7);
-  border-radius: 999px;
-  background:
-    radial-gradient(120% 160% at 24% 8%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.45) 32%, rgba(255,255,255,0) 60%),
-    linear-gradient(180deg, #65c8ff 0%, #1b8cf0 55%, #0a5ed4 100%);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6), 0 1px 4px rgba(10,60,150,0.35);
-}
-::selection { background: rgba(70,180,255,0.45); color: #03285f; }
-
-.container { width: 1120px; max-width: calc(100% - 64px); margin: 0 auto; }
-
-/* ================= 导航 ================= */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: rgba(242,249,255,0.86);
-  -webkit-backdrop-filter: blur(16px) saturate(1.35);
-  backdrop-filter: blur(16px) saturate(1.35);
-  background-image:
-    repeating-linear-gradient(180deg, rgba(255,255,255,0.10) 0px, rgba(255,255,255,0.10) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 3px),
-    repeating-linear-gradient(180deg, rgba(40,120,220,0.055) 0px, rgba(40,120,220,0.055) 1px, rgba(40,120,220,0) 1px, rgba(40,120,220,0) 5px),
-    linear-gradient(180deg, #f8fdff 0%, #e8f4fe 42%, #d7e9fa 78%, #c7ddf4 100%);
-  border-bottom: 1px solid rgba(9,55,140,0.30);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,1),
-    inset 0 0 9px rgba(255,255,255,0.85),
-    inset 0 -1px 0 rgba(255,255,255,0.85),
-    0 1px 1px rgba(255,255,255,0.9),
-    0 18px 30px -18px rgba(4,42,120,0.85);
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 11px 0;
-}
-
-.brand { display: inline-flex; align-items: center; gap: 11px; }
-
-.brand .brand-logo {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 13px;
-  background:
-    radial-gradient(120% 140% at 30% 12%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.3) 36%, rgba(255,255,255,0) 60%),
-    linear-gradient(180deg, #a5e6ff 0%, #4cc2ff 22%, #1489f2 55%, #0a5fd8 100%);
-  border: 1px solid rgba(5,40,140,0.7);
-  box-shadow:
-    inset 0 0 0 1.5px rgba(255,255,255,0.85),
-    inset 0 3px 6px -2px rgba(255,255,255,0.9),
-    inset 0 -6px 10px -6px rgba(4,30,130,0.6),
-    0 2px 2px rgba(4,34,130,0.4),
-    0 6px 12px -6px rgba(6,40,130,0.55);
-}
-.brand .brand-logo svg { display: block; width: 100%; height: 100%; }
-
-.brand-text { display: flex; flex-direction: column; line-height: 1.1; }
-.brand-text strong {
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 0.01em;
-  color: #04327f;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.85), 0 1px 2px rgba(4,40,120,0.2);
-}
-.brand-text small {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: #0a55b8;
-  letter-spacing: 0.06em;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.7);
-}
-
-.nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
-.nav-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  font-size: 14px;
-  font-weight: 700;
-  color: #0e3f88;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.75);
-  transition: color 0.16s ease, background-color 0.16s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-.nav-links a:hover {
-  background-color: rgba(255,255,255,0.55);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.9), 0 2px 6px -3px rgba(10,60,160,0.35);
-  color: #06306f;
-  transform: translateY(-1px);
-}
-.nav-links a.active {
-  color: #ffffff;
-  border-color: rgba(6,40,130,0.55);
-  background:
-    radial-gradient(130% 200% at 30% -30%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0) 60%),
-    linear-gradient(180deg, #5ec6ff 0%, #1f90f2 45%, #0b62d8 100%);
-  text-shadow: 0 -1px 1px rgba(4,30,110,0.5);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.55),
-    inset 0 2px 3px rgba(255,255,255,0.5),
-    inset 0 -5px 10px -6px rgba(4,30,110,0.75),
-    0 2px 2px rgba(4,30,110,0.30),
-    0 8px 16px -10px rgba(8,80,210,0.75);
-}
-.nav-links a.active:hover { background-color: transparent; }
-
-/* ================= 糖果按钮族 ================= */
-.btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  border: 1.5px solid rgba(5,40,140,0.85);
-  border-radius: 999px;
-  padding: 11px 26px;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  text-shadow: 0 -1px 2px rgba(3,30,110,0.6);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.58) 7%, rgba(255,255,255,0.14) 18%, rgba(255,255,255,0) 26%),
-    radial-gradient(78% 210% at 50% -38%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 18%, rgba(255,255,255,0.30) 44%, rgba(255,255,255,0) 62%),
-    radial-gradient(24% 44% at 26% 9%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.60) 40%, rgba(255,255,255,0) 70%),
-    radial-gradient(60% 130% at 82% 118%, rgba(0,60,215,0.70) 0%, rgba(0,60,215,0) 58%),
-    linear-gradient(180deg, #a5e6ff 0%, #4cc2ff 20%, #1489f2 47%, #0a5fd8 74%, #053c9e 100%);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,1),
-    inset 0 0 0 1px rgba(255,255,255,0.55),
-    inset 0 3px 7px -3px rgba(255,255,255,0.95),
-    inset 0 -12px 18px -12px rgba(3,26,120,0.72),
-    0 3px 2px rgba(2,28,120,0.60),
-    0 6px 15px -6px rgba(10,85,230,0.75),
-    0 0 16px -4px rgba(150,230,255,0.90);
-  transition: transform 0.16s cubic-bezier(0.2,0.9,0.3,1.4), box-shadow 0.18s ease, filter 0.18s ease;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.btn .bico { width: 18px; height: 18px; fill: #ffffff; filter: drop-shadow(0 1px 1px rgba(3,30,110,0.55)); flex: none; }
-.btn:hover {
-  transform: translateY(-2px) scale(1.035);
-  filter: saturate(1.28) brightness(1.10);
-  box-shadow:
-    inset 0 3px 0 rgba(255,255,255,1),
-    inset 0 0 0 1px rgba(255,255,255,0.80),
-    inset 0 5px 10px -3px rgba(255,255,255,1),
-    inset 0 -12px 18px -11px rgba(4,30,130,0.50),
-    0 4px 3px rgba(2,28,120,0.55),
-    0 14px 26px -8px rgba(10,90,230,0.95),
-    0 0 24px -2px rgba(170,240,255,1);
-}
-.btn:active {
-  transform: translateY(2px) scale(0.97);
-  filter: saturate(0.9) brightness(0.96);
-  background: linear-gradient(180deg, #5fc8ff 0%, #1f92f0 42%, #0b64db 72%, #0848b4 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.35),
-    inset 0 7px 14px -2px rgba(2,22,110,0.95),
-    inset 0 4px 8px rgba(2,22,110,0.60),
-    0 1px 1px rgba(2,28,120,0.40),
-    0 2px 5px -2px rgba(10,80,220,0.50);
-}
-
-/* 玻璃白次级按钮 */
-.btn-ghost,
-.btn-outline {
-  color: #0a4bb0;
-  background:
-    radial-gradient(120% 190% at 50% -26%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 30%, rgba(255,255,255,0) 60%),
-    radial-gradient(34% 52% at 24% 12%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 38%, rgba(255,255,255,0) 70%),
-    linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(240,250,255,0.88) 40%, rgba(214,238,255,0.92) 100%);
-  border-color: rgba(9,60,170,0.55);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.95);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,1),
-    inset 0 0 0 1.5px rgba(255,255,255,1),
-    inset 0 3px 6px -2px rgba(255,255,255,1),
-    inset 0 -8px 12px -8px rgba(8,60,180,0.28),
-    0 3px 2px rgba(5,45,150,0.40),
-    0 8px 16px -6px rgba(20,100,235,0.45),
-    0 0 14px -4px rgba(190,235,255,0.95);
-}
-.btn-ghost:hover,
-.btn-outline:hover {
-  color: #083a99;
-  transform: translateY(-2px) scale(1.025);
-  box-shadow:
-    inset 0 0 0 1.5px rgba(255,255,255,1),
-    inset 0 5px 10px -3px rgba(255,255,255,1),
-    0 4px 3px rgba(5,45,150,0.32),
-    0 12px 22px -8px rgba(20,100,235,0.5),
-    0 0 24px -2px rgba(200,240,255,1);
-}
-.btn-ghost:active,
-.btn-outline:active {
-  transform: translateY(1px) scale(0.98);
-  background: linear-gradient(180deg, #e2f3ff 0%, #c3e6ff 48%, #a8d8fb 100%);
-  box-shadow:
-    inset 0 4px 10px -2px rgba(10,60,170,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.6),
-    0 1px 1px rgba(5,45,150,0.3);
-}
-
-/* 导航内 CTA */
-.nav-links a.btn {
-  padding: 8px 18px;
-  font-size: 14px;
-  color: #ffffff;
-  text-shadow: 0 -1px 2px rgba(3,30,110,0.6);
-}
-
-/* 大号 CTA 下载按钮 */
-.btn-lg { padding: 15px 38px; font-size: 17px; }
-
-/* ================= 标题 ================= */
-h1, h2, h3 {
-  letter-spacing: 0.01em;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,0.92),
-    0 0 1px rgba(255,255,255,0.92),
-    0 -1px 1px rgba(255,255,255,0.42),
-    0 2px 2px rgba(3,34,110,0.32),
-    0 6px 14px -6px rgba(20,100,220,0.35);
-}
-h1 {
-  font-size: clamp(30px, 4.6vw, 42px);
-  line-height: 1.22;
-  font-weight: 900;
-  color: #04327f;
-}
-h2 {
-  font-size: 34px;
-  line-height: 1.25;
-  font-weight: 900;
-  color: #05327f;
-}
-h3 {
-  font-size: 20px;
-  line-height: 1.35;
-  font-weight: 800;
-  color: #073a93;
-}
-
-/* 渐变强调词 */
-.hl {
-  display: inline-block;
-  background: linear-gradient(100deg, #062f8c 0%, #1474e8 50%, #0694e0 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: none;
-  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.95)) drop-shadow(0 2px 2px rgba(3,32,110,0.35)) drop-shadow(0 4px 10px rgba(40,150,255,0.30));
-}
-
-/* ================= Hero ================= */
-.hero { padding: 50px 0 40px; text-align: center; }
-.hero .badge-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 16px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0a4bb0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(222,242,255,0.9));
-  border: 1px solid rgba(8,55,165,0.35);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.9), 0 2px 6px -3px rgba(10,60,170,0.35);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.85);
-}
-.hero .badge-line .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #6ad4ff, #1683e8);
-  box-shadow: 0 0 0 0 rgba(0,150,255,0.55);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(0,150,255,0.5); }
-  70% { box-shadow: 0 0 0 8px rgba(0,150,255,0); }
-  100% { box-shadow: 0 0 0 0 rgba(0,150,255,0); }
-}
-.hero h1 { margin: 0 0 6px; }
-.hero .tagline {
-  margin: 0;
-  font-size: 21px;
-  font-weight: 900;
-  color: #0a4bb0;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
-}
-.hero .bird-hero {
-  display: flex;
-  justify-content: center;
-  margin: 4px 0 2px;
-}
-.hero .bird-hero .halo {
-  position: relative;
-  width: 238px;
-  height: 174px;
-}
-.hero .bird-hero .halo::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 210px;
-  height: 118px;
-  transform: translate(-50%, -46%);
-  border-radius: 50%;
-  background: radial-gradient(50% 60% at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(190,230,255,0.55) 46%, rgba(150,215,255,0) 78%);
-  filter: blur(1px);
-  pointer-events: none;
-}
-.hero .bird-hero svg {
-  position: relative;
-  width: 238px;
-  height: 172px;
-  filter: drop-shadow(0 16px 30px rgba(16,90,200,0.32));
-}
-.hero p.lead {
-  max-width: 720px;
-  margin: 0 auto;
-  font-size: 17px;
-  color: #16477f;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.55);
-}
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 22px;
-  align-items: center;
-}
-
-/* ================= Section 通用 ================= */
-.section { padding: 34px 0 48px; position: relative; }
-.section + .section::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 8%; right: 8%;
-  height: 2px;
-  background: linear-gradient(180deg, rgba(9,55,150,0.35), rgba(9,55,150,0));
-  box-shadow: 0 1px 0 rgba(255,255,255,0.75);
-  border-radius: 999px;
-  pointer-events: none;
-}
-.section-head { text-align: center; max-width: 760px; margin: 0 auto 34px; }
-.section-head .kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: #0a55b8;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.75);
-  margin-bottom: 10px;
-}
-.section-head .kicker::before,
-.section-head .kicker::after {
-  content: "";
-  display: block;
-  width: 22px;
-  height: 9px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #9be0ff, #c9ecff);
-  box-shadow: inset 0 0 0 1px rgba(8,60,160,0.28), 0 1px 0 rgba(255,255,255,0.8);
-}
-.section-head h2 { margin: 0; }
-.section-head p {
-  font-size: 16px;
-  color: #16477f;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
-}
-
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-
-/* ================= 玻璃果冻卡片 ================= */
-.card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 22px;
-  padding: 30px 28px;
-  border: 1px solid rgba(5,48,148,0.75);
-  background:
-    radial-gradient(120% 130% at 84% -14%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.22) 34%, rgba(255,255,255,0) 62%),
-    radial-gradient(56% 100% at 10% 108%, rgba(40,140,250,0.22) 0%, rgba(40,140,250,0) 56%),
-    linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(242,250,255,0.78) 52%, rgba(216,238,255,0.82) 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,0.98),
-    inset 0 2px 2px rgba(255,255,255,1),
-    inset 0 10px 16px -10px rgba(255,255,255,0.95),
-    inset 0 -22px 32px -20px rgba(8,52,175,0.55),
-    0 4px 3px rgba(6,45,150,0.35),
-    0 24px 40px -20px rgba(3,45,150,0.90),
-    0 0 26px -8px rgba(130,225,255,1);
-  transition: transform 0.22s cubic-bezier(0.2,0.9,0.3,1.2), box-shadow 0.24s ease, background 0.24s ease;
-}
-.card::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: 3px;
-  left: 5%;
-  right: 5%;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(56% 92% at 50% 6%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.70) 46%, rgba(255,255,255,0) 82%);
-  opacity: 0.92;
-  pointer-events: none;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,1),
-    inset 0 3px 3px rgba(255,255,255,1),
-    inset 0 12px 18px -10px rgba(255,255,255,1),
-    inset 0 -18px 26px -16px rgba(10,60,170,0.40),
-    0 6px 5px rgba(6,45,150,0.35),
-    0 34px 48px -20px rgba(3,55,185,1),
-    0 0 40px -8px rgba(150,235,255,1);
-}
-.card h3 { margin: 0 0 10px; }
-.card p {
-  margin: 0;
-  font-size: 15px;
-  color: #1b4a7c;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-
-/* 拟物玻璃盘图标 */
-.card-ico {
-  display: block;
-  width: 62px;
-  height: 62px;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 8px 12px rgba(6,44,140,0.42));
-}
-
-/* 通用小号矢量符号（与文字同色） */
-.ic { display: inline-block; width: 15px; height: 15px; fill: currentColor; vertical-align: -2px; margin-right: 5px; flex: none; }
-
-/* ================= 技术规格玻璃面板 ================= */
-.specs-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  padding: 40px 36px;
-  border: 1px solid rgba(5,48,148,0.75);
-  background:
-    radial-gradient(120% 130% at 84% -14%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 34%, rgba(255,255,255,0) 62%),
-    radial-gradient(56% 100% at 10% 108%, rgba(40,140,250,0.18) 0%, rgba(40,140,250,0) 56%),
-    linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(244,250,255,0.86) 52%, rgba(218,238,255,0.9) 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,0.98),
-    inset 0 2px 2px rgba(255,255,255,1),
-    inset 0 10px 16px -10px rgba(255,255,255,0.95),
-    inset 0 -22px 32px -20px rgba(8,52,175,0.5),
-    0 4px 3px rgba(6,45,150,0.32),
-    0 24px 40px -20px rgba(3,45,150,0.85),
-    0 0 26px -8px rgba(130,225,255,1);
-}
-.specs-panel::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: 3px;
-  left: 4%;
-  right: 4%;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(56% 92% at 50% 6%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 46%, rgba(255,255,255,0) 82%);
-  pointer-events: none;
-}
-.spec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px 22px; position: relative; z-index: 2; }
-.spec .k {
-  font-size: 12.5px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #0a55b8;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.75);
-}
-.spec .v {
-  font-size: 16.5px;
-  font-weight: 800;
-  color: #063a93;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.85);
-}
-
-/* ================= 深蓝玻璃提示条 ================= */
-.notice {
-  position: relative;
-  margin: 24px 0 0;
-  padding: 15px 22px;
-  border-radius: 16px;
-  font-size: 14px;
-  color: #eaf6ff;
-  border: 1px solid rgba(8,60,180,0.7);
-  background:
-    repeating-linear-gradient(180deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 4px),
-    radial-gradient(120% 170% at 84% -20%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 36%, rgba(255,255,255,0) 60%),
-    linear-gradient(180deg, #2b7de6 0%, #115cc9 55%, #083f9e 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.35),
-    inset 0 -10px 18px -12px rgba(2,20,80,0.8),
-    0 2px 1px rgba(10,55,160,0.3),
-    0 12px 18px -12px rgba(4,45,150,0.6);
-  text-shadow: 0 -1px 1px rgba(2,20,80,0.5);
-}
-.notice strong { color: #ffffff; }
-.notice .chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.notice .chip-list span {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #dff3ff;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.30);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
-}
-.notice .chip-list .ic { margin-right: 4px; }
-
-/* ================= 下载 CTA ================= */
-.download-panel {
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  border-radius: 26px;
-  padding: 50px 40px 46px;
-  border: 1px solid rgba(5,48,148,0.75);
-  background:
-    radial-gradient(120% 130% at 84% -14%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 34%, rgba(255,255,255,0) 62%),
-    radial-gradient(56% 100% at 10% 108%, rgba(40,140,250,0.18) 0%, rgba(40,140,250,0) 56%),
-    linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(246,252,255,0.9) 50%, rgba(220,240,255,0.92) 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,0.98),
-    inset 0 2px 2px rgba(255,255,255,1),
-    inset 0 10px 16px -10px rgba(255,255,255,0.95),
-    inset 0 -22px 32px -20px rgba(8,52,175,0.5),
-    0 4px 3px rgba(6,45,150,0.35),
-    0 34px 60px -24px rgba(3,55,185,0.95),
-    0 0 40px -8px rgba(140,230,255,1);
-}
-.download-panel::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: 3px;
-  left: 4%;
-  right: 4%;
-  height: 26px;
-  border-radius: 50%;
-  background: radial-gradient(56% 92% at 50% 6%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 46%, rgba(255,255,255,0) 82%);
-  pointer-events: none;
-}
-.download-panel > * { position: relative; z-index: 2; }
-.download-panel .ver {
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: #0a4bb0;
-  margin-bottom: 8px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.85);
-}
-.download-panel h2 { margin: 0 0 12px; }
-.download-panel .note {
-  margin: 0 auto 24px;
-  max-width: 620px;
-  font-size: 15px;
-  color: #16477f;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
-}
-.file-meta {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.file-meta span {
-  display: inline-flex;
-  align-items: center;
-  padding: 7px 15px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0a4bb0;
-  background:
-    radial-gradient(120% 150% at 28% 12%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 42%, rgba(255,255,255,0) 64%),
-    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(222,242,255,0.92));
-  border: 1px solid rgba(8,55,165,0.4);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.9), 0 2px 3px rgba(8,50,150,0.3);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.85);
-}
-.download-panel .small {
-  margin-top: 16px;
-  font-size: 12.5px;
-  color: #3a6395;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-
-/* ================= Footer ================= */
-.footer {
-  margin-top: 50px;
-  border-radius: 26px 26px 0 0;
-  border-top: 1px solid rgba(20,100,235,0.95);
-  background:
-    repeating-linear-gradient(180deg, rgba(255,255,255,0.09) 0px, rgba(255,255,255,0.09) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 4px),
-    radial-gradient(110% 260% at 14% -30%, rgba(150,230,255,0.50) 0%, rgba(90,180,255,0.16) 36%, rgba(90,180,255,0) 64%),
-    linear-gradient(180deg, #1e6ed4 0%, #124fa8 28%, #0a3578 58%, #041d4c 100%);
-  color: rgba(232,245,255,0.92);
-  box-shadow:
-    inset 0 2px 1px rgba(255,255,255,0.90),
-    inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 0 46px rgba(3,20,80,0.55),
-    inset 0 -3px 0 rgba(1,12,45,0.90),
-    0 -16px 32px -22px rgba(2,25,90,0.95);
-}
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 24px 4px;
-  font-size: 13px;
-  color: rgba(232,245,255,0.88);
-  text-shadow: 0 -1px 1px rgba(2,18,60,0.6);
-}
-.footer a {
-  color: #cfeeff;
-  font-weight: 700;
-  text-shadow: 0 -1px 1px rgba(2,18,60,0.6);
-  transition: color 0.15s ease, text-shadow 0.15s ease;
-}
-.footer a:hover {
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(160,230,255,0.9), 0 -1px 1px rgba(2,18,60,0.6);
-}
-
-/* ================= 滚动显现 ================= */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-
-/* ================= 响应式 ================= */
-@media (max-width: 900px) {
-  .container { width: 100%; max-width: 100%; padding: 0 20px; }
-  .nav-inner { flex-wrap: wrap; justify-content: center; gap: 10px; padding: 12px 0; }
-  .nav-links { flex-wrap: wrap; justify-content: center; gap: 6px; }
-  .grid-3 { grid-template-columns: 1fr; gap: 20px; }
-  .spec-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-  h2 { font-size: 27px; }
-  .section-head { margin-bottom: 26px; }
-  .hero { padding: 34px 0 26px; }
-  .hero .tagline { font-size: 19px; }
-  .hero .bird-hero .halo { width: 210px; height: 154px; }
-  .hero .bird-hero svg { width: 210px; height: 152px; }
-  .download-panel { padding: 38px 22px 34px; }
-  .specs-panel { padding: 30px 22px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LaswI 独立软件工作室：专注安卓定制 ROM「GUUI」与搭载自研 Nex Kernel 内核的「VayloOS」，并提供应用与文创内容。" />
+  <title>LaswI · 独立软件工作室</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-<!-- SVG 拟物矢量符号库 -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <!-- 卡片盘体渐变 -->
-    <linearGradient id="pgBody" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#7fd6ff"/>
-      <stop offset="0.55" stop-color="#1e8cf0"/>
-      <stop offset="1" stop-color="#0b5ad0"/>
-    </linearGradient>
-    <!-- 导航鹦鹉迷你盘渐变 -->
-    <radialGradient id="miniHeadG" cx="0.35" cy="0.3" r="1">
-      <stop offset="0" stop-color="#b3dcfc"/>
-      <stop offset="0.6" stop-color="#4aa6ef"/>
-      <stop offset="1" stop-color="#1879dd"/>
-    </radialGradient>
-    <linearGradient id="miniBodyG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#64b5f6"/>
-      <stop offset="1" stop-color="#1565c0"/>
-    </linearGradient>
-    <!-- 灵动岛深渐变 -->
-    <linearGradient id="islandG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#12265e"/>
-      <stop offset="1" stop-color="#091238"/>
-    </linearGradient>
-
-    <!-- ======= 特性：拟物玻璃盘图标（96 网格） ======= -->
-    <symbol id="b-mic" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.85">
-        <path d="M28 42 C22 46 22 54 28 58"/>
-        <path d="M34 38 C30 42 30 54 34 58"/>
-        <path d="M68 42 C74 46 74 54 68 58"/>
-        <path d="M62 38 C66 42 66 54 62 58"/>
-      </g>
-      <rect x="40.5" y="27" width="15" height="29" rx="7.5" fill="#ffffff"/>
-      <path d="M44 33 h8 v5 h-8 z" fill="#48a9f0" opacity="0.55"/>
-      <path d="M48 56 v7" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-      <rect x="40" y="64" width="16" height="4" rx="2" fill="#ffffff" opacity="0.9"/>
-    </symbol>
-
-    <symbol id="b-net" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <path d="M48 26 L39 60 M48 26 L66 48 M39 60 L66 48" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.55" stroke-linecap="round"/>
-      <circle cx="48" cy="24" r="9" fill="#ffffff"/>
-      <circle cx="48" cy="24" r="3" fill="#0b5ad0"/>
-      <circle cx="37" cy="64" r="8" fill="#ffffff"/>
-      <circle cx="37" cy="64" r="2.8" fill="#0b5ad0"/>
-      <circle cx="68" cy="47" r="8" fill="#ffffff"/>
-      <circle cx="68" cy="47" r="2.8" fill="#0b5ad0"/>
-    </symbol>
-
-    <symbol id="b-island" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <rect x="14" y="30" width="68" height="37" rx="18.5" fill="url(#islandG)" stroke="#ffffff" stroke-opacity="0.85" stroke-width="1.8"/>
-      <ellipse cx="48" cy="31" rx="25" ry="4" fill="#ffffff" opacity="0.22"/>
-      <rect x="29" y="40" width="15" height="17" rx="6" fill="#9be8ff"/>
-      <circle cx="35.5" cy="47" r="2.6" fill="#1a5fc0"/>
-      <rect x="50" y="44" width="20" height="9" rx="4.5" fill="#ffffff" opacity="0.92"/>
-      <rect x="50" y="47" width="8" height="3" rx="1.5" fill="#2f8ce8" opacity="0.8"/>
-    </symbol>
-
-    <symbol id="b-brush" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <g transform="rotate(40 48 52)">
-        <rect x="40.5" y="10" width="15" height="7" rx="3.5" fill="#ffffff" opacity="0.55"/>
-        <rect x="41.5" y="15" width="13" height="40" rx="6.5" fill="#ffffff"/>
-        <path d="M40.5 56 L55.5 56 L53.5 66 Q48 74 42.5 66 Z" fill="#cdeeff"/>
-        <path d="M41 56 L55 56 L52.5 63 Q48 68 43.5 63 Z" fill="#ffffff"/>
-        <circle cx="48" cy="70" r="3" fill="#9be8ff"/>
-      </g>
-      <circle cx="30" cy="76" r="4.5" fill="#ffffff" opacity="0.92"/>
-      <circle cx="70" cy="76" r="4.5" fill="#ffffff" opacity="0.92"/>
-      <circle cx="30" cy="76" r="1.8" fill="#1e8cf0"/>
-      <circle cx="70" cy="76" r="1.8" fill="#1e8cf0"/>
-    </symbol>
-
-    <symbol id="b-lock" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <path d="M37 48 V37 a11 11 0 0 1 22 0 V48" stroke="#ffffff" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <rect x="27" y="44" width="42" height="31" rx="9" fill="#ffffff"/>
-      <circle cx="48" cy="57" r="6.5" fill="#0b5ad0"/>
-      <rect x="45.8" y="61" width="4.4" height="8" rx="2.2" fill="#0b5ad0"/>
-    </symbol>
-
-    <symbol id="b-bolt" viewBox="0 0 96 96">
-      <rect x="3" y="3" width="90" height="90" rx="27" fill="url(#pgBody)"/>
-      <rect x="7.5" y="7.5" width="81" height="81" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M6 30 Q6 10 26 6 H70 Q90 10 90 30" stroke="#ffffff" stroke-width="3.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-      <ellipse cx="48" cy="7" rx="26" ry="4.5" fill="#ffffff" opacity="0.5"/>
-      <circle cx="26" cy="24" r="3.5" fill="#ffffff" opacity="0.6"/>
-      <circle cx="74" cy="26" r="3.5" fill="#ffffff" opacity="0.6"/>
-      <circle cx="23" cy="72" r="3.5" fill="#ffffff" opacity="0.6"/>
-      <path d="M55 20 L33 52 h13 l-5 25 23 -33 h-13 z" fill="#ffffff"/>
-      <path d="M49 38 L40 52 h10 l-4 16 L62 42 h-10 z" fill="#0b5ad0" opacity="0.35"/>
-    </symbol>
-
-    <!-- ======= 小号线性符号（24 网格，随文字变色） ======= -->
-    <symbol id="i-dl" viewBox="0 0 24 24">
-      <path d="M12 3.5 V13.5 M7.5 9 12 13.5 16.5 9" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M4.5 19.5 h15" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="i-box" viewBox="0 0 24 24">
-      <path d="M3.5 7 12 2.8 20.5 7 v10 L12 21.2 3.5 17 Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M3.5 7 12 11.4 20.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M12 11.4 V21.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24">
-      <rect x="6.8" y="2.6" width="10.4" height="18.8" rx="2.9" fill="none" stroke="currentColor" stroke-width="1.9"/>
-      <path d="M10.3 17.6 h3.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="i-unlock" viewBox="0 0 24 24">
-      <path d="M8.5 10.5 V8.2 a3.5 3.5 0 0 1 6.9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <rect x="5.4" y="10.6" width="13.2" height="9.6" rx="2.4" fill="none" stroke="currentColor" stroke-width="2"/>
-      <circle cx="12" cy="15.4" r="1.7" fill="currentColor"/>
-    </symbol>
-    <symbol id="i-term" viewBox="0 0 24 24">
-      <path d="M5 6.5 10.8 12 5 17.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12.8 17.6 h6.4" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
-    </symbol>
-
-    <!-- ======= 导航蓝鹦鹉徽章（拟物玻璃盘） ======= -->
-    <symbol id="bird-mini" viewBox="0 0 96 96">
-      <rect x="2" y="2" width="92" height="92" rx="26" fill="url(#pgBody)"/>
-      <rect x="6" y="6" width="84" height="84" rx="22" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="2"/>
-      <path d="M5 34 Q5 8 30 5 H66 Q91 8 91 34" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.8" stroke-linecap="round"/>
-      <ellipse cx="48" cy="6.5" rx="30" ry="5" fill="#ffffff" opacity="0.55"/>
-      <g transform="translate(0 4)">
-        <ellipse cx="50" cy="72" rx="23" ry="15" fill="url(#miniBodyG)" opacity="0.92"/>
-        <circle cx="42" cy="46" r="24" fill="url(#miniHeadG)"/>
-        <ellipse cx="36" cy="52" rx="9" ry="7" fill="#ffffff" opacity="0.8"/>
-        <path d="M26 38 Q42 31 56 40" stroke="#0a3a6e" stroke-width="2.4" fill="none" opacity="0.5" stroke-linecap="round"/>
-        <path d="M30 46 Q42 41 54 48" stroke="#0a3a6e" stroke-width="2.4" fill="none" opacity="0.42" stroke-linecap="round"/>
-        <circle cx="49" cy="39" r="5.6" fill="#ffffff"/>
-        <circle cx="50.6" cy="40.4" r="3" fill="#04121f"/>
-        <circle cx="51.8" cy="39" r="1" fill="#ffffff"/>
-        <path d="M62 45 L78 52 L62 59 Z" fill="#ffb74d"/>
-        <path d="M60 47 L64 49.6 L60 55 Z" fill="#e89a3c"/>
-      </g>
-    </symbol>
-  </defs>
-</svg>
-
   <nav class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="#top">
-        <span class="brand-logo">
-          <svg viewBox="0 0 96 96"><use href="#bird-mini" xlink:href="#bird-mini"/></svg>
-        </span>
-        <span class="brand-text">
-          <strong>GUUI</strong>
-          <small>蓝色虎皮鹦鹉</small>
-        </span>
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/laswi-studio-logo.png" alt="LaswI 标志" />
+        LaswI
       </a>
       <div class="nav-links">
-        <a class="active" href="#top">首页</a>
-        <a href="#features">特性</a>
-        <a href="#specs">规格</a>
-        <a href="https://laswi.com.cn" target="_blank" rel="noopener">LaswI 官网</a>
-        <a class="btn" href="#download"><svg class="bico" viewBox="0 0 24 24"><use href="#i-dl" xlink:href="#i-dl"/></svg>立即下载</a>
+        <a class="active" href="index.html">首页</a>
+        <a href="os.html">系统产品</a>
+        <a href="https://xiaosongai.top" target="_blank" rel="noopener">AI工具</a>
+        <a href="about.html">关于我们</a>
+        <a class="nav-cta btn-mail" href="mailto:3199704668@qq.com">合作联系</a>
       </div>
     </div>
   </nav>
 
-  <div id="top"></div>
-
-  <!-- Hero -->
   <header class="hero">
-    <div class="container">
-      <div class="badge-line"><span class="dot"></span> GUUI v0.0.1 · 现已发布</div>
-      <h1>蓝色虎皮鹦鹉 · <span class="hl">万物生态互联</span></h1>
-      <div class="tagline">GUUI</div>
-      <div class="bird-hero">
-        <div class="halo">
-          <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="蓝色虎皮鹦鹉 GUUI 吉祥物">
-            <defs>
-              <linearGradient id="bodyG" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#42A5F5"/>
-                <stop offset="0.55" stop-color="#1E88E5"/>
-                <stop offset="1" stop-color="#0D47A1"/>
-              </linearGradient>
-              <linearGradient id="wingG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#64B5F6"/>
-                <stop offset="1" stop-color="#1565C0"/>
-              </linearGradient>
-              <radialGradient id="headG" cx="0.35" cy="0.35" r="0.9">
-                <stop offset="0" stop-color="#BBDEFB"/>
-                <stop offset="0.5" stop-color="#42A5F5"/>
-                <stop offset="1" stop-color="#1E88E5"/>
-              </radialGradient>
-            </defs>
-            <!-- 尾羽 -->
-            <path d="M205 210 L235 300 L215 292 L210 305 L195 290 L190 302 L178 282 Z" fill="#0D47A1"/>
-            <path d="M210 215 L240 296 L226 288 L220 298 L206 284 L202 295 L188 278 Z" fill="#1565C0"/>
-            <!-- 身体 -->
-            <ellipse cx="205" cy="175" rx="80" ry="95" fill="url(#bodyG)"/>
-            <!-- 腹部 -->
-            <ellipse cx="205" cy="205" rx="55" ry="62" fill="#64B5F6" opacity="0.55"/>
-            <!-- 翅膀 -->
-            <path d="M155 130 Q205 95 258 130 Q268 165 252 195 Q205 175 155 170 Q148 150 155 130 Z" fill="url(#wingG)"/>
-            <path d="M160 138 Q205 108 252 138" stroke="#BBDEFB" stroke-width="2.5" fill="none" opacity="0.7"/>
-            <path d="M158 155 Q205 126 250 155" stroke="#BBDEFB" stroke-width="2" fill="none" opacity="0.5"/>
-            <!-- 头部 -->
-            <circle cx="200" cy="85" r="48" fill="url(#headG)"/>
-            <!-- 虎皮纹 -->
-            <path d="M175 72 Q200 68 225 72" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
-            <path d="M178 88 Q200 84 222 88" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
-            <path d="M180 104 Q200 100 220 104" stroke="#0A3A6E" stroke-width="2.5" fill="none" opacity="0.55"/>
-            <!-- 眼睛 -->
-            <circle cx="216" cy="80" r="8" fill="#FFFFFF"/>
-            <circle cx="218" cy="81" r="4.5" fill="#04121f"/>
-            <circle cx="220" cy="79" r="1.8" fill="#FFFFFF"/>
-            <!-- 喙 -->
-            <path d="M238 92 L262 98 L238 106 Z" fill="#FFB74D"/>
-            <!-- 脚 -->
-            <path d="M185 268 L180 285 M185 268 L192 286 M185 268 L187 288" stroke="#0D47A1" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M225 268 L220 285 M225 268 L232 286 M225 268 L227 288" stroke="#0D47A1" stroke-width="4" fill="none" stroke-linecap="round"/>
-          </svg>
+    <div class="container hero-grid">
+      <div>
+        <h1>自研操作系统<br />与数字产品</h1>
+        <p class="lead">
+          LaswI 是一支以自研为起点的独立开发团队，专注安卓定制 ROM「GUUI」与搭载自研 Nex Kernel 内核的「VayloOS」；
+          同时围绕日常使用场景，提供应用与文创内容。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-blue" href="os.html">了解自研系统</a>
+          <a class="btn btn-outline" href="mailto:3199704668@qq.com">联系我们</a>
         </div>
       </div>
-      <p class="lead">
-        基于 LineageOS 深度定制的轻量 Android 系统，以「蓝色虎皮鹦鹉」为核心设计语言，
-        内置晓松 AI 语音助手与汩汩万物互联，专为小米 MIX 2S 重新设计每一个角落。
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-lg" href="#download"><svg class="bico" viewBox="0 0 24 24"><use href="#i-dl" xlink:href="#i-dl"/></svg>立即下载</a>
-        <a class="btn-ghost btn-lg" href="#features">了解更多</a>
+      <div class="hero-art">
+        <img class="hero-logo" src="assets/laswi-studio-logo.png" alt="LaswI Studio 标志" />
       </div>
     </div>
   </header>
 
-  <!-- 特性 -->
-  <section class="section" id="features">
+  <section class="section">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">Features</span>
-        <h2>为互联而生</h2>
-        <p>不只是一套换肤的主题，而是从系统底层到每一个像素，都围绕「蓝鹦鹉」与「生态互联」重新设计。</p>
+      <div class="section-head">
+        <h2>业务方向</h2>
       </div>
+
       <div class="grid-3">
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-mic" xlink:href="#b-mic"/></svg>
-          <h3>晓松 AI · 语音助手</h3>
-          <p>离线唤醒词「你好晓松」，全程本地识别，不依赖任何云端。唤醒后悬浮窗浮于所有应用之上，接入私有部署的大模型接口，对话、问答一呼即达。</p>
-        </article>
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-net" xlink:href="#b-net"/></svg>
-          <h3>汩汩万物互联</h3>
-          <p>扫码即可配对入网，跨设备剪贴板同步、通知中继、高速文件传输、多设备远程控制。指定一台设备为「生态中枢」，跨网流量经你自有的硬件中转，零第三方服务器。</p>
-        </article>
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-island" xlink:href="#b-island"/></svg>
-          <h3>汩汩岛 · 灵动交互</h3>
-          <p>状态栏常驻的灵动岛组件。点一下震动反馈，长按展开大岛查看前台任务，下拉即可秒开实时应用，黑蓝渐变胶囊处处呼应蓝鹦鹉羽色。</p>
-        </article>
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-brush" xlink:href="#b-brush"/></svg>
-          <h3>蓝鹦鹉设计语言</h3>
-          <p>从开机动画、壁纸、系统图标，到弹窗圆角、通知卡片、快速设置面板，全局统一蓝鹦鹉蓝配色体系，深蓝黑底 + 羽色渐变，克制而华丽。</p>
-        </article>
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-lock" xlink:href="#b-lock"/></svg>
-          <h3>隐私 · 本地优先</h3>
-          <p>本地唯一 LaswI-ID 永不上传；互联全程端到端加密；AI 接口地址可自配，指向你信任的私有服务。数据的主权，始终在你手里。</p>
-        </article>
-        <article class="card reveal">
-          <svg class="card-ico"><use href="#b-bolt" xlink:href="#b-bolt"/></svg>
-          <h3>轻量 · 流畅</h3>
-          <p>基于 Android 11，去除冗余预装，保留完整硬件能力（通话 / 相机 / NFC / 指纹 / 蓝牙）。为骁龙 845 的 MIX 2S 精打细算，续航与流畅兼得。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 技术规格 -->
-  <section class="section" id="specs">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">Specifications</span>
-        <h2>技术规格</h2>
-        <p>当前版本聚焦单机型打磨，后续将逐步开放更多设备支持。</p>
-      </div>
-      <div class="specs-panel reveal">
-        <div class="spec-grid">
-          <div class="spec"><div class="k">系统版本</div><div class="v">GUUI v0.0.1</div></div>
-          <div class="spec"><div class="k">底层系统</div><div class="v">LineageOS · Android 11</div></div>
-          <div class="spec"><div class="k">适配机型</div><div class="v">小米 MIX 2S</div></div>
-          <div class="spec"><div class="k">设备代号</div><div class="v">polaris</div></div>
-          <div class="spec"><div class="k">处理器</div><div class="v">骁龙 845</div></div>
-          <div class="spec"><div class="k">设计语言</div><div class="v">蓝色虎皮鹦鹉</div></div>
-          <div class="spec"><div class="k">刷入方式</div><div class="v">Fastboot</div></div>
-          <div class="spec"><div class="k">开源协议</div><div class="v">Apache 2.0</div></div>
-        </div>
-        <div class="notice">
-          <strong>设备支持说明</strong>　目前 GUUI v0.0.1 仅支持小米 MIX 2S（polaris）这一款机型，
-          需要已解锁 Bootloader，并安装 Android 10 底固件后通过 Fastboot 刷入。
-          <div class="chip-list">
-            <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-phone" xlink:href="#i-phone"/></svg>小米 MIX 2S</span>
-            <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-unlock" xlink:href="#i-unlock"/></svg>已解锁 Bootloader</span>
-            <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-box" xlink:href="#i-box"/></svg>Android 10 底固件</span>
-            <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-term" xlink:href="#i-term"/></svg>Fastboot 四件套</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 下载 -->
-  <section class="section" id="download">
-    <div class="container">
-      <div class="download-panel reveal">
-        <div class="ver">GUUI v0.0.1 · 现已发布</div>
-        <h2>准备好体验了吗？</h2>
-        <p class="note">
-          适用于小米 MIX 2S（polaris）。请先确认已解锁 Bootloader 并刷入 Android 10 底固件，
-          再通过 Fastboot 刷入 GUUI。
-        </p>
-        <div class="file-meta">
-          <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-box" xlink:href="#i-box"/></svg>GUUI_v0.0.1_MIX2S.zip</span>
-          <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-phone" xlink:href="#i-phone"/></svg>polaris</span>
-          <span><svg class="ic" viewBox="0 0 24 24"><use href="#i-term" xlink:href="#i-term"/></svg>Fastboot</span>
-        </div>
-        <a class="btn btn-lg" href="https://1859727362.share.123pan.cn/123pan/Dd4ivd-canP3" target="_blank" rel="noopener">
-          <svg class="bico" viewBox="0 0 24 24"><use href="#i-dl" xlink:href="#i-dl"/></svg>下载 GUUI v0.0.1
+        <a class="card" href="os.html">
+          <span class="card-icon">
+            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bgindex1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f4fbff"/>
+                  <stop offset="0.45" stop-color="#a6dcfb"/>
+                  <stop offset="0.78" stop-color="#45a3f3"/>
+                  <stop offset="1" stop-color="#0e68dc"/>
+                </linearGradient>
+                <linearGradient id="glindex1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="syindex1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff"/>
+                  <stop offset="1" stop-color="#d3ecff"/>
+                </linearGradient>
+                <linearGradient id="inindex1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#69bcff"/>
+                  <stop offset="1" stop-color="#0a3f9e"/>
+                </linearGradient>
+                <filter id="shindex1" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
+                </filter>
+                <clipPath id="cwindex1"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
+              </defs>
+              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
+              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex1)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
+              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7" fill="url(#glindex1)"/>
+              <g filter="url(#shindex1)"><rect x="9.4" y="10.6" width="29.2" height="19.6" rx="4" fill="url(#syindex1)"/>
+      <rect x="12.8" y="13.6" width="22.4" height="12.6" rx="2.2" fill="url(#inindex1)"/>
+      <rect x="16.2" y="16.2" width="15.6" height="1.7" rx="0.85" fill="#ffffff" opacity="0.6"/>
+      <rect x="7.2" y="31.8" width="33.6" height="3.6" rx="1.8" fill="url(#syindex1)"/>
+      <rect x="17.2" y="35.6" width="13.6" height="3.2" rx="1.6" fill="url(#syindex1)"/></g>
+            </svg>
+          </span>
+          <h3>操作系统</h3>
+          <p class="desc">
+            团队核心方向。GUUI 为安卓深度定制 ROM，VayloOS 搭载自研 Nex Kernel 内核，
+            界面与底层均由团队自主实现，详细说明收录于系统产品页。
+          </p>
+          <span class="card-link">查看系统产品页 →</span>
         </a>
-        <div class="small">文件托管于 123 云盘，打开链接后即可下载刷机包。</div>
+
+        <a class="card" href="apps.html">
+          <span class="card-icon">
+            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bgindex2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f4fbff"/>
+                  <stop offset="0.45" stop-color="#a6dcfb"/>
+                  <stop offset="0.78" stop-color="#45a3f3"/>
+                  <stop offset="1" stop-color="#0e68dc"/>
+                </linearGradient>
+                <linearGradient id="glindex2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="syindex2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff"/>
+                  <stop offset="1" stop-color="#d3ecff"/>
+                </linearGradient>
+                <linearGradient id="inindex2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#69bcff"/>
+                  <stop offset="1" stop-color="#0a3f9e"/>
+                </linearGradient>
+                <filter id="shindex2" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
+                </filter>
+                <clipPath id="cwindex2"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
+              </defs>
+              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
+              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex2)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
+              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7" fill="url(#glindex2)"/>
+              <g filter="url(#shindex2)"><rect x="12.2" y="13" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
+      <rect x="25.2" y="13" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
+      <rect x="12.2" y="26" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
+      <rect x="25.2" y="26" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/></g>
+            </svg>
+          </span>
+          <h3>应用基础设施</h3>
+          <p class="desc">
+            面向日常使用与开发场景的工具与服务，以简洁、稳定、实用为原则，
+            按需提供，并随反馈持续维护。
+          </p>
+          <span class="card-link">查看应用合集 →</span>
+        </a>
+
+        <a class="card" href="works.html">
+          <span class="card-icon">
+            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bgindex3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f4fbff"/>
+                  <stop offset="0.45" stop-color="#a6dcfb"/>
+                  <stop offset="0.78" stop-color="#45a3f3"/>
+                  <stop offset="1" stop-color="#0e68dc"/>
+                </linearGradient>
+                <linearGradient id="glindex3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="syindex3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff"/>
+                  <stop offset="1" stop-color="#d3ecff"/>
+                </linearGradient>
+                <linearGradient id="inindex3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#69bcff"/>
+                  <stop offset="1" stop-color="#0a3f9e"/>
+                </linearGradient>
+                <filter id="shindex3" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
+                </filter>
+                <clipPath id="cwindex3"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
+              </defs>
+              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
+              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex3)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
+              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7" fill="url(#glindex3)"/>
+              <g filter="url(#shindex3)"><path d="M24 7.8c-5.8 0-9.4 4.2-9.4 9 0 3.3 1.7 5.8 3.5 7.5 1.3 1.2 2 2.1 2.2 3h7.4c.2-.9.9-1.8 2.2-3 1.8-1.7 3.5-4.2 3.5-7.5 0-4.8-3.6-9-9.4-9z" fill="url(#syindex3)"/>
+      <rect x="19.2" y="33" width="9.6" height="3.6" rx="1.8" fill="url(#syindex3)"/>
+      <rect x="16.6" y="37.6" width="14.8" height="3.2" rx="1.6" fill="url(#syindex3)"/>
+      <path d="M21.4 29.4h5.2l-1 3h-3.2z" fill="url(#inindex3)"/></g>
+            </svg>
+          </span>
+          <h3>文创作品</h3>
+          <p class="desc">
+            视觉设计与文字内容作品集，涵盖壁纸、图标与短文，
+            是代码之外的另一种表达方式。
+          </p>
+          <span class="card-link">浏览文创作品 →</span>
+        </a>
       </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-head">
+        <h2>合作伙伴</h2>
+      </div>
+
+      <article class="partner-simple">
+        <div class="partner-logo">
+          <img src="assets/st-studio-logo.JPG" alt="热土工作室标志" />
+        </div>
+        <div>
+          <h3>热土工作室</h3>
+          <p class="quote">
+            热土工作室，一支由初中生组建的IT科技团队。“热土”象征脚下坚实的根基与心中不灭的创造热忱。
+            虽年纪尚轻，却怀揣以科技解决实际问题、回馈社会的理想，在这里学习探索、动手创造，
+            以代码构筑未来，期盼创新的种子于这片热土生根发芽。
+          </p>
+        </div>
+        <a class="btn-outline" href="https://rtstu.com" target="_blank" rel="noopener">访问官网 rtstu.com</a>
+      </article>
+
+      <article class="partner-simple">
+        <div class="partner-logo">
+          <img src="assets/xmzf-logo.JPG" alt="小明之父工作室标志" />
+        </div>
+        <div>
+          <h3>小明之父工作室</h3>
+          <p class="quote">
+            XMZF sTudio 是一个追求简洁与创造力的工作室。我们相信 "Code × Art = ∞"，在极简与美学之间寻找平衡。
+          </p>
+        </div>
+        <a class="btn-outline" href="https://xmzf.space" target="_blank" rel="noopener">访问官网 xmzf.space</a>
+      </article>
+
+      <article class="partner-simple">
+        <div class="partner-logo">
+          <img src="assets/xqn.png" alt="新启年工作室标志" />
+        </div>
+        <div>
+          <h3>新启年工作室</h3>
+          <p class="quote">
+            专注系统软件开发、网站定制开发，致力于为客户提供稳定、高效、可落地的数字化解决方案，务实交付每一个项目。
+          </p>
+        </div>
+        <a class="btn-outline" href="https://newera2625.top" target="_blank" rel="noopener">访问官网 newera2625.top</a>
+      </article>
     </div>
   </section>
 
   <footer class="footer">
     <div class="container footer-inner">
-      <span>© 2026 GUUI · LaswI Studio · 保留所有权利</span>
+      <span>© 2026 LaswI · 保留所有权利</span>
       <span>
-        <a href="#top">首页</a> · <a href="#features">特性</a> · <a href="#specs">规格</a> ·
-        <a href="https://laswi.com.cn" target="_blank" rel="noopener">LaswI 官网</a> ·
-        <a href="mailto:3199704668@qq.com">联系合作</a>
+        <a href="os.html">系统产品</a> · <a href="https://xiaosongai.top" target="_blank" rel="noopener">AI工具</a> · <a href="about.html">关于我们</a> · <a href="https://rtstu.com" target="_blank" rel="noopener">热土工作室</a> · <a href="mailto:3199704668@qq.com">合作联系</a>
       </span>
     </div>
   </footer>
-
-  <script>
-    // 滚动显现
-    (function () {
-      var els = document.querySelectorAll('.reveal');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (el) { el.classList.add('visible'); });
-        return;
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      els.forEach(function (el) { io.observe(el); });
-    })();
-  </script>
 
 </body>
 </html>
