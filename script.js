@@ -8,6 +8,7 @@
    06 磁貼自動翻轉（可被 hover / 離屏 / reduced-motion 暫停）
    07 Hero 視差
    08 進場動畫（IntersectionObserver）
+   08b 宣傳片區塊（視口內自動播放 / 音量 / 彈層）
    09 圖片缺失兜底
    ══════════════════════════════════════════════════════════════ */
 (() => {
@@ -25,6 +26,7 @@
       strings: {
         'nav.home': '首頁',
         'nav.products': '產品',
+        'nav.film': '宣傳片',
         'nav.stack': '自研棧',
         'nav.partners': '合作夥伴',
         'nav.contact': '聯繫',
@@ -32,10 +34,21 @@
         'hero.tagline': '以系統、產品與音樂，拆解日常的無趣。',
         'hero.scroll': '向下探索',
         'hero.meta': '7 個產品 · 4 位夥伴',
+        'film.kicker': '02 — BRAND FILM',
+        'film.sub': '宣傳片',
+        'film.lead': '兩分鐘，一條線：從內核到系統再到產品，全部自己造。',
+        'film.name': 'LASWI STUDIO — BRAND FILM',
+        'film.duration': '02:00',
+        'film.play': '播放完整宣傳片',
+        'film.soundOn': '開啟聲音',
+        'film.soundOff': '靜音',
+        'video.kicker': 'BRAND FILM · 02:00',
+        'video.title': 'LaswI Studio 宣傳片',
+        'video.close': '關閉',
         'products.kicker': '01 — SEVEN THINGS WE BUILD',
         'products.sub': '產品',
         'products.lead': '從內核到音樂，七個產品，一條自研路線。滑過磁貼可暫停翻轉，點擊直接前往。',
-        'stack.kicker': '02 — THE STACK',
+        'stack.kicker': '03 — THE STACK',
         'stack.sub': '自研棧',
         'stack.lead': '三層，一條線：從內核到系統，再到產品。每一層都由我們自己寫。',
         'stack.k1.desc': '排程、記憶體、驅動，全部手寫，不借用任何現成內核。',
@@ -48,10 +61,10 @@
         'stack.stat.products': '產品',
         'stack.stat.partners': '夥伴',
         'stack.stat.layers': '自研層',
-        'partners.kicker': '03 — PARTNERS',
+        'partners.kicker': '04 — PARTNERS',
         'partners.sub': '合作夥伴',
         'partners.lead': '與同樣相信「動手造」的團隊並肩。',
-        'footer.kicker': '04 — CONTACT',
+        'footer.kicker': '05 — CONTACT',
         'footer.sub': '合作聯繫',
         'footer.lead': '有想法、有專案，或只是想聊聊，郵件都歡迎。',
         'footer.built': '自研 · 自造 · 自娛',
@@ -64,6 +77,7 @@
       strings: {
         'nav.home': '首页',
         'nav.products': '产品',
+        'nav.film': '宣传片',
         'nav.stack': '自研栈',
         'nav.partners': '合作伙伴',
         'nav.contact': '联系',
@@ -71,10 +85,21 @@
         'hero.tagline': '以系统、产品与音乐，拆解日常的无趣。',
         'hero.scroll': '向下探索',
         'hero.meta': '7 个产品 · 4 位伙伴',
+        'film.kicker': '02 — BRAND FILM',
+        'film.sub': '宣传片',
+        'film.lead': '两分钟，一条线：从内核到系统再到产品，全部自己造。',
+        'film.name': 'LASWI STUDIO — BRAND FILM',
+        'film.duration': '02:00',
+        'film.play': '播放完整宣传片',
+        'film.soundOn': '开启声音',
+        'film.soundOff': '静音',
+        'video.kicker': 'BRAND FILM · 02:00',
+        'video.title': 'LaswI Studio 宣传片',
+        'video.close': '关闭',
         'products.kicker': '01 — SEVEN THINGS WE BUILD',
         'products.sub': '产品',
         'products.lead': '从内核到音乐，七个产品，一条自研路线。滑过磁贴可暂停翻转，点击直接前往。',
-        'stack.kicker': '02 — THE STACK',
+        'stack.kicker': '03 — THE STACK',
         'stack.sub': '自研栈',
         'stack.lead': '三层，一条线：从内核到系统，再到产品。每一层都由我们自己写。',
         'stack.k1.desc': '调度、内存、驱动，全部手写，不借用任何现成内核。',
@@ -87,10 +112,10 @@
         'stack.stat.products': '产品',
         'stack.stat.partners': '伙伴',
         'stack.stat.layers': '自研层',
-        'partners.kicker': '03 — PARTNERS',
+        'partners.kicker': '04 — PARTNERS',
         'partners.sub': '合作伙伴',
         'partners.lead': '与同样相信「动手造」的团队并肩。',
-        'footer.kicker': '04 — CONTACT',
+        'footer.kicker': '05 — CONTACT',
         'footer.sub': '合作联系',
         'footer.lead': '有想法、有项目，或只是想聊聊，邮件都欢迎。',
         'footer.built': '自研 · 自造 · 自娱',
@@ -103,6 +128,7 @@
       strings: {
         'nav.home': 'Home',
         'nav.products': 'Products',
+        'nav.film': 'Film',
         'nav.stack': 'Stack',
         'nav.partners': 'Partners',
         'nav.contact': 'Contact',
@@ -110,10 +136,21 @@
         'hero.tagline': 'Systems, products and music — a way to take the dull out of the everyday.',
         'hero.scroll': 'SCROLL',
         'hero.meta': '7 PRODUCTS · 4 PARTNERS',
+        'film.kicker': '02 — BRAND FILM',
+        'film.sub': 'THE FILM',
+        'film.lead': 'Two minutes, one line: kernel, system, products — all built by us.',
+        'film.name': 'LASWI STUDIO — BRAND FILM',
+        'film.duration': '02:00',
+        'film.play': 'Play the full film',
+        'film.soundOn': 'Unmute',
+        'film.soundOff': 'Mute',
+        'video.kicker': 'BRAND FILM · 02:00',
+        'video.title': 'LaswI Studio — Brand Film',
+        'video.close': 'Close',
         'products.kicker': '01 — SEVEN THINGS WE BUILD',
         'products.sub': 'PRODUCTS',
         'products.lead': 'From kernel to music: seven products on one self-built road. Hover to pause a tile, click to open it.',
-        'stack.kicker': '02 — THE STACK',
+        'stack.kicker': '03 — THE STACK',
         'stack.sub': 'THE STACK',
         'stack.lead': 'Three layers, one line: kernel, system, products. Every layer written by us.',
         'stack.k1.desc': 'Scheduler, memory, drivers — all hand-written, no borrowed kernel.',
@@ -126,10 +163,10 @@
         'stack.stat.products': 'PRODUCTS',
         'stack.stat.partners': 'PARTNERS',
         'stack.stat.layers': 'LAYERS',
-        'partners.kicker': '03 — PARTNERS',
+        'partners.kicker': '04 — PARTNERS',
         'partners.sub': 'PARTNERS',
         'partners.lead': 'Standing beside teams who also believe in building things by hand.',
-        'footer.kicker': '04 — CONTACT',
+        'footer.kicker': '05 — CONTACT',
         'footer.sub': 'LET’S TALK',
         'footer.lead': 'An idea, a project, or just a chat — email is always open.',
         'footer.built': 'BUILT · MADE · PLAYED',
@@ -344,6 +381,11 @@
       const val = dict.strings[el.dataset.i18n];
       if (typeof val === 'string') el.textContent = val;
     });
+    // aria-label 同樣走字典（音控、關閉鈕等純圖示控件）
+    $$('[data-i18n-aria]').forEach((el) => {
+      const val = dict.strings[el.dataset.i18nAria];
+      if (typeof val === 'string') el.setAttribute('aria-label', val);
+    });
   }
 
   function setLang(lang, { animate = true } = {}) {
@@ -427,7 +469,7 @@
   else wideQuery.addListener(onWide);
 
   /* Scroll Spy：以觀察區塊決定當前導航項 */
-  const sections = ['home', 'products', 'stack', 'partners', 'contact']
+  const sections = ['home', 'products', 'film', 'stack', 'partners', 'contact']
     .map((id) => document.getElementById(id))
     .filter(Boolean);
 
@@ -524,6 +566,135 @@
   function observeReveals(root = document) {
     $$('.reveal', root).forEach((el) => revealObserver.observe(el));
     if (root.classList && root.classList.contains('reveal')) revealObserver.observe(root);
+  }
+
+  /* ── 08b 宣傳片區塊：視口內自動播放 / 音量 / 彈層 ─────────── */
+  const promo = $('#promo');
+  const promoVideo = $('#promoVideo');
+  const promoSound = $('#promoSound');
+  const promoPlay = $('#promoPlay');
+  const filmDialog = $('#filmDialog');
+  const filmVideo = $('#filmVideo');
+  const filmClose = $('#filmClose');
+
+  const isNarrow = () => window.matchMedia('(max-width: 860px)').matches;
+  const pickSrc = (el) => (isNarrow() ? el.dataset.src720 : el.dataset.src1080);
+  const saveData = () => !!(navigator.connection && navigator.connection.saveData);
+  const cinematicOff = () => prefersReduced.matches || saveData(); // 減弱動效 / 省流：只留 poster
+
+  let promoInView = false;
+
+  /* 進入視口才拉檔案；源由腳本挑選（桌面 1080p / 行動 720p） */
+  function loadPromo(force) {
+    if (!promoVideo || promoVideo.dataset.loaded) return;
+    if (!force && cinematicOff()) return; // 減弱動效 / 省流：進視口也不主動載入
+    promoVideo.dataset.loaded = '1';
+    promoVideo.addEventListener('loadeddata', () => {
+      if (promoInView) promoVideo.play().catch(() => {});
+    }, { once: true });
+    promoVideo.src = pickSrc(promoVideo);
+    promoVideo.muted = true;
+    promoVideo.play().catch(() => {});
+  }
+
+  function setPromoMuted(muted) {
+    if (!promoVideo || !promoSound) return;
+    promoVideo.muted = muted;
+    const key = muted ? 'film.soundOn' : 'film.soundOff';
+    const icon = $('.material-symbols-rounded', promoSound);
+    promoSound.classList.toggle('is-on', !muted);
+    promoSound.setAttribute('aria-pressed', String(!muted));
+    promoSound.setAttribute('aria-label', I18N[currentLang].strings[key]);
+    promoSound.dataset.i18nAria = key;
+    if (icon) icon.textContent = muted ? 'volume_off' : 'volume_up';
+  }
+
+  if (promoVideo) {
+    if (promoSound) {
+      promoSound.addEventListener('click', () => {
+        if (!promoVideo.dataset.loaded) loadPromo(true); // 用戶主動點擊：即使 reduced-motion 也載入並出聲
+        setPromoMuted(!promoVideo.muted);
+        promoVideo.play().catch(() => {});
+      });
+    }
+
+    /* 進入視口才播放、離開即暫停（省電、省解碼） */
+    if (promo && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          promoInView = entry.isIntersecting;
+          if (!entry.isIntersecting) {
+            promoVideo.pause();
+            return;
+          }
+          loadPromo();
+          if (promoVideo.dataset.loaded && !cinematicOff()) promoVideo.play().catch(() => {});
+        });
+      }, { threshold: 0.25 }).observe(promo);
+    } else {
+      promoInView = true;
+    }
+
+    /* 分頁切到背景時暫停 */
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        promoVideo.pause();
+      } else if (promoInView && promoVideo.dataset.loaded) {
+        promoVideo.play().catch(() => {});
+      }
+    });
+
+    /* 使用者中途開啟「減少動效」：立刻暫停並退回 poster */
+    const onReduced = (e) => {
+      if (!e.matches) return;
+      promoVideo.pause();
+      promoVideo.removeAttribute('src');
+      delete promoVideo.dataset.loaded;
+      promoVideo.load();
+      setPromoMuted(true);
+    };
+    if (prefersReduced.addEventListener) prefersReduced.addEventListener('change', onReduced);
+  }
+
+  /* 宣傳片彈層：首次開啟才載入源，從頭播放；關閉（含 Esc / 遮罩）即暫停 */
+  if (filmDialog && filmVideo && promoPlay) {
+    const openFilm = () => {
+      if (!filmVideo.dataset.loaded) {
+        filmVideo.dataset.loaded = '1';
+        filmVideo.src = pickSrc(filmVideo);
+      }
+      promoVideo && promoVideo.pause(); // 避免兩路音軌同時出聲
+      document.body.classList.add('is-film-open');
+      if (typeof filmDialog.showModal === 'function') filmDialog.showModal();
+      else filmDialog.setAttribute('open', '');
+      filmVideo.currentTime = 0;
+      filmVideo.play().catch(() => {});
+    };
+
+    const closeFilm = () => {
+      filmVideo.pause();
+      document.body.classList.remove('is-film-open');
+      if (typeof filmDialog.close === 'function') filmDialog.close();
+      else filmDialog.removeAttribute('open');
+      if (promoInView && promoVideo && promoVideo.dataset.loaded) promoVideo.play().catch(() => {});
+    };
+
+    promoPlay.addEventListener('click', openFilm);
+    if (filmClose) filmClose.addEventListener('click', closeFilm);
+
+    // Esc：攔下原生 cancel，統一走 closeFilm（確保暫停）
+    filmDialog.addEventListener('cancel', (e) => { e.preventDefault(); closeFilm(); });
+    filmDialog.addEventListener('close', () => {
+      filmVideo.pause();
+      document.body.classList.remove('is-film-open');
+    });
+
+    // 點遮罩關閉（點擊落在對話框邊界外）
+    filmDialog.addEventListener('click', (e) => {
+      const r = filmDialog.getBoundingClientRect();
+      const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      if (outside) closeFilm();
+    });
   }
 
   /* ── 09 圖片缺失兜底 ────────────────────────────────────── */

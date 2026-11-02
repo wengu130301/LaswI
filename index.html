@@ -34,6 +34,7 @@
   <nav class="nav__links" id="navLinks" aria-label="主導航">
     <a class="nav__link is-active" href="#home" data-i18n="nav.home">首頁</a>
     <a class="nav__link" href="#products" data-i18n="nav.products">產品</a>
+    <a class="nav__link" href="#film" data-i18n="nav.film">宣傳片</a>
     <a class="nav__link" href="#stack" data-i18n="nav.stack">自研棧</a>
     <a class="nav__link" href="#partners" data-i18n="nav.partners">合作夥伴</a>
     <a class="nav__link" href="#contact" data-i18n="nav.contact">聯繫</a>
@@ -88,12 +89,15 @@
     </div>
 
     <div class="hero__bar">
-      <a class="hero__scroll" href="#products">
-        <span data-i18n="hero.scroll">向下探索</span>
-        <span class="material-symbols-rounded">south</span>
-      </a>
+      <div class="hero__bar-main">
+        <a class="hero__scroll" href="#products">
+          <span data-i18n="hero.scroll">向下探索</span>
+          <span class="material-symbols-rounded" aria-hidden="true">south</span>
+        </a>
+      </div>
       <p class="hero__meta mono" data-i18n="hero.meta">7 個產品 · 4 位夥伴</p>
     </div>
+
   </section>
 
   <!-- 圖形鏤空：色帶上以 SVG mask 打孔，讓頁面底色從圓形中透出 -->
@@ -166,12 +170,62 @@
     </div>
   </div>
 
-  <!-- ═══════════════════ ③c 自研棧（深色卡片，三層堆疊） ═══════════════════ -->
+  <!-- ═══════════════════ ③c 宣傳片（獨立影片區塊，影片即主角） ═══════════════════ -->
+  <section class="section section--film" id="film">
+    <header class="sec-head sec-head--split reveal">
+      <div class="sec-head__main">
+        <p class="kicker mono" data-i18n="film.kicker">02 — BRAND FILM</p>
+        <h2 class="sec-title">
+          <span class="hollow hollow--primary">FILM</span>
+          <span class="sec-title__sub" data-i18n="film.sub">宣傳片</span>
+        </h2>
+      </div>
+      <div class="sec-head__aside">
+        <p class="sec-lead" data-i18n="film.lead">兩分鐘，一條線：從內核到產品，全部自己造。</p>
+        <p class="sec-count mono">02:00 — ONE TAKE</p>
+      </div>
+    </header>
+
+    <!-- 16:9 大圓角卡片：影片鋪滿卡面；左下資訊 / 右下音控 / 中央播放 -->
+    <figure class="promo reveal" id="promo">
+      <video class="promo__video" id="promoVideo"
+             muted loop playsinline preload="metadata"
+             poster="media/promo-poster.jpg"
+             data-src720="media/promo-720.mp4" data-src1080="media/promo-1080.mp4"
+             aria-label="LaswI Studio 宣傳片"></video>
+
+      <!-- 輕薄漸層：只為左下資訊與中央按鈕墊底，中間畫面保持通透 -->
+      <span class="promo__scrim" aria-hidden="true"></span>
+
+      <figcaption class="promo__info">
+        <span class="promo__name mono" data-i18n="film.name">LASWI STUDIO — BRAND FILM</span>
+        <span class="promo__meta mono">
+          <span data-i18n="film.duration">02:00</span>
+          <span class="promo__dot" aria-hidden="true"></span>
+          <span>LaswI Studio 2025</span>
+        </span>
+      </figcaption>
+
+      <!-- 音量開關：44×44，點擊解除靜音，再點靜音 -->
+      <button class="promo__sound" id="promoSound" type="button" aria-pressed="false"
+              aria-label="開啟聲音" data-i18n-aria="film.soundOn">
+        <span class="material-symbols-rounded" aria-hidden="true">volume_off</span>
+      </button>
+
+      <!-- 中央播放：開啟 MD3 彈層，從頭播放帶 controls 的同源影片 -->
+      <button class="promo__play" id="promoPlay" type="button" aria-haspopup="dialog"
+              aria-label="播放完整宣傳片" data-i18n-aria="film.play">
+        <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+      </button>
+    </figure>
+  </section>
+
+  <!-- ═══════════════════ ③d 自研棧（深色卡片，三層堆疊） ═══════════════════ -->
   <section class="section section--stack" id="stack">
     <div class="stack reveal">
       <header class="stack__head">
         <div class="stack__head-main">
-          <p class="kicker mono stack__kicker" data-i18n="stack.kicker">02 — THE STACK</p>
+          <p class="kicker mono stack__kicker" data-i18n="stack.kicker">03 — THE STACK</p>
           <h2 class="stack__title">
             <span class="hollow hollow--stack">STACK</span>
             <span class="stack__sub" data-i18n="stack.sub">自研棧</span>
@@ -234,7 +288,7 @@
   <section class="section section--partners" id="partners">
     <!-- 標題居中，與產品的左對齊分欄形成節奏差 -->
     <header class="sec-head sec-head--center reveal">
-      <p class="kicker mono" data-i18n="partners.kicker">03 — PARTNERS</p>
+      <p class="kicker mono" data-i18n="partners.kicker">04 — PARTNERS</p>
       <h2 class="sec-title">
         <span class="hollow hollow--tertiary">PARTNERS</span>
         <span class="sec-title__sub" data-i18n="partners.sub">合作夥伴</span>
@@ -258,7 +312,7 @@
     <!-- 兩欄：左為巨型標題，右為郵件列，避免整段又是單欄堆疊 -->
     <div class="footer__grid">
       <div class="footer__lead-col">
-        <p class="kicker mono" data-i18n="footer.kicker">04 — CONTACT</p>
+        <p class="kicker mono" data-i18n="footer.kicker">05 — CONTACT</p>
 
         <h2 class="footer__title">
           <span class="hollow hollow--footer">LET'S TALK</span>
@@ -292,6 +346,24 @@
     </div>
   </div>
 </footer>
+
+<!-- ═══════════════════ ⑥ 宣傳片彈層（MD3 dialog） ═══════════════════ -->
+<dialog class="film" id="filmDialog" aria-labelledby="filmTitle">
+  <div class="film__head">
+    <div>
+      <p class="film__kicker mono" data-i18n="video.kicker">BRAND FILM · 02:00</p>
+      <h2 class="film__title" id="filmTitle" data-i18n="video.title">LaswI Studio 宣傳片</h2>
+    </div>
+    <button class="film__close" id="filmClose" type="button" aria-label="關閉" data-i18n-aria="video.close">
+      <span class="material-symbols-rounded" aria-hidden="true">close</span>
+    </button>
+  </div>
+  <div class="film__stage">
+    <video class="film__video" id="filmVideo" controls playsinline preload="none"
+           poster="media/promo-poster.jpg"
+           data-src720="media/promo-720.mp4" data-src1080="media/promo-1080.mp4"></video>
+  </div>
+</dialog>
 
 <noscript>
   <p class="noscript">此站點需要 JavaScript 以渲染產品磁貼與語言切換。</p>

@@ -2,12 +2,16 @@
 AIGC:
     Label: "1"
     ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: 036678f504ff50ab1d8d56fc51fc50d4_0c45dcb9d69c11f1b2d8525400393706
-    ReservedCode1: LbEyZvOoaefZ5Y2/dvOigI3DJoqXw2qXsDcrSjgR04EyyelNIYkRAYdIP/1ClvtulQ8+uXgMEh8530e0yYWoyET92XRaEClGWy0EmULXJTURP4WrpRRTI/mfAkfhQI8w+vDJAYxmSXzONo09aBJOo/gtUcOBpbcqXGd2yR5AuZd8z9kBjlFe+0pHUxA=
+    ProduceID: 036678f504ff50ab1d8d56fc51fc50d4_c4dc11e7d6d711f1a216525400248c00
+    ReservedCode1: Vs/VcVXN1J21Bjz4/ZrRmWJjaQTaTHO+6YILqQmN+U5MjxfSyNd/KYThqOjYrkVjzTD0SHydTqKaB1/ngiJ9AmluZZlxNmw2ZRIcM0W9Nn6xQl6bDN0kTEti0L8wp1Pv28Zq2ohDyzddAEVM68SjLxDlyWfojvCsUF376C8zq1RBpp4gBYvuq5O64wM=
     ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: 036678f504ff50ab1d8d56fc51fc50d4_0c45dcb9d69c11f1b2d8525400393706
-    ReservedCode2: LbEyZvOoaefZ5Y2/dvOigI3DJoqXw2qXsDcrSjgR04EyyelNIYkRAYdIP/1ClvtulQ8+uXgMEh8530e0yYWoyET92XRaEClGWy0EmULXJTURP4WrpRRTI/mfAkfhQI8w+vDJAYxmSXzONo09aBJOo/gtUcOBpbcqXGd2yR5AuZd8z9kBjlFe+0pHUxA=
+    PropagateID: 036678f504ff50ab1d8d56fc51fc50d4_c4dc11e7d6d711f1a216525400248c00
+    ReservedCode2: Vs/VcVXN1J21Bjz4/ZrRmWJjaQTaTHO+6YILqQmN+U5MjxfSyNd/KYThqOjYrkVjzTD0SHydTqKaB1/ngiJ9AmluZZlxNmw2ZRIcM0W9Nn6xQl6bDN0kTEti0L8wp1Pv28Zq2ohDyzddAEVM68SjLxDlyWfojvCsUF376C8zq1RBpp4gBYvuq5O64wM=
 ---
+
+
+
+
 
 # LaswI Studio 官網
 
@@ -20,7 +24,12 @@ laswi-studio/
 ├── index.html      結構與語意（文字皆掛 data-i18n）
 ├── style.css       MD3 色板 / 圓角 / 陰影 / 動效，含 3 檔響應式
 ├── script.js       三語 i18n、產品與夥伴資料渲染、磁貼翻轉、視差、Observer
-├── gu.png          首屏大圖（需自行放入）
+├── media/          上線用影片與海報（勿直接引用 17MB 原始檔）
+│   ├── promo-1080.mp4  首屏 + 彈層桌面源（4.83MB）
+│   ├── promo-720.mp4   行動源（2.26MB）
+│   └── promo-poster.jpg 首屏海報 / 影片 poster（74KB）
+├── video-shots/    本輪影片接入實測截圖
+├── gu.png          首屏大圖（可選：有了影片後僅作兜底）
 ├── logo.png        站點 Logo（需自行放入）
 └── assets/
     ├── st-studio-logo.JPG
@@ -121,9 +130,108 @@ laswi-studio/
 - 三語：简 / 繁 / EN 切換後 `data-lang` 與 `nav.stack` 文案正確。
 - 桌面回歸 1440px：磁貼 4 欄 196px 列高、夥伴 6 欄 span 4/2/2/4、頁腳雙欄、導航橫排（toggle `display: none`）與改動前一致。
 
+## v5 移動端逐屏修復（375×812 / 390×844）
+
+以 Edge headless（`--blink-settings primaryPointerType=2`）在 375×812 與 390×844 兩檔視口，按「首屏 / 導航抽屜 / 產品磁貼 / 自研棧 / 夥伴 / 陳述色帶 / 頁腳」十個取景逐屏截圖＋DOM 幾何審計（rect、scrollWidth、重疊、`elementFromPoint` 可點性），修復以下 6 項實測偏差：
+
+| # | 實測到的問題 | 量測依據 | 修法（`style.css` 第 07 節） |
+|---|---|---|---|
+| ① | 觸屏抽屜的可點性依賴過渡時序：`.nav__links` 的 `visibility` 參與 300ms 過渡，過渡未走完時為 `hidden`，點擊穿透到首屏（headless 凍結時間軸時 t0/t60/t150/t400 四點 `elementFromPoint` 全部命中 `DIV.hero__content`，5/5 連結不可點） | 同上；`getComputedStyle` 回 `visibility: hidden / opacity: 0 / z-index: auto` | 觸屏（`hover: none`）把 `visibility` 移出過渡清單（只過渡 `opacity/transform`），並給 `.nav__links.is-open` 補 `z-index: 2` 明確浮層層級；改後同四點命中 `A.nav__link`（5/5） |
+| ② | 產品磁貼單列高度不齊（首張 196px、其餘 176px），且背面雖不可翻轉仍參與佈局，iOS 上 `backface-visibility` 失效時會與正面鏡像文字重疊 | `tileH = [196,176,176,…]`；兩面 `grid-area` 同格 | `≤600px`：`.tile__face--back { display: none }`、`.tile__inner { transform: none }`、`.tile, .tile--lg { min-height: 196px }`，7 張卡統一 196px |
+| ③ | 跑馬燈／陳述色帶左右被硬切：`.marquee__band` 為 104% 寬 + `margin-inline: -2%` + `rotate`，375 下實際 390px，超出部分被 `overflow: hidden` 裁掉 7.5px/邊，圓角消失 | `.marquee__band` rect `l=0 r=390`（視口 375） | `≤600px`：寬度 100%、`margin-inline: 0`、傾角收至 `-1.2deg`，兩端圓角完整 |
+| ④ | 首屏邊緣羽化層越界：`.hero__img--edge`（`scale(1.14)`）rect 為 `-23…398`，超出視口 23px 並被容器裁出直邊 | 審計 `overVp: img.hero__img--edge l=-23 r=398` | `≤600px` 不呈現該裝飾層（`display: none`），首屏只保留清晰層 |
+| ⑤ | 首屏主視覺缺圖時整屏留白：`gu.png` 尚未置入，`.hero__img.is-missing { opacity: 0 }` 後首屏只剩底色 | 兩張 `hero__img` 均帶 `is-missing` | `≤600px` 給 `.hero__media` 加同色系漸層網格兜底；補圖後圖片覆蓋，兜底自動不可見 |
+| ⑥ | 自研棧窄屏兩欄與頁腳郵件在極窄／長字串下可被擠壓 | 層號 `r=133`、標籤 `l=145`（EN 為 `r=123 / l=135`）；`mail` 高 59px | `.stack__num { white-space: nowrap }`、`.stack__tag { min-width: 0; max-width: 100% }`；`.mail, .mail__text { max-width: 100%; overflow-wrap: anywhere }` |
+
+**修復後實測**
+- 375 / 390 兩檔：`scrollWidth === clientWidth`，`overlaps = 0`，`overVp = []`；磁貼 7 張均 196px、背面 `h=0`；自研棧四數據 2×2（`36–181 / 195–339`，兩行基線 3538 / 3612）；`footer 12–363`、`mail 20–331` 不越界。
+- 抽屜（`transition: none` 之後）：5 個連結 `min-height 49px`、`elementFromPoint` 全部命中 `a.nav__link`，`aria-expanded="true"`、遮罩與鎖滾動正常。
+- 桌面 1440 回歸：`scrollWidth = 1440`、`overlaps = 0`、磁貼 4 欄 412/196px、雙面仍可翻轉，v5 規則只在 `≤600px` 與 `hover: none` 生效。
+- 前後對照截圖：`mobile-shots/before/`（20 張）與 `mobile-shots/after/`（20 張），檔名 `{視口寬}-{序號}-{區塊}.png`。
+
+## v7 宣傳片改為獨立區塊（已撤回首屏影片背景）
+
+需求校正：宣傳片不再當首屏背景，改為頁面內一個**專門的 16:9 影片區塊**，進視口自動播放。
+
+### 撤回首屏影片（v6 內容全部移除）
+
+| 移除項 | 說明 |
+| --- | --- |
+| DOM | `hero` 內 `.hero__poster`、`.hero__video`（`#heroVideo`）、`#heroSound`、`#watchFilm` 及底部影片列全部刪除 |
+| CSS | 第 12 節 hero 影片層 / 海報層 / 音控 / `.hero.is-video-ready` 加深遮罩全部刪除，`prefers-reduced-motion` 的 `video{display:none}` 規則改掛到 `.promo` |
+| JS | 舊 08b「首屏影片」模組整段替換為 `#film` 區塊邏輯；`hero.*` 相關 i18n 鍵移除 |
+| 保留 | `≤600px` 的 `.hero__media` 漸變網格兜底（`gu.png` 缺失時仍不開天窗）、字鎖、ticker、底部資訊列 |
+
+實測 `document.querySelectorAll('.hero video, .hero__poster, .hero__sound, #watchFilm').length === 0`，首屏回到純視覺狀態。
+
+### 新增 `#film` 區塊
+
+位置：`marquee` 字帶之後、自研棧之前，DOM 順序實測為 `home → products → marquee → film → stack → partners → statement → contact`。
+
+- 導航新增「宣傳片 / Film」入口（`href="#film"`），滾動監聽（Scroll Spy）同步高亮。
+- 標題沿用既有 `sec-head` 體系：`kicker` 數字編號 + 鏤空大標 `FILM` + 中文副標「宣傳片」+ 一句 lead。
+- 內側為 `#promo`（`.promo`）16:9 大圓角卡片（MD3 超大圓角 `28px`，無毛玻璃），窄屏維持 16:9 不裁切。
+- 卡片內疊一層輕薄漸變（左下 + 底部），左下放「片名 / LaswI Studio 2025 / 02:00」，右下放 44×44 音量鍵，中央為 64×64 播放鍵。
+
+### 編號順延（三語同步）
+
+| 區塊 | 舊 | 新 |
+| --- | --- | --- |
+| products | 01 | 01 — SEVEN THINGS WE BUILD |
+| **film** | — | **02 — BRAND FILM** |
+| stack | 02 | 03 — THE STACK |
+| partners | 03 | 04 — PARTNERS |
+| contact | 04 | 05 — CONTACT |
+
+彈層 kicker 同步為 `BRAND FILM · 02:00`。
+
+### 影片物料（沿用，未重新編碼）
+
+| 產物 | 規格 | 大小 | 用途 |
+| --- | --- | --- | --- |
+| `media/promo-1080.mp4` | H.264 High@4.0，CRF 27 / maxrate 340k，AAC 64k 立體聲，`+faststart` | 4.83MB | ≥861px 區塊與彈層 |
+| `media/promo-720.mp4` | H.264 Main@3.1，1280×720，CRF 29 / maxrate 125k，AAC 40k 單聲道，`+faststart` | 2.26MB | ≤860px 區塊 |
+| `media/promo-poster.jpg` | 1600px 寬，取自 62s 中段畫面，q=4 | 74KB | `poster` 屬性 / reduced-motion 唯一畫面 |
+
+### 交互與降級
+
+| 行為 | 實作 |
+| --- | --- |
+| 自動播放 | `autoplay muted loop playsinline preload="metadata" poster="media/promo-poster.jpg"`；源由 `pickSrc()` 依 860px 斷點寫入（`data-src720 / data-src1080`） |
+| 音量開關 | `#promoSound` 44×44，`volume_off ↔ volume_up`，`aria-pressed` + 三語 `aria-label`（`data-i18n-aria`：開啟聲音 / 开启声音 / Unmute）；首點解除靜音並續播，再點靜音 |
+| 完整宣傳片 | `#promoPlay` 中央播放鍵開啟原生 `<dialog id="filmDialog">`，內嵌 `controls` 同源影片並 `currentTime = 0` 從頭播放，背景影片暫停 |
+| 彈層關閉 | Esc 走 `cancel` → `closeFilm()` 統一暫停；點遮罩按 `getBoundingClientRect` 判定落在框外；`close` 再暫停一次、解鎖滾動、背景影片續播 |
+| 進出視口 | `IntersectionObserver(threshold: .25)` 進視口才寫 `src` 並播放，離開視口 `pause()` |
+| 分頁隱藏 | `visibilitychange` 隱藏時 `pause()` |
+| reduced-motion / 省流 | 不寫 `src`、不自動播放，只顯示 poster；用戶主動點音控或播放鍵時 `loadPromo(true)` 強制載入 |
+| 三語 | `film.kicker / sub / lead / name / meta / duration / play / sound` 全量補齊 zh-TW / zh-CN / en |
+
+### v7 實測（Playwright + Edge，本地 HTTP 服務，375 / 390 / 1440）
+
+| 檢查項 | 375×812 | 390×844 | 1440×900 |
+| --- | --- | --- | --- |
+| 首屏影片殘留節點 | 0 | 0 | 0 |
+| 區塊源 | `promo-720.mp4` | `promo-720.mp4` | `promo-1080.mp4` |
+| 自動播放 | `paused=false / muted=true / loop / playsInline`，`readyState=4`，1.8s 後 `currentTime≈1.08` | ≈1.27 | ≈1.31 |
+| 卡片尺寸 | 339×191（16:9） | 354×199 | 1216×684 |
+| 音量鍵位置 | 右 299 / 下 412，寬卡內（`soundInCard=true`） | 314 / 397 | 1258 / 911 |
+| 解除靜音 | `muted=false`、圖示 `volume_up`、`aria-label=靜音` | 同上 | 同上 |
+| 彈層 | 開啟即播放 720p、背景暫停、`body.is-film-open` 鎖滾、框 339×268 完整不出屏 | 354×276 | 1080p、1040×674 |
+| Esc 關閉 | `open=false`、彈層影片 `paused=true`、背景續播、解鎖滾動 | 同上 | 同上 |
+| 離開區塊 | `paused=true` | 同上 | 同上 |
+| 橫向溢出 | 首屏 / 區塊 / 全頁 `scrollWidth-clientWidth = 0` | 0 | 0 |
+| 三語 | 導航 `首頁\|產品\|宣傳片\|自研棧\|合作夥伴\|聯繫`、`THE FILM / 宣傳片`、`播放完整宣傳片`、`開啟聲音` | 簡體同步、`02:00` | `Home\|Products\|Film\|Stack\|Partners\|Contact`、`Unmute`、`Play the full film` |
+| reduced-motion | 不寫 `src`、`paused=true`、poster 生效；點音控後 `promo-1080.mp4` 載入並 `muted=false` 播放 | — | 同左 |
+
+截圖目錄：`video-shots-v7/`（`{375,390,1440}-hero.png`、`{視口}-film.png`、`{視口}-film-unmuted.png`、`{視口}-dialog.png`、`1440-film-reduced.png`）。
+
+> 站上仍有 `logo.png`、`gu.png` 兩張既有素材未置入（既有 404，不影響影片與版面），補上即可覆蓋對應兜底。
+
 ## 建議圖片規格
 
 - `gu.png`：橫向 2400×1350 以上，主體居中（四周會被羽化模糊，主體勿貼邊）。
 - `logo.png`：正方形 512×512，透明背景，深淺色底皆可辨識（用於導航與 Hero）。
 - 夥伴 Logo：長邊 400px 以上，透明背景 PNG 最佳。
+*（内容由AI生成，仅供参考）*
+*（内容由AI生成，仅供参考）*
 *（内容由AI生成，仅供参考）*

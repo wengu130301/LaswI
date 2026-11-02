@@ -1864,3 +1864,275 @@ img, svg, video, canvas { max-width: 100%; }
   .hero__scroll:hover .material-symbols-rounded { transform: none; }
   .hero__scroll:active { background: rgba(255, 255, 255, .34); }
 }
+
+/* ══ 06b 宣傳片卡片窄屏：圓角收一檔、播放鍵縮小，資訊不被音控壓到 ══ */
+@media (max-width: 600px) {
+  .promo { border-radius: var(--r-xl); }
+  .promo__play { width: 52px; height: 52px; }
+  .promo__play .material-symbols-rounded { font-size: 28px; }
+  .promo__meta { gap: 8px; }
+}
+
+/* ══ 07 移動端修正（v5） ═════════════════════════════════════
+   來源：375×812 / 390×844 逐屏審計（導航抽屜、首屏字鎖、產品磁貼、
+   自研棧、夥伴、陳述色帶、頁腳）後針對實測偏差做的六項修正。       */
+@media (max-width: 600px) {
+  /* ① 產品磁貼單列：觸屏無法翻轉，背面只會造成鏡像文字與正面重疊，
+     且背面內容把卡片撐高，導致各卡高度不齊（196 vs 176）。單列時只保留正面。 */
+  .tile__face--back { display: none; }
+  .tile__inner { transform: none !important; }
+  .tile,
+  .tile--lg { grid-row: auto; min-height: 196px; }
+
+  /* ② 跑馬燈色帶：104% 出血 + 旋轉在 375 下寬 390px，左右各被視窗硬裁 7.5px
+     且圓角丟失；窄屏改為 100% 並減小傾角，保證兩端完整可視。 */
+  .marquee__band { width: 100%; margin-inline: 0; transform: rotate(-1.2deg); }
+
+  /* ③ 首屏邊緣模糊層（scale 1.14）在 375 下 rect 為 -23…398，越出視口 23px
+     並被容器硬裁出直邊；窄屏不呈現該裝飾層。 */
+  .hero__img--edge { display: none; }
+
+  /* ④ 首屏主視覺 gu.png 缺失時主圖為透明，首屏留白；用同色系漸層網格兜底，
+     素材補齊後圖片覆蓋即可自動隱藏。 */
+  .hero__media {
+    background:
+      radial-gradient(closest-side at 22% 26%, rgba(255, 146, 84, .30), transparent 72%),
+      radial-gradient(closest-side at 82% 18%, rgba(72, 116, 244, .34), transparent 74%),
+      radial-gradient(closest-side at 74% 84%, rgba(46, 158, 132, .26), transparent 72%),
+      linear-gradient(168deg, #10162c 0%, #1b2340 52%, #221a33 100%);
+  }
+
+  /* ⑤ 頁腳郵件：長郵箱需可在任意位置斷行，避免撐破卡片與右緣溢出。 */
+  .mail,
+  .mail__text { max-width: 100%; overflow-wrap: anywhere; }
+
+  /* ⑥ 自研棧窄屏兩欄：層號不換行、標籤可收縮換行，避免層號與標籤互相擠壓重疊。 */
+  .stack__num { white-space: nowrap; }
+  .stack__tag { min-width: 0; max-width: 100%; justify-self: start; }
+}
+
+/* 觸屏裝置：抽屜不參與 visibility 過渡（過渡期間 visibility 仍為 hidden，
+   展開瞬間點不到），並明確浮層層級，避免被首屏內容壓住。 */
+@media (hover: none) {
+  .nav__links { transition: opacity 280ms var(--ease), transform 280ms var(--ease); }
+  .nav__links.is-open { z-index: 2; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   12 宣傳片區塊（獨立影片卡片）/ 音量開關 / 宣傳片彈層
+   影片是這一區的主角：16:9 大圓角卡面鋪滿畫面，控件浮在卡內。
+   ══════════════════════════════════════════════════════════════ */
+
+.section--film { padding-top: clamp(40px, 7vh, 88px); }
+
+/* 16:9 卡片：MD3 超大圓角、純色底、無毛玻璃 */
+.promo {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  isolation: isolate;
+  background: #0B1020;
+  box-shadow: 0 40px 92px -48px rgba(10, 14, 32, .55);
+}
+
+.promo__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #0B1020;
+}
+
+/* 輕薄漸層：左下資訊與中央按鈕墊底，中間保持通透 */
+.promo__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 58% 58% at 50% 50%, rgba(8, 10, 22, .16) 0%, rgba(8, 10, 22, 0) 74%),
+    linear-gradient(180deg, rgba(8, 10, 22, .30) 0%, rgba(8, 10, 22, 0) 24%, rgba(8, 10, 22, .10) 56%, rgba(8, 10, 22, .38) 82%, rgba(8, 10, 22, .76) 100%);
+}
+
+/* 左下：片名 / 時長 / 年份 */
+.promo__info {
+  position: absolute;
+  left: clamp(16px, 3vw, 34px);
+  bottom: clamp(14px, 2.6vw, 30px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #fff;
+  pointer-events: none;
+  text-shadow: 0 1px 12px rgba(4, 6, 16, .55);
+}
+.promo__name {
+  font-size: clamp(10px, 1.1vw, 12px);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.promo__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(10px, 1.1vw, 12px);
+  letter-spacing: .12em;
+  color: rgba(255, 255, 255, .84);
+}
+.promo__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .7;
+}
+
+/* 右下：音量開關 44×44，與卡片圓角留出安全距離 */
+.promo__sound {
+  position: absolute;
+  right: clamp(14px, 2.4vw, 26px);
+  bottom: clamp(14px, 2.4vw, 26px);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .50);
+  background: rgba(18, 18, 20, .34);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .24);
+  cursor: pointer;
+  transition: background-color 250ms var(--ease), color 250ms var(--ease), border-color 250ms var(--ease);
+}
+.promo__sound:hover { background: rgba(255, 255, 255, .30); }
+.promo__sound:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.promo__sound.is-on { background: #fff; color: var(--md-on-surface); border-color: #fff; }
+.promo__sound .material-symbols-rounded { font-size: 22px; }
+
+/* 中央：播放按鈕 64×64，浮在影片正中 */
+.promo__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 3;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .58);
+  background: rgba(18, 18, 20, .34);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .28);
+  cursor: pointer;
+  transition: background-color 260ms var(--ease), color 260ms var(--ease), transform 260ms var(--ease);
+}
+.promo__play:hover { background: #fff; color: var(--md-on-surface); transform: scale(1.04); }
+.promo__play:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.promo__play .material-symbols-rounded { font-size: 32px; }
+
+/* 宣傳片彈層（原生 dialog，Esc 由瀏覽器處理，腳本補遮罩關閉與暫停） */
+.film {
+  padding: 0;
+  border: 0;
+  width: min(1040px, calc(100vw - 2 * var(--gutter)));
+  max-width: calc(100vw - 2 * var(--gutter));
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: var(--r-2xl);
+  background: var(--md-inverse-surface);
+  color: #fff;
+  box-shadow: 0 42px 96px -34px rgba(6, 8, 20, .8);
+}
+.film::backdrop { background: rgba(8, 10, 22, .74); }
+.film[open] { display: block; animation: filmIn 260ms var(--ease) both; }
+
+@keyframes filmIn {
+  from { opacity: 0; translate: 0 16px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+.film__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 16px;
+}
+.film__kicker {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+.film__title {
+  margin: 0;
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: .01em;
+}
+.film__close {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .10);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 250ms var(--ease), color 250ms var(--ease);
+}
+.film__close:hover { background: #fff; color: var(--md-on-surface); }
+.film__close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.film__stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+}
+.film__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* 彈層開啟時鎖住頁面滾動 */
+body.is-film-open { overflow: hidden; }
+
+/* ── 窄屏：入口換行排列，音控上移讓開首屏資訊列 ──────────────── */
+@media (max-width: 600px) {
+  .hero__bar { flex-wrap: wrap; row-gap: 8px; }
+  .hero__bar-main { flex: 1 1 100%; }
+  .hero__meta { margin-left: auto; }
+  .film { max-height: 86vh; }
+  .film__head { padding: 18px 18px 14px; }
+}
+
+/* ── reduced-motion：不自動播放，只顯示海報 ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* 影片不自動載入，卡面只留 poster（由 script 判斷不賦 src） */
+  .promo__play { transition: none; }
+  .film[open] { animation: none; }
+}
