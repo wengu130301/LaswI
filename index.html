@@ -1,262 +1,302 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hant" data-lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LaswI 独立软件工作室：专注安卓定制 ROM「GUUI」与搭载自研 Nex Kernel 内核的「VayloOS」，并提供应用与文创内容。" />
-  <title>LaswI · 独立软件工作室</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LaswI Studio — 系統 · 產品 · 音樂</title>
+<meta name="description" content="LaswI Studio：自研內核、純淨系統、聊天與音樂，七個產品與四位合作夥伴。">
+<meta name="theme-color" content="#FAF8FF">
+<link rel="icon" href="logo.png">
+
+<!-- 字體：幾何無襯線（標題）＋ Noto Sans TC（正文）＋ JetBrains Mono（標籤）＋ Noto Serif（裝飾） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+TC:wght@500&display=swap" rel="stylesheet">
+<!-- Material Symbols（唯一允許的外部圖標庫） -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=block" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">
-        <img class="brand-logo" src="assets/laswi-studio-logo.png" alt="LaswI 标志" />
-        LaswI
-      </a>
-      <div class="nav-links">
-        <a class="active" href="index.html">首页</a>
-        <a href="os.html">系统产品</a>
-        <a href="https://xiaosongai.top" target="_blank" rel="noopener">AI工具</a>
-        <a href="about.html">关于我们</a>
-        <a class="nav-cta btn-mail" href="mailto:3199704668@qq.com">合作联系</a>
-      </div>
-    </div>
+<a class="skip-link" href="#products">跳至主要內容</a>
+
+<!-- ═══════════════════ ① 導航欄（固定，滾動後收斂為懸浮膠囊） ═══════════════════ -->
+<header class="nav" id="nav">
+  <a class="brand" href="#home" aria-label="LaswI Studio">
+    <span class="brand__mark" data-logo data-fallback="L">
+      <!-- Logo：logo.png（站點根目錄）。缺失時顯示同尺寸色塊 + 首字母 -->
+      <img src="logo.png" alt="LaswI Studio 標誌" data-fallback="L">
+    </span>
+    <span class="brand__name">LaswI</span>
+  </a>
+
+  <nav class="nav__links" id="navLinks" aria-label="主導航">
+    <a class="nav__link is-active" href="#home" data-i18n="nav.home">首頁</a>
+    <a class="nav__link" href="#products" data-i18n="nav.products">產品</a>
+    <a class="nav__link" href="#stack" data-i18n="nav.stack">自研棧</a>
+    <a class="nav__link" href="#partners" data-i18n="nav.partners">合作夥伴</a>
+    <a class="nav__link" href="#contact" data-i18n="nav.contact">聯繫</a>
   </nav>
 
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <h1>自研操作系统<br />与数字产品</h1>
-        <p class="lead">
-          LaswI 是一支以自研为起点的独立开发团队，专注安卓定制 ROM「GUUI」与搭载自研 Nex Kernel 内核的「VayloOS」；
-          同时围绕日常使用场景，提供应用与文创内容。
+  <!-- 語言切換：Material Segmented Button（膠囊 + 滑動指示塊） -->
+  <div class="seg" id="langSeg" role="group" aria-label="語言 / Language">
+    <span class="seg__thumb" aria-hidden="true"></span>
+    <button class="seg__btn" type="button" data-lang="zh-CN" aria-pressed="false">简</button>
+    <button class="seg__btn is-active" type="button" data-lang="zh-TW" aria-pressed="true">繁</button>
+    <button class="seg__btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="選單">
+    <span class="material-symbols-rounded">menu</span>
+  </button>
+</header>
+
+<!-- 手機抽屜遮罩：點擊空白處收起選單（僅在窄屏啟用） -->
+<div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
+
+<main>
+
+  <!-- ═══════════════════ ② Hero 首屏 ═══════════════════
+       構圖只留三個視覺區塊：導航 / 中央字鎖 / 底部資訊列。
+       Logo 只在導航出現一次，避免左上角重複堆疊。 -->
+  <section class="hero" id="home">
+    <div class="hero__media">
+      <!-- 首屏大圖：gu.png（站點根目錄）。缺失時容器底層漸層作為同尺寸佔位 -->
+      <img class="hero__img" src="gu.png" alt="LaswI Studio 主視覺" fetchpriority="high">
+      <!-- 模糊層：只在四周可見，中心以徑向漸變 mask 鏤空，保證主體清晰 -->
+      <img class="hero__img hero__img--edge" src="gu.png" alt="" aria-hidden="true">
+      <div class="hero__tint" aria-hidden="true"></div>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__lockup">
+        <p class="hero__eyebrow mono" data-i18n="hero.eyebrow">獨立工作室 · EST. 2025</p>
+
+        <!-- 鏤空字：背景從字中透出（background-clip: text） -->
+        <h1 class="hero__title" data-parallax="18"><span class="hollow">LaswI</span></h1>
+
+        <!-- Studio 以細線夾住，與 LaswI 併成一個字鎖，不再散落在右下角 -->
+        <p class="hero__studio">
+          <span class="hero__rule" aria-hidden="true"></span>
+          <span class="hollow" data-parallax="-10">Studio</span>
+          <span class="hero__rule" aria-hidden="true"></span>
         </p>
-        <div class="hero-actions">
-          <a class="btn btn-blue" href="os.html">了解自研系统</a>
-          <a class="btn btn-outline" href="mailto:3199704668@qq.com">联系我们</a>
-        </div>
-      </div>
-      <div class="hero-art">
-        <img class="hero-logo" src="assets/laswi-studio-logo.png" alt="LaswI Studio 标志" />
+
+        <p class="hero__tagline" data-i18n="hero.tagline">以系統、產品與音樂，拆解日常的無趣。</p>
       </div>
     </div>
-  </header>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2>业务方向</h2>
-      </div>
-
-      <div class="grid-3">
-        <a class="card" href="os.html">
-          <span class="card-icon">
-            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bgindex1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#f4fbff""/>
-                  <stop offset="0.45" fill stop-color="#a6dcfb"/>
-                  <stop=" offset="0.78" stop-color="#url45a3f3"/>
-                  <stop(# offset="1" stop-color="#0e68dc"/>
-gl                </linearGradient>
-                <linearGradient id="glindex1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
-                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-                </linearGradient>
-                <linearGradient id="syindex1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff"/>
-                  <stop offset="1" stop-color="#d3ecff"/>
-                </linearGradient>
-                <linearGradient id="inindex1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#69bcff"/>
-                  <stop offset="1" stop-color="#0a3f9e"/>
-                </linearGradient>
-                <filter id="shindex1" x="-40%" y="-40%" width="180%" height="180%">
-                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
-                </filter>
-                <clipPath id="cwindex1"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
-              </defs>
-              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
-              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex1)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
-              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7index1)"/>
-              <g filter="url(#shindex1)"><rect x="9.4" y="10.6" width="29.2" height="19.6" rx="4" fill="url(#syindex1)"/>
-      <rect x="12.8" y="13.6" width="22.4" height="12.6" rx="2.2" fill="url(#inindex1)"/>
-      <rect x="16.2" y="16.2" width="15.6" height="1.7" rx="0.85" fill="#ffffff" opacity="0.6"/>
-      <rect x="7.2" y="31.8" width="33.6" height="3.6" rx="1.8" fill="url(#syindex1)"/>
-      <rect x="17.2" y="35.6" width="13.6" height="3.2" rx="1.6" fill="url(#syindex1)"/></g>
-            </svg>
-          </span>
-          <h3>操作系统</h3>
-          <p class="desc">
-            团队核心方向。GUUI 为安卓深度定制 ROM，VayloOS 搭载自研 Nex Kernel 内核，
-            界面与底层均由团队自主实现，详细说明收录于系统产品页。
-          </p>
-          <span class="card-link">查看系统产品页 →</span>
-        </a>
-
-        <a class="card" href="apps.html">
-          <span class="card-icon">
-            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bgindex2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#f4fbff"/>
-                  <stop offset="0.45" stop-color="#a6dcfb"/>
-                  <stop offset="0.78" stop-color="#45a3f3"/>
-                  <stop offset="1" stop-color="#0e68dc"/>
-                </linearGradient>
-                <linearGradient id="glindex2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
-                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-                </linearGradient>
-                <linearGradient id="syindex2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff"/>
-                  <stop offset="1" stop-color="#d3ecff"/>
-                </linearGradient>
-                <linearGradient id="inindex2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#69bcff"/>
-                  <stop offset="1" stop-color="#0a3f9e"/>
-                </linearGradient>
-                <filter id="shindex2" x="-40%" y="-40%" width="180%" height="180%">
-                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
-                </filter>
-                <clipPath id="cwindex2"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
-              </defs>
-              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
-              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex2)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
-              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7" fill="url(#glindex2)"/>
-              <g filter="url(#shindex2)"><rect x="12.2" y="13" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
-      <rect x="25.2" y="13" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
-      <rect x="12.2" y="26" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/>
-      <rect x="25.2" y="26" width="10.6" height="10.6" rx="2.8" fill="url(#syindex2)"/></g>
-            </svg>
-          </span>
-          <h3>应用基础设施</h3>
-          <p class="desc">
-            面向日常使用与开发场景的工具与服务，以简洁、稳定、实用为原则，
-            按需提供，并随反馈持续维护。
-          </p>
-          <span class="card-link">查看应用合集 →</span>
-        </a>
-
-        <a class="card" href="works.html">
-          <span class="card-icon">
-            <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bgindex3" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#f4fbff"/>
-                  <stop offset="0.45" stop-color="#a6dcfb"/>
-                  <stop offset="0.78" stop-color="#45a3f3"/>
-                  <stop offset="1" stop-color="#0e68dc"/>
-                </linearGradient>
-                <linearGradient id="glindex3" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
-                  <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-                </linearGradient>
-                <linearGradient id="syindex3" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff"/>
-                  <stop offset="1" stop-color="#d3ecff"/>
-                </linearGradient>
-                <linearGradient id="inindex3" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#69bcff"/>
-                  <stop offset="1" stop-color="#0a3f9e"/>
-                </linearGradient>
-                <filter id="shindex3" x="-40%" y="-40%" width="180%" height="180%">
-                  <feDropShadow dx="0" dy="1.8" stdDeviation="0.7" flood-color="#04318a" flood-opacity="0.55"/>
-                </filter>
-                <clipPath id="cwindex3"><rect x="8.6" y="10.6" width="30.8" height="26.8" rx="5"/></clipPath>
-              </defs>
-              <ellipse cx="24" cy="45.3" rx="16" ry="2.7" fill="rgba(4,40,128,0.30)"/>
-              <rect x="2.4" y="2.4" width="43.2" height="43.2" rx="13" fill="url(#bgindex3)" stroke="rgba(9,52,158,0.45)" stroke-width="1.1"/>
-              <rect x="5.8" y="5.2" width="36.4" height="15.4" rx="7.7" fill="url(#glindex3)"/>
-              <g filter="url(#shindex3)"><path d="M24 7.8c-5.8 0-9.4 4.2-9.4 9 0 3.3 1.7 5.8 3.5 7.5 1.3 1.2 2 2.1 2.2 3h7.4c.2-.9.9-1.8 2.2-3 1.8-1.7 3.5-4.2 3.5-7.5 0-4.8-3.6-9-9.4-9z" fill="url(#syindex3)"/>
-      <rect x="19.2" y="33" width="9.6" height="3.6" rx="1.8" fill="url(#syindex3)"/>
-      <rect x="16.6" y="37.6" width="14.8" height="3.2" rx="1.6" fill="url(#syindex3)"/>
-      <path d="M21.4 29.4h5.2l-1 3h-3.2z" fill="url(#inindex3)"/></g>
-            </svg>
-          </span>
-          <h3>文创作品</h3>
-          <p class="desc">
-            视觉设计与文字内容作品集，涵盖壁纸、图标与短文，
-            是代码之外的另一种表达方式。
-          </p>
-          <span class="card-link">浏览文创作品 →</span>
-        </a>
-      </div>
+    <div class="hero__bar">
+      <a class="hero__scroll" href="#products">
+        <span data-i18n="hero.scroll">向下探索</span>
+        <span class="material-symbols-rounded">south</span>
+      </a>
+      <p class="hero__meta mono" data-i18n="hero.meta">7 個產品 · 4 位夥伴</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top: 0;">
-    <div class="container">
-      <div class="section-head">
-        <h2>合作伙伴</h2>
+  <!-- 圖形鏤空：色帶上以 SVG mask 打孔，讓頁面底色從圓形中透出 -->
+  <div class="cutout" aria-hidden="true">
+    <svg viewBox="0 0 1440 180" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <defs>
+        <linearGradient id="cutGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2F5BD8"/>
+          <stop offset=".48" stop-color="#1F7A5C"/>
+          <stop offset="1" stop-color="#E2681F"/>
+        </linearGradient>
+        <mask id="cutMask">
+          <rect width="1440" height="180" fill="#ffffff"/>
+          <circle cx="170" cy="90" r="98" fill="#000000"/>
+          <circle cx="520" cy="90" r="56" fill="#000000"/>
+          <circle cx="858" cy="90" r="122" fill="#000000"/>
+          <circle cx="1196" cy="90" r="44" fill="#000000"/>
+          <circle cx="1382" cy="90" r="72" fill="#000000"/>
+        </mask>
+      </defs>
+      <rect width="1440" height="180" rx="48" fill="url(#cutGrad)" mask="url(#cutMask)"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════ ③ 產品（Windows Live Tile 磁貼） ═══════════════════ -->
+  <section class="section section--products" id="products">
+    <!-- 標題左右分欄：巨型鏤空字在左，說明與索引在右，避免每段都是同一種豎列節奏 -->
+    <header class="sec-head sec-head--split reveal">
+      <div class="sec-head__main">
+        <p class="kicker mono" data-i18n="products.kicker">01 — SEVEN THINGS WE BUILD</p>
+        <h2 class="sec-title">
+          <span class="hollow hollow--primary">PRODUCTS</span>
+          <span class="sec-title__sub" data-i18n="products.sub">產品</span>
+        </h2>
       </div>
+      <div class="sec-head__aside">
+        <p class="sec-lead" data-i18n="products.lead">從內核到音樂，七個產品，一條自研路線。滑過磁貼可暫停翻轉，點擊直接前往。</p>
+        <p class="sec-count mono">07 — TILES</p>
+      </div>
+    </header>
 
-      <article class="partner-simple">
-        <div class="partner-logo">
-          <img src="assets/st-studio-logo.JPG" alt="热土工作室标志" />
-        </div>
-        <div>
-          <h3>热土工作室</h3>
-          <p class="quote">
-            热土工作室，一支由初中生组建的IT科技团队。“热土”象征脚下坚实的根基与心中不灭的创造热忱。
-            虽年纪尚轻，却怀揣以科技解决实际问题、回馈社会的理想，在这里学习探索、动手创造，
-            以代码构筑未来，期盼创新的种子于这片热土生根发芽。
-          </p>
-        </div>
-        <a class="btn-outline" href="https://rtstu.com" target="_blank" rel="noopener">访问官网 rtstu.com</a>
-      </article>
+    <!-- 磁貼由 script.js 依語系渲染（class .tiles） -->
+    <div class="tiles reveal" id="tiles"></div>
+  </section>
 
-      <article class="partner-simple">
-        <div class="partner-logo">
-          <img src="assets/xmzf-logo.JPG" alt="小明之父工作室标志" />
+  <!-- ═══════════════════ ③b 滾動字帶（段落之間的節奏過渡） ═══════════════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__band">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span class="marquee__word">GUUI</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">VayloOS</span><span class="marquee__dot"></span>
+          <span class="marquee__word">Nex Kernel</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">HowGo</span><span class="marquee__dot"></span>
+          <span class="marquee__word">汩談 GuTake</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">LaswI Game</span><span class="marquee__dot"></span>
+          <span class="marquee__word">HayMusic</span><span class="marquee__dot"></span>
         </div>
-        <div>
-          <h3>小明之父工作室</h3>
-          <p class="quote">
-            XMZF sTudio 是一个追求简洁与创造力的工作室。我们相信 "Code × Art = ∞"，在极简与美学之间寻找平衡。
-          </p>
+        <!-- 第二組內容完全相同：無縫接續用 -->
+        <div class="marquee__group">
+          <span class="marquee__word">GUUI</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">VayloOS</span><span class="marquee__dot"></span>
+          <span class="marquee__word">Nex Kernel</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">HowGo</span><span class="marquee__dot"></span>
+          <span class="marquee__word">汩談 GuTake</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--hollow">LaswI Game</span><span class="marquee__dot"></span>
+          <span class="marquee__word">HayMusic</span><span class="marquee__dot"></span>
         </div>
-        <a class="btn-outline" href="https://xmzf.space" target="_blank" rel="noopener">访问官网 xmzf.space</a>
-      </article>
+      </div>
+    </div>
+  </div>
 
-      <article class="partner-simple">
-        <div class="partner-logo">
-          <img src="assets/xqn.png" alt="新启年工作室标志" />
+  <!-- ═══════════════════ ③c 自研棧（深色卡片，三層堆疊） ═══════════════════ -->
+  <section class="section section--stack" id="stack">
+    <div class="stack reveal">
+      <header class="stack__head">
+        <div class="stack__head-main">
+          <p class="kicker mono stack__kicker" data-i18n="stack.kicker">02 — THE STACK</p>
+          <h2 class="stack__title">
+            <span class="hollow hollow--stack">STACK</span>
+            <span class="stack__sub" data-i18n="stack.sub">自研棧</span>
+          </h2>
         </div>
-        <div>
-          <h3>新启年工作室</h3>
-          <p class="quote">
-            专注系统软件开发、网站定制开发，致力于为客户提供稳定、高效、可落地的数字化解决方案，务实交付每一个项目。
-          </p>
-        </div>
-        <a class="btn-outline" href="https://newera2625.top" target="_blank" rel="noopener">访问官网 newera2625.top</a>
-      </article>
+        <p class="stack__lead" data-i18n="stack.lead">三層，一條線：從內核到系統，再到產品。每一層都由我們自己寫。</p>
+      </header>
 
-      <article class="partner-simple">
-        <div class="partner-logo">
-          <img src="assets/wbdog-logo.png" alt="WBDog 标志" />
-        </div>
-        <div>
-          <h3>WBDog</h3>
-          <p class="quote">
-            白熊犬智能终端 · 专注网页制作。
-          </p>
-        </div>
-        <a class="btn-outline" href="https://wbdog.com.cn" target="_blank" rel="noopener">访问官网 wbdog.com.cn</a>
-      </article>
+      <!-- 三行分層：Kernel → System → Products -->
+      <ol class="stack__layers">
+        <li class="stack__row reveal" style="--d:1">
+          <span class="stack__num" aria-hidden="true">01</span>
+          <span class="stack__mid">
+            <span class="stack__name">Nex Kernel</span>
+            <span class="stack__desc" data-i18n="stack.k1.desc">排程、記憶體、驅動，全部手寫，不借用任何現成內核。</span>
+          </span>
+          <span class="stack__tag mono" data-i18n="stack.k1.tag">KERNEL · FROM ZERO</span>
+        </li>
+        <li class="stack__row reveal" style="--d:2">
+          <span class="stack__num" aria-hidden="true">02</span>
+          <span class="stack__mid">
+            <span class="stack__name">VayloOS</span>
+            <span class="stack__desc" data-i18n="stack.k2.desc">跑在自研內核上的整機體驗，從開機第一幀到桌面。</span>
+          </span>
+          <span class="stack__tag mono" data-i18n="stack.k2.tag">SYSTEM · FULL STACK</span>
+        </li>
+        <li class="stack__row reveal" style="--d:3">
+          <span class="stack__num" aria-hidden="true">03</span>
+          <span class="stack__mid">
+            <span class="stack__name">GUUI · HowGo · HayMusic</span>
+            <span class="stack__desc" data-i18n="stack.k3.desc">七個產品共用同一套底座，改一處，全線受益。</span>
+          </span>
+          <span class="stack__tag mono" data-i18n="stack.k3.tag">PRODUCTS · 07 SHIPPED</span>
+        </li>
+      </ol>
+
+      <!-- 底部數據列 -->
+      <ul class="stack__stats">
+        <li class="stack__stat">
+          <span class="stack__stat-num">2025</span>
+          <span class="stack__stat-label mono" data-i18n="stack.stat.est">起於</span>
+        </li>
+        <li class="stack__stat">
+          <span class="stack__stat-num">07</span>
+          <span class="stack__stat-label mono" data-i18n="stack.stat.products">產品</span>
+        </li>
+        <li class="stack__stat">
+          <span class="stack__stat-num">04</span>
+          <span class="stack__stat-label mono" data-i18n="stack.stat.partners">夥伴</span>
+        </li>
+        <li class="stack__stat">
+          <span class="stack__stat-num">03</span>
+          <span class="stack__stat-label mono" data-i18n="stack.stat.layers">自研層</span>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span>© 2026 LaswI · 保留所有权利</span>
-      <span>
-        <a href="os.html">系统产品</a> · <a href="https://xiaosongai.top" target="_blank" rel="noopener">AI工具</a> · <a href="about.html">关于我们</a> · <a href="https://rtstu.com" target="_blank" rel="noopener">热土工作室</a> · <a href="mailto:3199704668@qq.com">合作联系</a>
-      </span>
-    </div>
-  </footer>
+  <!-- ═══════════════════ ④ 合作夥伴（懸浮色板 + 非對稱卡片） ═══════════════════ -->
+  <section class="section section--partners" id="partners">
+    <!-- 標題居中，與產品的左對齊分欄形成節奏差 -->
+    <header class="sec-head sec-head--center reveal">
+      <p class="kicker mono" data-i18n="partners.kicker">03 — PARTNERS</p>
+      <h2 class="sec-title">
+        <span class="hollow hollow--tertiary">PARTNERS</span>
+        <span class="sec-title__sub" data-i18n="partners.sub">合作夥伴</span>
+      </h2>
+      <p class="sec-lead" data-i18n="partners.lead">與同樣相信「動手造」的團隊並肩。</p>
+    </header>
 
+    <div class="partners reveal" id="partnersGrid"></div>
+  </section>
+
+  <!-- 巨型陳述色帶：只留一個鏤空字，作為進入頁腳前的緩衝 -->
+  <section class="statement reveal">
+    <p class="statement__word hollow">SELF BUILT</p>
+  </section>
+
+</main>
+
+<!-- ═══════════════════ ⑤ 合作聯繫（頁腳） ═══════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer__inner">
+    <!-- 兩欄：左為巨型標題，右為郵件列，避免整段又是單欄堆疊 -->
+    <div class="footer__grid">
+      <div class="footer__lead-col">
+        <p class="kicker mono" data-i18n="footer.kicker">04 — CONTACT</p>
+
+        <h2 class="footer__title">
+          <span class="hollow hollow--footer">LET'S TALK</span>
+          <span class="footer__sub" data-i18n="footer.sub">合作聯繫</span>
+        </h2>
+
+        <p class="footer__lead" data-i18n="footer.lead">有想法、有專案，或只是想聊聊，郵件都歡迎。</p>
+      </div>
+
+      <ul class="mails">
+        <li>
+          <a class="mail" href="mailto:3199704668@qq.com">
+            <span class="mail__idx mono" aria-hidden="true">01</span>
+            <span class="mail__text">3199704668@qq.com</span>
+            <span class="material-symbols-rounded mail__icon">north_east</span>
+          </a>
+        </li>
+        <li>
+          <a class="mail" href="mailto:1828236908@qq.com">
+            <span class="mail__idx mono" aria-hidden="true">02</span>
+            <span class="mail__text">1828236908@qq.com</span>
+            <span class="material-symbols-rounded mail__icon">north_east</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> LaswI Studio</span>
+      <span class="footer__built" data-i18n="footer.built">自研 · 自造 · 自娛</span>
+    </div>
+  </div>
+</footer>
+
+<noscript>
+  <p class="noscript">此站點需要 JavaScript 以渲染產品磁貼與語言切換。</p>
+</noscript>
+
+<script src="script.js"></script>
 </body>
 </html>
