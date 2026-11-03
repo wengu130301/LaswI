@@ -181,7 +181,7 @@
   /* ── 02 站點資料 ────────────────────────────────────────── */
   const PRODUCTS = [
     {
-      id: 'guui', size: 'lg', tone: 'blue', icon: 'smartphone', url: 'guui.laswi.com.cn',
+      id: 'guui', size: 'lg', tone: 'blue', icon: 'smartphone', url: 'guui.com.cn',
       'zh-TW': { name: 'GUUI', desc: '以藍色虎皮鸚鵡為主要設計語言的安卓類原生純淨系統。' },
       'zh-CN': { name: 'GUUI', desc: '以蓝色虎皮鹦鹉为主要设计语言的安卓类原生纯净系统。' },
       en:      { name: 'GUUI', desc: 'A clean, near-AOSP Android build whose entire design language is a blue budgerigar.' }
