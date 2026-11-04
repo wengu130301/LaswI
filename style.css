@@ -1034,6 +1034,13 @@ body.is-nav-open { overflow: hidden; }
   --tile-fg: #4a0d22;
   --tile-dim: rgba(74, 13, 34, .64);
 }
+.tone-mint {
+  --tile-accent: #04332b;
+  --tile-on-accent: #d4fff3;
+  --tile-bg: linear-gradient(150deg, #a6f0de, #4bb6a5);
+  --tile-fg: #04332b;
+  --tile-dim: rgba(4, 51, 43, .64);
+}
 
 .tile__top {
   display: flex;
