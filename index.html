@@ -34,6 +34,7 @@
   <nav class="nav__links" id="navLinks" aria-label="主導航">
     <a class="nav__link is-active" href="#home" data-i18n="nav.home">首頁</a>
     <a class="nav__link" href="#products" data-i18n="nav.products">產品</a>
+    <a class="nav__link" href="#web" data-i18n="nav.web">LaswI Web</a>
     <a class="nav__link" href="#film" data-i18n="nav.film">宣傳片</a>
     <a class="nav__link" href="#stack" data-i18n="nav.stack">自研棧</a>
     <a class="nav__link" href="#partners" data-i18n="nav.partners">合作夥伴</a>
@@ -143,11 +144,59 @@
     <div class="tiles reveal" id="tiles"></div>
   </section>
 
+  <!-- ═══════════════════ ③a 第一款面向大眾的產品：LaswI Web（獨立板塊，不進磁貼網格） ═══════════════════ -->
+  <section class="section section--web" id="web">
+    <div class="web reveal">
+      <div class="web__body">
+        <p class="kicker mono" data-i18n="web.kicker">02 — FIRST PRODUCT FOR EVERYONE</p>
+        <h2 class="web__title">
+          <span class="hollow">LaswI</span>
+          <span class="web__title-word">Web</span>
+        </h2>
+        <p class="web__sub" data-i18n="web.sub">第一款面向大眾的產品</p>
+        <p class="web__lead" data-i18n="web.lead">以前那些東西，是做給自己和少數人的。這次換個做法：打開瀏覽器就能用，不需要下載，也不需要安裝。</p>
+
+        <ul class="web__facts">
+          <li class="web__fact">
+            <span class="material-symbols-rounded" aria-hidden="true">bolt</span>
+            <span data-i18n="web.f1">開頁即用</span>
+          </li>
+          <li class="web__fact">
+            <span class="material-symbols-rounded" aria-hidden="true">devices</span>
+            <span data-i18n="web.f2">瀏覽器直開</span>
+          </li>
+          <li class="web__fact">
+            <span class="material-symbols-rounded" aria-hidden="true">update</span>
+            <span data-i18n="web.f3">線上更新</span>
+          </li>
+        </ul>
+
+        <div class="web__actions">
+          <a class="web__cta" href="https://laswi-ai-production.up.railway.app" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="web.cta">立即打開</span>
+            <span class="material-symbols-rounded" aria-hidden="true">north_east</span>
+          </a>
+          <span class="web__url mono">laswi-ai-production.up.railway.app</span>
+        </div>
+      </div>
+
+      <a class="web__frame" href="https://laswi-ai-production.up.railway.app" target="_blank" rel="noopener noreferrer">
+        <span class="web__bar" aria-hidden="true">
+          <span class="web__dot"></span><span class="web__dot"></span><span class="web__dot"></span>
+          <span class="web__addr mono">laswi-ai-production.up.railway.app</span>
+        </span>
+        <img class="web__shot" src="media/laswi-web-preview.jpg" alt="LaswI Web 介面預覽" loading="lazy" decoding="async" data-fallback>
+        <span class="web__badge mono" data-i18n="web.badge">LIVE</span>
+      </a>
+    </div>
+  </section>
+
   <!-- ═══════════════════ ③b 滾動字帶（段落之間的節奏過渡） ═══════════════════ -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__band">
       <div class="marquee__track">
         <div class="marquee__group">
+          <span class="marquee__word marquee__word--hollow">LaswI Web</span><span class="marquee__dot"></span>
           <span class="marquee__word">GUUI</span><span class="marquee__dot"></span>
           <span class="marquee__word marquee__word--hollow">VayloOS</span><span class="marquee__dot"></span>
           <span class="marquee__word">Nex Kernel</span><span class="marquee__dot"></span>
@@ -158,6 +207,7 @@
         </div>
         <!-- 第二組內容完全相同：無縫接續用 -->
         <div class="marquee__group">
+          <span class="marquee__word marquee__word--hollow">LaswI Web</span><span class="marquee__dot"></span>
           <span class="marquee__word">GUUI</span><span class="marquee__dot"></span>
           <span class="marquee__word marquee__word--hollow">VayloOS</span><span class="marquee__dot"></span>
           <span class="marquee__word">Nex Kernel</span><span class="marquee__dot"></span>
@@ -174,7 +224,7 @@
   <section class="section section--film" id="film">
     <header class="sec-head sec-head--split reveal">
       <div class="sec-head__main">
-        <p class="kicker mono" data-i18n="film.kicker">02 — BRAND FILM</p>
+        <p class="kicker mono" data-i18n="film.kicker">03 — BRAND FILM</p>
         <h2 class="sec-title">
           <span class="hollow hollow--primary">FILM</span>
           <span class="sec-title__sub" data-i18n="film.sub">宣傳片</span>
@@ -225,7 +275,7 @@
     <div class="stack reveal">
       <header class="stack__head">
         <div class="stack__head-main">
-          <p class="kicker mono stack__kicker" data-i18n="stack.kicker">03 — THE STACK</p>
+          <p class="kicker mono stack__kicker" data-i18n="stack.kicker">04 — THE STACK</p>
           <h2 class="stack__title">
             <span class="hollow hollow--stack">STACK</span>
             <span class="stack__sub" data-i18n="stack.sub">自研棧</span>
@@ -288,7 +338,7 @@
   <section class="section section--partners" id="partners">
     <!-- 標題居中，與產品的左對齊分欄形成節奏差 -->
     <header class="sec-head sec-head--center reveal">
-      <p class="kicker mono" data-i18n="partners.kicker">04 — PARTNERS</p>
+      <p class="kicker mono" data-i18n="partners.kicker">05 — PARTNERS</p>
       <h2 class="sec-title">
         <span class="hollow hollow--tertiary">PARTNERS</span>
         <span class="sec-title__sub" data-i18n="partners.sub">合作夥伴</span>
@@ -312,7 +362,7 @@
     <!-- 兩欄：左為巨型標題，右為郵件列，避免整段又是單欄堆疊 -->
     <div class="footer__grid">
       <div class="footer__lead-col">
-        <p class="kicker mono" data-i18n="footer.kicker">05 — CONTACT</p>
+        <p class="kicker mono" data-i18n="footer.kicker">06 — CONTACT</p>
 
         <h2 class="footer__title">
           <span class="hollow hollow--footer">LET'S TALK</span>
