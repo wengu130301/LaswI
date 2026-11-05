@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LaswI Studio — 時間軸 · Timeline</title>
+<meta name="description" content="LaswI Studio 時間軸：2025 年 7 月命名、2026 年成立與發布、10 月 17 日《彩虹為序》上架騰訊音樂，以及 001–004 四版標誌迭代。">
+<meta name="theme-color" content="#FAF8FF">
+<link rel="icon" href="media/logo-004.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+TC:wght@500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="timeline.css">
+</head>
+<body class="page-timeline">
+
+<a class="skip-link" href="#timeline">跳至時間軸</a>
+
+<!-- ═══════════════════ 頁頭：返回首頁 + 語言切換 ═══════════════════ -->
+<header class="tl-head">
+  <div class="tl-head__inner">
+    <a class="tl-brand" href="index.html" aria-label="返回 LaswI Studio 首頁">
+      <span class="tl-brand__mark">
+        <img src="media/logo-004.png" alt="LaswI 標誌" width="480" height="480">
+      </span>
+      <span class="tl-brand__text">
+        <b>LaswI Studio</b>
+        <i class="mono" data-i18n="tl.back">返回首頁</i>
+      </span>
+    </a>
+
+    <div class="seg" id="langSeg" role="group" aria-label="語言 / Language">
+      <span class="seg__thumb" aria-hidden="true"></span>
+      <button class="seg__btn" type="button" data-lang="zh-CN" aria-pressed="false">简</button>
+      <button class="seg__btn is-active" type="button" data-lang="zh-TW" aria-pressed="true">繁</button>
+      <button class="seg__btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="tl-main">
+
+  <!-- ═══════════════════ 首屏 ═══════════════════ -->
+  <section class="tl-hero">
+    <p class="kicker mono" data-i18n="tl.kicker">TIMELINE — 2025.07 →</p>
+    <h1 class="tl-hero__title"><span class="hollow">TIMELINE</span></h1>
+    <p class="tl-hero__sub mono" data-i18n="tl.sub">時間軸</p>
+    <p class="tl-hero__lead" data-i18n="tl.lead">從一個名字，到一間工作室。中間那些節點，按時間排在同一條線上。</p>
+    <ul class="tl-hero__meta mono">
+      <li><span class="tl-hero__num">08</span> <span data-i18n="tl.meta1">節點</span></li>
+      <li><span class="tl-hero__num">04</span> <span data-i18n="tl.meta2">版標誌</span></li>
+      <li><span class="tl-hero__num">∞</span> <span data-i18n="tl.meta3">未完</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════ 時間軸本體 ═══════════════════ -->
+  <section class="tl-track" id="timeline" aria-labelledby="tlTrackTitle">
+    <h2 class="tl-sr" id="tlTrackTitle" data-i18n="tl.sub">時間軸</h2>
+
+    <ol class="tl-list">
+
+      <li class="tl-item reveal" style="--d:0">
+        <div class="tl-when">
+          <span class="tl-when__year">2025</span>
+          <span class="tl-when__mon mono">07</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t1.tag">命名</span>
+          <h3 class="tl-card__title" data-i18n="t1.title">Laswi 這個名字被創造出來</h3>
+          <p class="tl-card__desc" data-i18n="t1.desc">還沒有產品，也還沒有工作室，先有一個名字。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:1">
+        <div class="tl-when">
+          <span class="tl-when__year">2025</span>
+          <span class="tl-when__mon mono">11</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t2.tag">改名</span>
+          <h3 class="tl-card__title" data-i18n="t2.title">正式改名 LaswI</h3>
+          <p class="tl-card__desc" data-i18n="t2.desc">大小寫定案：小寫 i 收成大寫 I，名字自此固定，沒再改過。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:2">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">03</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t3.tag">第一款大眾產品</span>
+          <h3 class="tl-card__title" data-i18n="t3.title">LaswI Web 正式面向大眾</h3>
+          <p class="tl-card__desc" data-i18n="t3.desc">不用下載，開一個分頁就能用——第一個交到所有人手上的東西。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:3">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">04</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t4.tag">成立</span>
+          <h3 class="tl-card__title" data-i18n="t4.title">LaswI Studio 正式成立</h3>
+          <p class="tl-card__desc" data-i18n="t4.desc">名字終於有了去處，作品開始以工作室的名義發布。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:0">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">06</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t5.tag">發布</span>
+          <h3 class="tl-card__title" data-i18n="t5.title">LaswI App 正式發布</h3>
+          <p class="tl-card__desc" data-i18n="t5.desc">Web 之後，App 版本跟著上線。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:1">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">09</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t6.tag">合作</span>
+          <h3 class="tl-card__title" data-i18n="t6.title">迎來第一批合作夥伴</h3>
+          <p class="tl-card__desc" data-i18n="t6.desc">第一批夥伴加入，四張卡片掛上了首頁。</p>
+        </div>
+      </li>
+
+      <li class="tl-item reveal" style="--d:2">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">10.17</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t7.tag">音樂</span>
+          <h3 class="tl-card__title" data-i18n="t7.title">HayMusic《彩虹為序》上架騰訊音樂平台</h3>
+          <p class="tl-card__desc" data-i18n="t7.desc">HayMusic 的第一款音樂，同步上線 QQ 音樂、酷狗音樂、酷我音樂。</p>
+        </div>
+      </li>
+
+      <li class="tl-item tl-item--now reveal" style="--d:3">
+        <div class="tl-when">
+          <span class="tl-when__year">2026</span>
+          <span class="tl-when__mon mono">→</span>
+        </div>
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <span class="tl-card__tag mono" data-i18n="t8.tag">未完</span>
+          <h3 class="tl-card__title" data-i18n="t8.title">LaswI 還在往前走</h3>
+          <p class="tl-card__desc" data-i18n="t8.desc">2026 之後繼續。這條時間軸還沒有結束的那一天。</p>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ═══════════════════ 標誌迭代 001 → 004 ═══════════════════ -->
+  <section class="tl-logos" id="logos" aria-labelledby="tlLogosTitle">
+    <header class="tl-logos__head">
+      <p class="kicker mono" data-i18n="lg.kicker">LOGO ITERATION — 001 → 004</p>
+      <h2 class="tl-logos__title">
+        <span class="hollow">LOGO</span>
+        <span class="tl-logos__sub mono" id="tlLogosTitle" data-i18n="lg.sub">標誌迭代</span>
+      </h2>
+      <p class="tl-logos__lead" data-i18n="lg.lead">四版標誌，按時間排列。每一版都留下來，不刪掉。</p>
+    </header>
+
+    <ol class="lg-grid">
+      <li class="lg-item reveal" style="--d:0">
+        <figure>
+          <img src="media/logo-001.jpg" alt="LaswI 標誌 001 版" width="760" height="760" loading="lazy">
+        </figure>
+        <p class="lg-cap">
+          <span class="mono">001</span>
+          <span data-i18n="lg.cap1">第一版</span>
+        </p>
+      </li>
+      <li class="lg-item reveal" style="--d:1">
+        <figure>
+          <img src="media/logo-002.jpg" alt="LaswI 標誌 002 版" width="760" height="760" loading="lazy">
+        </figure>
+        <p class="lg-cap">
+          <span class="mono">002</span>
+          <span data-i18n="lg.cap2">第二版</span>
+        </p>
+      </li>
+      <li class="lg-item reveal" style="--d:2">
+        <figure>
+          <img src="media/logo-003.jpg" alt="LaswI 標誌 003 版" width="760" height="760" loading="lazy">
+        </figure>
+        <p class="lg-cap">
+          <span class="mono">003</span>
+          <span data-i18n="lg.cap3">第三版</span>
+        </p>
+      </li>
+      <li class="lg-item reveal" style="--d:3">
+        <figure>
+          <img src="media/logo-004.png" alt="LaswI 標誌 004 版" width="480" height="480" loading="lazy">
+        </figure>
+        <p class="lg-cap">
+          <span class="mono">004</span>
+          <span data-i18n="lg.cap4">第四版 · 現行</span>
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ═══════════════════ 收尾 ═══════════════════ -->
+  <section class="tl-outro">
+    <p class="tl-outro__text" data-i18n="tl.outro">時間軸停在這一步，但工作室沒有。</p>
+    <a class="tl-cta" href="index.html">
+      <span data-i18n="tl.cta">回 LaswI Studio 首頁</span>
+      <span class="tl-cta__arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="tl-foot">
+  <p class="mono">© 2026 LaswI Studio</p>
+  <p class="mono"><a href="index.html">INDEX</a> · <a href="index.html#contact">CONTACT</a></p>
+</footer>
+
+<script src="timeline.js"></script>
+</body>
+</html>

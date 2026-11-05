@@ -1,0 +1,527 @@
+/* ══════════════════════════════════════════════════════════════
+   LaswI Studio — timeline.css
+   時間軸獨立頁（timeline.html）專屬樣式
+   沿用 style.css 的設計變數 / .hollow / .mono / .kicker / .reveal / .seg
+   全程不使用 backdrop-filter，維持 MD3 tonal 規則
+   索引：
+    01 頁面骨架與頁頭
+    02 首屏
+    03 時間軸（桌面三欄：年份 / 節點 / 卡片）
+    04 標誌迭代
+    05 收尾與頁腳
+    06 響應式
+    07 無障礙與 reduced-motion
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 01 頁面骨架與頁頭 ─────────────────────────────────────── */
+.page-timeline {
+  --tl-when: clamp(74px, 9vw, 132px);
+  --tl-gap: 60px;
+  --tl-line: var(--md-outline);
+}
+
+.tl-main {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* 頁頭：不做固定導航，只有一條隨滾動留在頂端的細條 */
+.tl-head {
+  --nav-state: var(--md-surface-container);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--md-surface);
+  border-bottom: 1px solid color-mix(in srgb, var(--md-outline) 22%, transparent);
+}
+
+.tl-head__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 12px var(--gutter);
+}
+
+.tl-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px 6px 6px;
+  border-radius: var(--r-pill);
+  color: var(--md-on-surface);
+  text-decoration: none;
+  transition: background-color 260ms var(--ease);
+}
+.tl-brand:hover { background: var(--md-surface-container); }
+
+.tl-brand__mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  background: var(--md-surface-lowest);
+  box-shadow: var(--elev-1);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.tl-brand__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+}
+
+.tl-brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.tl-brand__text b {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.tl-brand__text i {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--md-on-surface-variant);
+}
+.tl-brand:hover .tl-brand__text i { color: var(--md-primary); }
+
+/* ── 02 首屏 ──────────────────────────────────────────────── */
+.tl-hero {
+  padding: clamp(56px, 9vw, 116px) 0 clamp(28px, 4vw, 48px);
+}
+
+.tl-hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(52px, 12.5vw, 168px);
+  font-weight: 700;
+  line-height: .92;
+  letter-spacing: -.035em;
+}
+
+.tl-hero__sub {
+  margin: 14px 0 0;
+  padding-left: 6px;
+  font-size: 12px;
+  letter-spacing: .3em;
+  color: var(--md-on-surface-variant);
+}
+
+.tl-hero__lead {
+  max-width: 30em;
+  margin: 22px 0 0;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.75;
+  color: var(--md-on-surface-variant);
+}
+
+.tl-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tl-hero__meta li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 7px 15px;
+  border-radius: var(--r-pill);
+  background: var(--md-surface-container);
+  color: var(--md-on-surface-variant);
+}
+.tl-hero__num {
+  font-weight: 500;
+  color: var(--md-primary);
+}
+
+/* ── 03 時間軸 ────────────────────────────────────────────── */
+.tl-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.tl-track {
+  position: relative;
+  padding: clamp(20px, 3vw, 40px) 0 clamp(64px, 8vw, 108px);
+}
+
+.tl-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: clamp(18px, 2.6vw, 34px);
+}
+
+/* 貫穿節點的細線：由上方淡入、下方淡出，不搶視線 */
+.tl-list::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: calc(var(--tl-when) + var(--tl-gap) / 2);
+  width: 2px;
+  transform: translateX(-1px);
+  background: linear-gradient(
+    180deg,
+    transparent 0,
+    color-mix(in srgb, var(--tl-line) 55%, transparent) 7%,
+    color-mix(in srgb, var(--tl-line) 55%, transparent) 93%,
+    transparent 100%
+  );
+}
+
+.tl-item {
+  display: grid;
+  grid-template-columns: var(--tl-when) var(--tl-gap) minmax(0, 1fr);
+  align-items: start;
+}
+
+.tl-when {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding-top: 4px;
+  text-align: right;
+}
+.tl-when__year {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--md-on-surface);
+}
+.tl-when__mon {
+  font-size: 11px;
+  letter-spacing: .13em;
+  color: var(--md-on-surface-variant);
+}
+
+/* 節點圓點：白心 + 藍環，進場後補一圈容器色光暈 */
+.tl-dot {
+  grid-column: 2;
+  justify-self: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 10px;
+  border-radius: 50%;
+  background: var(--md-surface-lowest);
+  border: 3px solid var(--md-primary);
+  box-shadow: 0 0 0 0 var(--md-primary-container);
+  transition: box-shadow 520ms var(--ease), transform 520ms var(--ease);
+}
+.tl-item.is-in .tl-dot {
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--md-primary-container) 80%, transparent);
+}
+
+.tl-card {
+  grid-column: 3;
+  padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 30px);
+  border-radius: var(--r-md);
+  border: 1px solid color-mix(in srgb, var(--md-outline) 24%, transparent);
+  background: var(--md-surface-lowest);
+  transition: border-color 300ms var(--ease), box-shadow 300ms var(--ease), transform 300ms var(--ease);
+}
+.tl-item:hover .tl-card {
+  border-color: color-mix(in srgb, var(--md-primary) 34%, transparent);
+  box-shadow: var(--elev-2);
+  transform: translateX(3px);
+}
+
+.tl-card__tag {
+  display: inline-block;
+  padding: 4px 11px;
+  margin-bottom: 12px;
+  border-radius: var(--r-pill);
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+}
+
+.tl-card__title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--md-on-surface);
+  text-wrap: balance;
+}
+
+.tl-card__desc {
+  margin: 0;
+  max-width: 40em;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--md-on-surface-variant);
+}
+
+/* 最新一個節點：綠色三角色，表示「還在跑」 */
+.tl-item--now .tl-dot {
+  border-color: var(--md-tertiary);
+  box-shadow: 0 0 0 0 var(--md-tertiary-container);
+}
+.tl-item--now.is-in .tl-dot {
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--md-tertiary-container) 85%, transparent);
+}
+.tl-item--now .tl-card {
+  background: var(--md-tertiary-container);
+  border-color: transparent;
+}
+.tl-item--now .tl-card__tag {
+  background: var(--md-tertiary);
+  color: var(--md-on-tertiary);
+}
+.tl-item--now .tl-card__title { color: var(--md-on-tertiary-container); }
+.tl-item--now .tl-card__desc { color: color-mix(in srgb, var(--md-on-tertiary-container) 78%, transparent); }
+.tl-item--now .tl-when__year { color: var(--md-tertiary); }
+
+/* ── 04 標誌迭代 ──────────────────────────────────────────── */
+.tl-logos {
+  padding: clamp(44px, 6vw, 78px) 0 clamp(40px, 5vw, 64px);
+  border-top: 1px solid color-mix(in srgb, var(--md-outline) 22%, transparent);
+}
+
+.tl-logos__head { margin-bottom: clamp(22px, 3vw, 40px); }
+
+.tl-logos__title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 92px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+.tl-logos__sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .26em;
+  color: var(--md-on-surface-variant);
+}
+
+.tl-logos__lead {
+  max-width: 32em;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--md-on-surface-variant);
+}
+
+.lg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 22px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lg-item figure {
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--md-surface-container);
+  box-shadow: var(--elev-1);
+  transition: transform 340ms var(--ease), box-shadow 340ms var(--ease);
+}
+.lg-item:hover figure {
+  transform: translateY(-4px);
+  box-shadow: var(--elev-3);
+}
+.lg-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lg-cap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 10px 2px 0;
+  font-size: 13px;
+  color: var(--md-on-surface-variant);
+}
+.lg-cap .mono {
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--md-primary);
+}
+
+/* ── 05 收尾與頁腳 ────────────────────────────────────────── */
+.tl-outro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(28px, 4vw, 44px) clamp(22px, 3vw, 40px);
+  border-radius: var(--r-lg);
+  background: var(--md-surface-container);
+}
+
+.tl-outro__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.9vw, 21px);
+  font-weight: 500;
+  color: var(--md-on-surface);
+  text-wrap: balance;
+}
+
+.tl-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--r-pill);
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--elev-1);
+  transition: background-color 240ms var(--ease), box-shadow 240ms var(--ease), gap 240ms var(--ease);
+}
+.tl-cta:hover {
+  background: color-mix(in srgb, var(--md-primary) 88%, #000);
+  box-shadow: var(--elev-3);
+  gap: 15px;
+}
+.tl-cta__arrow { font-size: 15px; line-height: 1; }
+
+.tl-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 26px var(--gutter) 40px;
+  color: var(--md-on-surface-variant);
+  border-top: 1px solid color-mix(in srgb, var(--md-outline) 18%, transparent);
+}
+.tl-foot p { margin: 0; }
+.tl-foot a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--md-outline) 45%, transparent);
+}
+.tl-foot a:hover { color: var(--md-primary); border-color: currentColor; }
+
+/* ── 06 響應式 ────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .page-timeline { --tl-when: clamp(64px, 8vw, 90px); --tl-gap: 46px; }
+  .lg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .page-timeline { --tl-gap: 0px; }
+
+  .tl-list { gap: 14px; }
+  .tl-list::before { left: 20px; top: 4px; bottom: 4px; }
+
+  .tl-item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+  .tl-when {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0;
+    text-align: left;
+  }
+  .tl-when__year { font-size: 19px; }
+  .tl-when__mon { font-size: 10.5px; }
+
+  .tl-dot {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    justify-self: start;
+    margin: 3px 0 0 12px;
+    width: 15px;
+    height: 15px;
+    border-width: 3px;
+  }
+  .tl-card {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 16px 18px;
+    border-radius: var(--r-sm);
+  }
+  .tl-item:hover .tl-card { transform: none; }
+  .tl-card__title { font-size: 17.5px; }
+  .tl-card__desc { font-size: 14px; }
+
+  .tl-head__inner { padding: 10px var(--gutter); }
+  .tl-brand__text i { display: none; }
+  .tl-brand__mark { width: 34px; height: 34px; border-radius: 11px; }
+
+  .lg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl-outro { flex-direction: column; align-items: flex-start; }
+  .tl-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+@media (max-width: 420px) {
+  .lg-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── 07 無障礙與 reduced-motion ───────────────────────────── */
+.tl-brand:focus-visible,
+.tl-cta:focus-visible,
+.tl-foot a:focus-visible {
+  outline: 3px solid var(--md-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-timeline .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tl-dot,
+  .tl-card,
+  .lg-item figure,
+  .tl-cta { transition: none; }
+  .tl-item:hover .tl-card,
+  .lg-item:hover figure { transform: none; }
+}
