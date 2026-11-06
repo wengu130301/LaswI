@@ -2394,3 +2394,147 @@ body.is-film-open { overflow: hidden; }
   color: var(--md-inverse-on-surface);
   border-color: currentColor;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   13 首頁時間軸入口（section--tline）
+   深色面板 + 右側迷你節點軌道，整塊即連結，指向 timeline.html
+   ══════════════════════════════════════════════════════════════ */
+.section--tline { padding-block: clamp(56px, 8vw, 116px); }
+
+.tline__card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(26px, 4vw, 68px);
+  align-items: center;
+  padding: clamp(26px, 4vw, 62px);
+  border-radius: clamp(28px, 3.4vw, 44px);
+  background: radial-gradient(125% 125% at 88% 4%, #242a4e 0%, #151830 44%, #0c0e1b 100%);
+  color: var(--md-inverse-on-surface);
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 440ms var(--ease-out), box-shadow 440ms var(--ease-out);
+}
+
+/* 右上角柔光，不用毛玻璃，只用徑向漸變 + 圓形色塊 */
+.tline__card::after {
+  content: "";
+  position: absolute;
+  top: -34%;
+  right: -12%;
+  width: 54%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(143, 168, 255, 0.34), rgba(143, 168, 255, 0) 68%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.tline__card:hover,
+.tline__card:focus-visible { transform: translateY(-6px); box-shadow: 0 28px 62px -30px rgba(12, 14, 27, 0.62); }
+.tline__card:focus-visible { outline: 3px solid var(--md-primary-dim); outline-offset: 4px; }
+
+.tline__title { display: flex; flex-direction: column; gap: 0.1em; margin: 14px 0 16px; }
+.tline__card .hollow {
+  --hollow-fill: linear-gradient(96deg, #ffffff 0%, #b6c6ff 48%, #b7f0d8 100%);
+  font-size: clamp(32px, 6vw, 82px);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+}
+.tline__sub { font-size: clamp(14px, 1.5vw, 19px); letter-spacing: 0.36em; color: rgba(236, 234, 246, 0.7); }
+
+.tline__lead {
+  max-width: 44ch;
+  font-size: clamp(13.5px, 1.05vw, 15.5px);
+  line-height: 1.9;
+  color: rgba(236, 234, 246, 0.74);
+}
+
+.tline__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(18px, 2.4vw, 30px);
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  transition: background 260ms var(--ease);
+}
+.tline__card:hover .tline__cta { background: #3a68ee; }
+.tline__cta-arrow { font-size: 15px; line-height: 1; transition: transform 340ms var(--ease-out); }
+.tline__card:hover .tline__cta-arrow { transform: translateX(6px); }
+
+/* ── 右側節點軌道 ── */
+.tline__track { position: relative; margin: 0; padding: 0; list-style: none; }
+.tline__track::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(236, 234, 246, 0.34), rgba(236, 234, 246, 0.08));
+}
+
+.tline__node {
+  position: relative;
+  display: grid;
+  grid-template-columns: 106px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 13px 0 13px 26px;
+}
+.tline__node::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(143, 168, 255, 0.16);
+}
+.tline__node--next::before { background: transparent; border: 1.5px solid var(--md-tertiary-container); box-shadow: none; }
+.tline__node + .tline__node::after {
+  content: "";
+  position: absolute;
+  left: 26px;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: rgba(236, 234, 246, 0.085);
+}
+
+.tline__date { font-size: 12px; letter-spacing: 0.12em; color: rgba(236, 234, 246, 0.6); }
+.tline__text { font-size: clamp(13.5px, 1.02vw, 15px); line-height: 1.6; color: rgba(236, 234, 246, 0.93); }
+
+@media (max-width: 1100px) {
+  .tline__card { grid-template-columns: 1fr; gap: clamp(22px, 3vw, 34px); }
+  .tline__track { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(16px, 3vw, 34px); }
+  .tline__track::before { display: none; }
+  .tline__node { grid-template-columns: 1fr; gap: 3px; padding: 12px 0 12px 22px; }
+  .tline__node::before { top: 17px; }
+  .tline__node + .tline__node::after { left: 22px; }
+  .tline__track { display: grid; }
+}
+
+@media (max-width: 720px) {
+  .tline__track { grid-template-columns: 1fr; }
+  .tline__lead { max-width: none; }
+  .tline__cta { width: 100%; justify-content: space-between; padding: 14px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tline__card, .tline__cta-arrow { transition: none; }
+  .tline__card:hover { transform: none; }
+}
+
+/* 13.1 長文本防溢出與軌道對齊微調 */
+.tline__text, .tline__lead { overflow-wrap: anywhere; }
+.tline__track { align-content: start; }
+.tline__node { min-height: 50px; }
