@@ -1174,6 +1174,7 @@ body.is-nav-open { overflow: hidden; }
 .partners > .partner:nth-child(2) { grid-column: span 2; }
 .partners > .partner:nth-child(3) { grid-column: span 2; }
 .partners > .partner:nth-child(4) { grid-column: span 4; }
+.partners > .partner:nth-child(5) { grid-column: span 6; }
 
 .partner {
   --card-bg: var(--md-surface-container);
@@ -1315,6 +1316,26 @@ body.is-nav-open { overflow: hidden; }
 }
 .partner:hover .partner__go { background: rgba(0, 0, 0, .09); gap: 10px; }
 .partner__go .material-symbols-rounded { font-size: 16px; }
+
+/* 無官網：不可點擊的淡色標籤 */
+.partner__go--off {
+  opacity: .62;
+  background: rgba(0, 0, 0, .05);
+}
+.partner:hover .partner__go--off { background: rgba(0, 0, 0, .05); gap: 6px; }
+.partner__url--none { opacity: .55; }
+
+/* 精簡卡：無簡介、無官網 → 橫向細條，避免整行留白 */
+.partner--compact {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(18px, 3vw, 44px);
+  padding: clamp(20px, 2.2vw, 30px) clamp(24px, 2.8vw, 44px);
+}
+.partner--compact .partner__head { flex: 1 1 auto; min-width: 0; }
+.partner--compact .partner__logo { width: clamp(62px, 5.6vw, 82px); height: clamp(62px, 5.6vw, 82px); }
+.partner--compact .partner__foot { margin-top: 0; padding-top: 0; flex: none; gap: clamp(14px, 2vw, 26px); }
 
 .partner__idx {
   font-family: var(--font-mono);
@@ -1492,6 +1513,8 @@ body.is-i18n-fading [data-i18n] {
   .partners { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* nth-child(n) 與上方 span 規則同等特異度、且位置更後，才能真正覆蓋非對稱跨欄 */
   .partners > .partner:nth-child(n) { grid-column: auto; }
+  /* 精簡卡在兩列時仍橫跨整行，避免與半寬卡擠在一列 */
+  .partners > .partner.partner--compact:nth-child(n) { grid-column: span 2; }
 
   .stack__head { grid-template-columns: 1fr; align-items: start; gap: 18px; }
   .stack__lead { margin-inline-start: 0; }
@@ -1671,6 +1694,14 @@ body.is-i18n-fading [data-i18n] {
     gap: 16px;
     padding: 22px;
   }
+  /* 單列：精簡卡回到縱向，避免橫排擠壓 */
+  .partners > .partner.partner--compact:nth-child(n) {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .partner--compact .partner__foot { margin-top: 0; padding-top: 0; }
   .partners > .partner .partner__logo,
   .partners > .partner:nth-child(1) .partner__logo { width: 64px; height: 64px; }
   .partners > .partner:nth-child(1) .partner__desc { max-width: none; }

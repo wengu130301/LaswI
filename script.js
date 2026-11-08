@@ -35,7 +35,7 @@
         'hero.eyebrow': '獨立工作室 · EST. 2025',
         'hero.tagline': '以系統、產品與音樂，拆解日常的無趣。',
         'hero.scroll': '向下探索',
-        'hero.meta': '9 個產品 · 4 位夥伴',
+        'hero.meta': '9 個產品 · 5 位夥伴',
         'film.kicker': '03 — BRAND FILM',
         'film.sub': '宣傳片',
         'film.lead': '兩分鐘，一條線：從內核到系統再到產品，全部自己造。',
@@ -92,7 +92,8 @@
         'footer.lead': '有想法、有專案，或只是想聊聊，郵件都歡迎。',
         'footer.built': '自研 · 自造 · 自娛',
         'common.visit': '前往',
-        'common.site': '官方網站'
+        'common.site': '官方網站',
+        'common.nosite': '暫無官網'
       }
     },
     'zh-CN': {
@@ -109,7 +110,7 @@
         'hero.eyebrow': '独立工作室 · EST. 2025',
         'hero.tagline': '以系统、产品与音乐，拆解日常的无趣。',
         'hero.scroll': '向下探索',
-        'hero.meta': '9 个产品 · 4 位伙伴',
+        'hero.meta': '9 个产品 · 5 位伙伴',
         'film.kicker': '03 — BRAND FILM',
         'film.sub': '宣传片',
         'film.lead': '两分钟，一条线：从内核到系统再到产品，全部自己造。',
@@ -166,7 +167,8 @@
         'footer.lead': '有想法、有项目，或只是想聊聊，邮件都欢迎。',
         'footer.built': '自研 · 自造 · 自娱',
         'common.visit': '前往',
-        'common.site': '官方网站'
+        'common.site': '官方网站',
+        'common.nosite': '暂无官网'
       }
     },
     en: {
@@ -183,7 +185,7 @@
         'hero.eyebrow': 'INDEPENDENT STUDIO · EST. 2025',
         'hero.tagline': 'Systems, products and music — a way to take the dull out of the everyday.',
         'hero.scroll': 'SCROLL',
-        'hero.meta': '7 PRODUCTS · 4 PARTNERS',
+        'hero.meta': '9 PRODUCTS · 5 PARTNERS',
         'film.kicker': '03 — BRAND FILM',
         'film.sub': 'THE FILM',
         'film.lead': 'Two minutes, one line: kernel, system, products — all built by us.',
@@ -240,7 +242,8 @@
         'footer.lead': 'An idea, a project, or just a chat — email is always open.',
         'footer.built': 'BUILT · MADE · PLAYED',
         'common.visit': 'Visit',
-        'common.site': 'Official site'
+        'common.site': 'Official site',
+        'common.nosite': 'No site yet'
       }
     }
   };
@@ -365,6 +368,19 @@
         name: 'WBDog Studio',
         desc: 'Smart terminals by WBDog — focused on building web pages.'
       }
+    },
+    {
+      /* 無簡介、無官網：僅名稱 + 標誌 */
+      id: 'yc', tone: 'blue', compact: true, logo: 'media/yc-logo.png', url: '',
+      'zh-TW': {
+        name: '永窗科技'
+      },
+      'zh-CN': {
+        name: '永窗科技'
+      },
+      en: {
+        name: 'YongChuang Technology'
+      }
     }
   ];
 
@@ -406,23 +422,30 @@
 
   function partnerHTML(p, i, lang, t) {
     const d = p[lang];
+    const initial = esc(d.name.slice(0, 1));
+    /* 無官網時：不在名稱下重複顯示，改由尾部淡色標籤說明 */
+    const urlLine = p.url ? `<span class="partner__url">${esc(p.url)}</span>` : '';
+    const descBlock = d.desc ? `<p class="partner__desc">${esc(d.desc)}</p>` : '';
+    const goBlock = p.url
+      ? `<a class="partner__go" href="https://${p.url}" target="_blank" rel="noopener noreferrer">
+            ${esc(t['common.visit'])}
+            <span class="material-symbols-rounded" aria-hidden="true">north_east</span>
+          </a>`
+      : `<span class="partner__go partner__go--off">${esc(t['common.nosite'])}</span>`;
     return `
-      <article class="partner partner--${p.tone}" data-idx="${pad2(i + 1)}" style="--d:${i}">
+      <article class="partner partner--${p.tone}${p.compact ? ' partner--compact' : ''}" data-idx="${pad2(i + 1)}" style="--d:${i}">
         <div class="partner__head">
-          <span class="partner__logo" data-logo data-fallback="${esc(d.name.slice(0, 1))}">
-            <img src="${p.logo}" alt="${esc(d.name)} 標誌" loading="lazy" data-fallback="${esc(d.name.slice(0, 1))}">
+          <span class="partner__logo" data-logo data-fallback="${initial}">
+            <img src="${p.logo}" alt="${esc(d.name)} 標誌" loading="lazy" data-fallback="${initial}">
           </span>
           <div>
             <h3 class="partner__name">${esc(d.name)}</h3>
-            <span class="partner__url">${esc(p.url)}</span>
+            ${urlLine}
           </div>
         </div>
-        <p class="partner__desc">${esc(d.desc)}</p>
+        ${descBlock}
         <div class="partner__foot">
-          <a class="partner__go" href="https://${p.url}" target="_blank" rel="noopener noreferrer">
-            ${esc(t['common.visit'])}
-            <span class="material-symbols-rounded" aria-hidden="true">north_east</span>
-          </a>
+          ${goBlock}
           <span class="partner__idx">/ ${pad2(i + 1)}</span>
         </div>
       </article>`;
@@ -433,6 +456,9 @@
     clearFlipTimers();
     tilesEl.innerHTML = PRODUCTS.map((p, i) => tileHTML(p, i, lang, t)).join('');
     partnersEl.innerHTML = PARTNERS.map((p, i) => partnerHTML(p, i, lang, t)).join('');
+    /* 統計數字跟隨實際夥伴數量，避免寫死後脫節 */
+    const statPartners = $('#statPartners');
+    if (statPartners) statPartners.textContent = pad2(PARTNERS.length);
 
     bindImageFallbacks(tilesEl);
     bindImageFallbacks(partnersEl);
